@@ -6,11 +6,10 @@
 
   <meta charset="UTF-8">
 
-<meta
-name="viewport"
-content="width=device-width, initial-scale=1.0"
-
->
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
   <title>
     Giokri Life · SPRESIANO CARD · Admin
@@ -280,1169 +279,891 @@ content="width=device-width, initial-scale=1.0"
 
   <header class="header">
 
-```
-<div class="header-inner">
+    <div class="header-inner">
 
-  <div class="brand">
-    Giokri Life
-  </div>
+      <div class="brand">
+        Giokri Life
+      </div>
 
-  <div class="subtitle">
-    SPRESIANO CARD · Pannello Amministratore
-  </div>
+      <div class="subtitle">
+        SPRESIANO CARD · Pannello Amministratore
+      </div>
 
-</div>
-```
+    </div>
 
   </header>
 
+
   <main class="container">
 
-```
-<!-- STATO COLLEGAMENTO -->
+    <div class="status">
 
-<div class="status">
+      <span
+        id="statusDot"
+        class="status-dot">
+      </span>
 
-  <span
-    id="statusDot"
-    class="status-dot">
-  </span>
+      <span class="status-text">
+        Stato collegamento
+      </span>
 
-  <span class="status-text">
-    Stato collegamento
-  </span>
+      <span id="statusText">
+        Collegamento in corso...
+      </span>
 
-  <span id="statusText">
-    Collegamento in corso...
-  </span>
-
-</div>
-
-
-<!-- TITOLO -->
-
-<h1 class="dashboard-title">
-  Dashboard
-</h1>
-
-
-<!-- CARDS STATISTICHE -->
-
-<div class="cards">
-
-
-  <div class="card">
-
-    <div class="card-icon">
-      🏪
     </div>
 
-    <div class="card-label">
-      Negozi aderenti
+
+    <h1 class="dashboard-title">
+      Dashboard
+    </h1>
+
+
+    <div class="cards">
+
+      <div class="card">
+
+        <div class="card-icon">
+          🏪
+        </div>
+
+        <div class="card-label">
+          Negozi aderenti
+        </div>
+
+        <div
+          class="card-value"
+          id="negozi">
+          -
+        </div>
+
+      </div>
+
+
+      <div class="card">
+
+        <div class="card-icon">
+          💳
+        </div>
+
+        <div class="card-label">
+          Card emesse
+        </div>
+
+        <div
+          class="card-value"
+          id="card">
+          -
+        </div>
+
+      </div>
+
+
+      <div class="card">
+
+        <div class="card-icon">
+          👤
+        </div>
+
+        <div class="card-label">
+          Clienti registrati
+        </div>
+
+        <div
+          class="card-value"
+          id="clienti">
+          -
+        </div>
+
+      </div>
+
+
+      <div class="card">
+
+        <div class="card-icon">
+          🧾
+        </div>
+
+        <div class="card-label">
+          Utilizzi registrati
+        </div>
+
+        <div
+          class="card-value"
+          id="utilizzi">
+          -
+        </div>
+
+      </div>
+
+
+      <div class="card">
+
+        <div class="card-icon">
+          ⭐
+        </div>
+
+        <div class="card-label">
+          Punti totali
+        </div>
+
+        <div
+          class="card-value"
+          id="punti">
+          -
+        </div>
+
+      </div>
+
+
+      <div class="card">
+
+        <div class="card-icon">
+          🎁
+        </div>
+
+        <div class="card-label">
+          Offerte attive
+        </div>
+
+        <div
+          class="card-value"
+          id="offerte">
+          -
+        </div>
+
+      </div>
+
     </div>
+
+
+    <div class="section">
+
+      <div class="section-header">
+
+        <h2>
+          🏪 Negozi aderenti
+        </h2>
+
+        <p>
+          Elenco dei negozi attualmente attivi
+          nella SPRESIANO CARD
+        </p>
+
+      </div>
+
+
+      <div
+        id="loading"
+        class="loading">
+
+        Caricamento negozi...
+
+      </div>
+
+
+      <div
+        id="tableContainer"
+        class="table-wrapper"
+        style="display:none;">
+
+        <table>
+
+          <thead>
+
+            <tr>
+
+              <th>ID</th>
+              <th>Negozio</th>
+              <th>Settore</th>
+              <th>Stato</th>
+              <th>Vantaggio Card</th>
+              <th>Telefono</th>
+              <th>Indirizzo</th>
+              <th>Note</th>
+
+            </tr>
+
+          </thead>
+
+          <tbody id="negoziBody">
+          </tbody>
+
+        </table>
+
+      </div>
+
+
+      <div
+        id="empty"
+        class="empty"
+        style="display:none;">
+
+        Nessun negozio attivo trovato.
+
+      </div>
+
+    </div>
+
 
     <div
-      class="card-value"
-      id="negozi">
-      -
+      id="error"
+      class="error">
+
+      <strong>
+        Errore nel collegamento con il database.
+      </strong>
+
+      <div
+        id="errorDetail"
+        class="error-detail">
+      </div>
+
     </div>
-
-  </div>
-
-
-  <div class="card">
-
-    <div class="card-icon">
-      💳
-    </div>
-
-    <div class="card-label">
-      Card emesse
-    </div>
-
-    <div
-      class="card-value"
-      id="card">
-      -
-    </div>
-
-  </div>
-
-
-  <div class="card">
-
-    <div class="card-icon">
-      👤
-    </div>
-
-    <div class="card-label">
-      Clienti registrati
-    </div>
-
-    <div
-      class="card-value"
-      id="clienti">
-      -
-    </div>
-
-  </div>
-
-
-  <div class="card">
-
-    <div class="card-icon">
-      🧾
-    </div>
-
-    <div class="card-label">
-      Utilizzi registrati
-    </div>
-
-    <div
-      class="card-value"
-      id="utilizzi">
-      -
-    </div>
-
-  </div>
-
-
-  <div class="card">
-
-    <div class="card-icon">
-      ⭐
-    </div>
-
-    <div class="card-label">
-      Punti totali
-    </div>
-
-    <div
-      class="card-value"
-      id="punti">
-      -
-    </div>
-
-  </div>
-
-
-  <div class="card">
-
-    <div class="card-icon">
-      🎁
-    </div>
-
-    <div class="card-label">
-      Offerte attive
-    </div>
-
-    <div
-      class="card-value"
-      id="offerte">
-      -
-    </div>
-
-  </div>
-
-
-</div>
-
-
-<!-- ELENCO NEGOZI -->
-
-<div class="section">
-
-
-  <div class="section-header">
-
-    <h2>
-      🏪 Negozi aderenti
-    </h2>
-
-    <p>
-      Elenco dei negozi attualmente attivi
-      nella SPRESIANO CARD
-    </p>
-
-  </div>
-
-
-  <div
-    id="loading"
-    class="loading">
-
-    Caricamento negozi...
-
-  </div>
-
-
-  <div
-    id="tableContainer"
-    class="table-wrapper"
-    style="display:none;">
-
-    <table>
-
-      <thead>
-
-        <tr>
-
-          <th>
-            ID
-          </th>
-
-          <th>
-            Negozio
-          </th>
-
-          <th>
-            Settore
-          </th>
-
-          <th>
-            Stato
-          </th>
-
-          <th>
-            Vantaggio Card
-          </th>
-
-          <th>
-            Telefono
-          </th>
-
-          <th>
-            Indirizzo
-          </th>
-
-          <th>
-            Note
-          </th>
-
-        </tr>
-
-      </thead>
-
-      <tbody id="negoziBody">
-      </tbody>
-
-    </table>
-
-  </div>
-
-
-  <div
-    id="empty"
-    class="empty"
-    style="display:none;">
-
-    Nessun negozio attivo trovato.
-
-  </div>
-
-
-</div>
-
-
-<!-- ERRORE -->
-
-<div
-  id="error"
-  class="error">
-
-  <strong>
-    Errore nel collegamento con il database.
-  </strong>
-
-  <div
-    id="errorDetail"
-    class="error-detail">
-  </div>
-
-</div>
-```
 
   </main>
 
+
   <footer class="footer">
 
-```
-Giokri Life · SPRESIANO CARD
-```
+    Giokri Life · SPRESIANO CARD
 
   </footer>
 
+
   <script>
 
-    /***************************************************
-     * URL APPS SCRIPT
-     ***************************************************/
+    /*******************************************************
+     * GIOKRI LIFE – SPRESIANO CARD
+     * PANNELLO AMMINISTRATORE
+     *******************************************************/
 
-   const API_URL =
-  'https://script.google.com/macros/s/AKfycbxHaUH-tBV6ijSEB6nwGXCwe-C2BZ5iw5qXO2lABAQibULYh2c2b7z--dUcHMqPksS/exec';
+    const API_URL =
+      'https://script.google.com/macros/s/AKfycbxHaUH-tBV6ijSEB6nwGXCwe-C2BZ5iw5qXO2lABAQibULYh2c2b7z--dUcHMqPksS/exec';
 
 
-    /***************************************************
+    /*******************************************************
      * JSONP
-     *
-     * Usiamo JSONP per evitare i problemi CORS
-     * del collegamento GitHub Pages -> Apps Script.
-     ***************************************************/
+     *******************************************************/
 
-   ```html
-<script>
+    function richiestaJSONP(url) {
 
-/*******************************************************
- * GIOKRI LIFE – SPRESIANO CARD
- * PANNELLO AMMINISTRATORE
- *******************************************************/
+      return new Promise(function(resolve, reject) {
 
-const API_URL =
-  'https://script.google.com/macros/s/AKfycbxHaUH-tBV6ijSEB6nwGXCwe-C2BZ5iw5qXO2lABAQibULYh2c2b7z--dUcHMqPksS/exec';
+        const nomeCallback =
+          'giokriCallback_' +
+          Date.now() +
+          '_' +
+          Math.floor(Math.random() * 100000);
 
+        const script =
+          document.createElement('script');
 
-/*******************************************************
- * LETTURA API JSONP
- *******************************************************/
-
-function richiestaJSONP(url) {
-
-  return new Promise(function(resolve, reject) {
-
-    const nomeCallback =
-      'giokriCallback_' +
-      Date.now() +
-      '_' +
-      Math.floor(Math.random() * 100000);
-
-    const script =
-      document.createElement('script');
-
-    let conclusa = false;
-
-    const timeout =
-      setTimeout(function() {
-
-        if (conclusa) {
-          return;
-        }
-
-        conclusa = true;
-
-        pulisci();
-
-        reject(
-          new Error(
-            'Timeout collegamento API'
-          )
-        );
-
-      }, 15000);
+        let conclusa = false;
 
 
-    window[nomeCallback] =
-      function(dati) {
+        const timeout =
+          setTimeout(function() {
 
-        if (conclusa) {
-          return;
-        }
+            if (conclusa) {
+              return;
+            }
 
-        conclusa = true;
+            conclusa = true;
 
-        clearTimeout(timeout);
+            pulisci();
 
-        pulisci();
+            reject(
+              new Error(
+                'Timeout collegamento API'
+              )
+            );
 
-        resolve(dati);
+          }, 15000);
 
-      };
-
-
-    function pulisci() {
-
-      if (script.parentNode) {
-        script.parentNode.removeChild(script);
-      }
-
-      try {
-
-        delete window[nomeCallback];
-
-      } catch (e) {
 
         window[nomeCallback] =
-          undefined;
+          function(dati) {
 
-      }
+            if (conclusa) {
+              return;
+            }
 
-    }
+            conclusa = true;
 
+            clearTimeout(timeout);
 
-    script.onerror =
-      function() {
+            pulisci();
 
-        if (conclusa) {
-          return;
-        }
+            resolve(dati);
 
-        conclusa = true;
+          };
 
-        clearTimeout(timeout);
 
-        pulisci();
+        function pulisci() {
 
-        reject(
-          new Error(
-            'Errore collegamento API'
-          )
-        );
+          if (script.parentNode) {
+            script.parentNode.removeChild(script);
+          }
 
-      };
+          try {
 
+            delete window[nomeCallback];
 
-    const separatore =
-      url.indexOf('?') >= 0
-        ? '&'
-        : '?';
+          } catch (e) {
 
-
-    script.src =
-      url +
-      separatore +
-      'callback=' +
-      encodeURIComponent(
-        nomeCallback
-      );
-
-
-    document.head.appendChild(
-      script
-    );
-
-  });
-
-}
-
-
-/*******************************************************
- * STATO COLLEGAMENTO
- *******************************************************/
-
-function impostaStato(
-  testo,
-  errore
-) {
-
-  const dot =
-    document.getElementById(
-      'statusDot'
-    );
-
-  const text =
-    document.getElementById(
-      'statusText'
-    );
-
-
-  if (text) {
-
-    text.textContent =
-      testo;
-
-  }
-
-
-  if (dot) {
-
-    if (errore) {
-
-      dot.classList.add(
-        'error'
-      );
-
-    } else {
-
-      dot.classList.remove(
-        'error'
-      );
-
-    }
-
-  }
-
-}
-
-
-/*******************************************************
- * CARICA DASHBOARD
- *******************************************************/
-
-async function caricaDashboard() {
-
-  try {
-
-    const dati =
-      await richiestaJSONP(
-        API_URL +
-        '?azione=dashboard'
-      );
-
-
-    console.log(
-      'RISPOSTA DASHBOARD:',
-      dati
-    );
-
-
-    if (
-      !dati ||
-      dati.success !== true ||
-      !dati.dashboard
-    ) {
-
-      throw new Error(
-        'Risposta dashboard non valida'
-      );
-
-    }
-
-
-    const dashboard =
-      dati.dashboard;
-
-
-    const negozi =
-      document.getElementById(
-        'negozi'
-      );
-
-    if (negozi) {
-      negozi.textContent =
-        dashboard.negozi ?? 0;
-    }
-
-
-    const card =
-      document.getElementById(
-        'card'
-      );
-
-    if (card) {
-      card.textContent =
-        dashboard.card ?? 0;
-    }
-
-
-    const clienti =
-      document.getElementById(
-        'clienti'
-      );
-
-    if (clienti) {
-      clienti.textContent =
-        dashboard.clienti ?? 0;
-    }
-
-
-    const utilizzi =
-      document.getElementById(
-        'utilizzi'
-      );
-
-    if (utilizzi) {
-      utilizzi.textContent =
-        dashboard.utilizzi ?? 0;
-    }
-
-
-    const punti =
-      document.getElementById(
-        'punti'
-      );
-
-    if (punti) {
-      punti.textContent =
-        dashboard.punti ?? 0;
-    }
-
-
-    const offerte =
-      document.getElementById(
-        'offerte'
-      );
-
-    if (offerte) {
-      offerte.textContent =
-        dashboard.offerte ?? 0;
-    }
-
-
-    impostaStato(
-      'Collegamento attivo',
-      false
-    );
-
-
-  } catch (errore) {
-
-    console.error(
-      'ERRORE DASHBOARD:',
-      errore
-    );
-
-
-    impostaStato(
-      'Errore collegamento',
-      true
-    );
-
-
-    const dettaglio =
-      document.getElementById(
-        'errorDetail'
-      );
-
-
-    if (dettaglio) {
-
-      dettaglio.textContent =
-        'Dashboard: ' +
-        errore.message;
-
-    }
-
-
-    const error =
-      document.getElementById(
-        'error'
-      );
-
-
-    if (error) {
-
-      error.style.display =
-        'block';
-
-    }
-
-  }
-
-}
-
-
-/*******************************************************
- * CARICA NEGOZI
- *******************************************************/
-
-async function caricaNegozi() {
-
-  const loading =
-    document.getElementById(
-      'loading'
-    );
-
-  const tableContainer =
-    document.getElementById(
-      'tableContainer'
-    );
-
-  const empty =
-    document.getElementById(
-      'empty'
-    );
-
-  const error =
-    document.getElementById(
-      'error'
-    );
-
-  const errorDetail =
-    document.getElementById(
-      'errorDetail'
-    );
-
-  const tbody =
-    document.getElementById(
-      'negoziBody'
-    );
-
-
-  try {
-
-    if (loading) {
-      loading.style.display =
-        'block';
-    }
-
-    if (tableContainer) {
-      tableContainer.style.display =
-        'none';
-    }
-
-    if (empty) {
-      empty.style.display =
-        'none';
-    }
-
-
-    const dati =
-      await richiestaJSONP(
-        API_URL
-      );
-
-
-    console.log(
-      'RISPOSTA NEGOZI:',
-      dati
-    );
-
-
-    if (
-      !dati ||
-      dati.success !== true
-    ) {
-
-      throw new Error(
-        'Risposta negozi non valida'
-      );
-
-    }
-
-
-    let negozi =
-      Array.isArray(
-        dati.negozi
-      )
-        ? dati.negozi
-        : [];
-
-
-    console.log(
-      'NEGOZI RICEVUTI:',
-      negozi.length
-    );
-
-
-    /***************************************************
-     * FILTRO NEGOZI ATTIVI
-     ***************************************************/
-
-    negozi =
-      negozi.filter(
-        function(negozio) {
-
-          const stato =
-            negozio.ATTIVO ??
-            negozio.Attivo ??
-            negozio.attivo ??
-            negozio.STATO ??
-            negozio.Stato ??
-            negozio.stato;
-
-
-          if (
-            stato === undefined ||
-            stato === null ||
-            stato === ''
-          ) {
-
-            return true;
+            window[nomeCallback] =
+              undefined;
 
           }
 
-
-          const valore =
-            String(stato)
-              .trim()
-              .toLowerCase();
+        }
 
 
-          return (
-            valore === 'si' ||
-            valore === 'sì' ||
-            valore === 'true' ||
-            valore === 'attivo' ||
-            valore === '1'
+        script.onerror =
+          function() {
+
+            if (conclusa) {
+              return;
+            }
+
+            conclusa = true;
+
+            clearTimeout(timeout);
+
+            pulisci();
+
+            reject(
+              new Error(
+                'Errore collegamento API'
+              )
+            );
+
+          };
+
+
+        const separatore =
+          url.indexOf('?') >= 0
+            ? '&'
+            : '?';
+
+
+        script.src =
+          url +
+          separatore +
+          'callback=' +
+          encodeURIComponent(
+            nomeCallback
+          );
+
+
+        document.head.appendChild(
+          script
+        );
+
+      });
+
+    }
+
+
+    /*******************************************************
+     * STATO COLLEGAMENTO
+     *******************************************************/
+
+    function impostaStato(
+      testo,
+      errore
+    ) {
+
+      const dot =
+        document.getElementById(
+          'statusDot'
+        );
+
+      const text =
+        document.getElementById(
+          'statusText'
+        );
+
+
+      if (text) {
+
+        text.textContent =
+          testo;
+
+      }
+
+
+      if (dot) {
+
+        if (errore) {
+
+          dot.classList.add(
+            'error'
+          );
+
+        } else {
+
+          dot.classList.remove(
+            'error'
           );
 
         }
-      );
 
+      }
 
-    console.log(
-      'NEGOZI ATTIVI:',
-      negozi.length
-    );
-
-
-    if (loading) {
-      loading.style.display =
-        'none';
     }
 
 
-    if (
-      negozi.length === 0
-    ) {
+    /*******************************************************
+     * CARICA DASHBOARD
+     *******************************************************/
 
-      if (empty) {
-        empty.style.display =
+    async function caricaDashboard() {
+
+      try {
+
+        const dati =
+          await richiestaJSONP(
+            API_URL +
+            '?azione=dashboard'
+          );
+
+
+        console.log(
+          'RISPOSTA DASHBOARD:',
+          dati
+        );
+
+
+        if (
+          !dati ||
+          dati.success !== true ||
+          !dati.dashboard
+        ) {
+
+          throw new Error(
+            'Risposta dashboard non valida'
+          );
+
+        }
+
+
+        const dashboard =
+          dati.dashboard;
+
+
+        document.getElementById('negozi').textContent =
+          dashboard.negozi ?? 0;
+
+        document.getElementById('card').textContent =
+          dashboard.card ?? 0;
+
+        document.getElementById('clienti').textContent =
+          dashboard.clienti ?? 0;
+
+        document.getElementById('utilizzi').textContent =
+          dashboard.utilizzi ?? 0;
+
+        document.getElementById('punti').textContent =
+          dashboard.punti ?? 0;
+
+        document.getElementById('offerte').textContent =
+          dashboard.offerte ?? 0;
+
+
+        impostaStato(
+          'Collegamento attivo',
+          false
+        );
+
+
+      } catch (errore) {
+
+        console.error(
+          'ERRORE DASHBOARD:',
+          errore
+        );
+
+
+        impostaStato(
+          'Errore collegamento',
+          true
+        );
+
+
+        document.getElementById(
+          'errorDetail'
+        ).textContent =
+          'Dashboard: ' +
+          errore.message;
+
+
+        document.getElementById(
+          'error'
+        ).style.display =
           'block';
+
       }
 
-      return;
+    }
+
+
+    /*******************************************************
+     * CARICA NEGOZI
+     *******************************************************/
+
+    async function caricaNegozi() {
+
+      const loading =
+        document.getElementById(
+          'loading'
+        );
+
+      const tableContainer =
+        document.getElementById(
+          'tableContainer'
+        );
+
+      const empty =
+        document.getElementById(
+          'empty'
+        );
+
+      const error =
+        document.getElementById(
+          'error'
+        );
+
+      const errorDetail =
+        document.getElementById(
+          'errorDetail'
+        );
+
+      const tbody =
+        document.getElementById(
+          'negoziBody'
+        );
+
+
+      try {
+
+        loading.style.display =
+          'block';
+
+        tableContainer.style.display =
+          'none';
+
+        empty.style.display =
+          'none';
+
+
+        const dati =
+          await richiestaJSONP(
+            API_URL
+          );
+
+
+        console.log(
+          'RISPOSTA NEGOZI:',
+          dati
+        );
+
+
+        if (
+          !dati ||
+          dati.success !== true
+        ) {
+
+          throw new Error(
+            'Risposta negozi non valida'
+          );
+
+        }
+
+
+        let negozi =
+          Array.isArray(
+            dati.negozi
+          )
+            ? dati.negozi
+            : [];
+
+
+        console.log(
+          'NEGOZI RICEVUTI:',
+          negozi.length
+        );
+
+
+        negozi =
+          negozi.filter(
+            function(negozio) {
+
+              const stato =
+                negozio.ATTIVO ??
+                negozio.Attivo ??
+                negozio.attivo ??
+                negozio.STATO ??
+                negozio.Stato ??
+                negozio.stato;
+
+
+              if (
+                stato === undefined ||
+                stato === null ||
+                stato === ''
+              ) {
+
+                return true;
+
+              }
+
+
+              const valore =
+                String(stato)
+                  .trim()
+                  .toLowerCase();
+
+
+              return (
+                valore === 'si' ||
+                valore === 'sì' ||
+                valore === 'true' ||
+                valore === 'attivo' ||
+                valore === '1'
+              );
+
+            }
+          );
+
+
+        console.log(
+          'NEGOZI ATTIVI:',
+          negozi.length
+        );
+
+
+        loading.style.display =
+          'none';
+
+
+        if (
+          negozi.length === 0
+        ) {
+
+          empty.style.display =
+            'block';
+
+          return;
+
+        }
+
+
+        tbody.innerHTML =
+          '';
+
+
+        negozi.forEach(
+          function(negozio) {
+
+            const tr =
+              document.createElement(
+                'tr'
+              );
+
+
+            const valori = [
+
+              negozio.ID ??
+                negozio.Id ??
+                negozio.id ??
+                '',
+
+              negozio.NEGOZIO ??
+                negozio.Negozio ??
+                negozio.negozio ??
+                negozio.NOME ??
+                negozio.Nome ??
+                negozio.nome ??
+                '',
+
+              negozio.SETTORE ??
+                negozio.Settore ??
+                negozio.settore ??
+                '',
+
+              negozio.ATTIVO ??
+                negozio.Attivo ??
+                negozio.attivo ??
+                negozio.STATO ??
+                negozio.Stato ??
+                negozio.stato ??
+                'Attivo',
+
+              negozio['VANTAGGIO CARD'] ??
+                negozio['Vantaggio Card'] ??
+                negozio['vantaggio card'] ??
+                negozio.VANTAGGIO ??
+                negozio.Vantaggio ??
+                negozio.vantaggio ??
+                '',
+
+              negozio.TELEFONO ??
+                negozio.Telefono ??
+                negozio.telefono ??
+                '',
+
+              negozio.INDIRIZZO ??
+                negozio.Indirizzo ??
+                negozio.indirizzo ??
+                '',
+
+              negozio.NOTE ??
+                negozio.Note ??
+                negozio.note ??
+                ''
+
+            ];
+
+
+            valori.forEach(
+              function(valore, indice) {
+
+                const td =
+                  document.createElement(
+                    'td'
+                  );
+
+
+                td.textContent =
+                  valore;
+
+
+                if (indice === 1) {
+
+                  const strong =
+                    document.createElement(
+                      'strong'
+                    );
+
+                  strong.textContent =
+                    valore;
+
+                  td.textContent =
+                    '';
+
+                  td.appendChild(
+                    strong
+                  );
+
+                }
+
+
+                if (indice === 3) {
+
+                  const badge =
+                    document.createElement(
+                      'span'
+                    );
+
+                  badge.className =
+                    'badge badge-active';
+
+                  badge.textContent =
+                    valore;
+
+                  td.textContent =
+                    '';
+
+                  td.appendChild(
+                    badge
+                  );
+
+                }
+
+
+                tr.appendChild(
+                  td
+                );
+
+              }
+            );
+
+
+            tbody.appendChild(
+              tr
+            );
+
+          }
+        );
+
+
+        tableContainer.style.display =
+          'block';
+
+
+        empty.style.display =
+          'none';
+
+
+        impostaStato(
+          'Collegamento attivo',
+          false
+        );
+
+
+      } catch (errore) {
+
+        console.error(
+          'ERRORE NEGOZI:',
+          errore
+        );
+
+
+        loading.style.display =
+          'none';
+
+        tableContainer.style.display =
+          'none';
+
+
+        error.style.display =
+          'block';
+
+
+        errorDetail.textContent =
+          'Negozi: ' +
+          errore.message;
+
+
+        impostaStato(
+          'Errore collegamento',
+          true
+        );
+
+      }
 
     }
 
 
-    if (!tbody) {
+    /*******************************************************
+     * AVVIO
+     *******************************************************/
 
-      throw new Error(
-        'Elemento negoziBody non trovato'
-      );
+    document.addEventListener(
+      'DOMContentLoaded',
+      function() {
 
-    }
+        caricaDashboard();
 
-
-    tbody.innerHTML = '';
-
-
-    /***************************************************
-     * CREA LE RIGHE DELLA TABELLA
-     ***************************************************/
-
-    negozi.forEach(
-      function(negozio) {
-
-        const id =
-          negozio.ID ??
-          negozio.Id ??
-          negozio.id ??
-          '';
-
-
-        const nome =
-          negozio.NEGOZIO ??
-          negozio.Negozio ??
-          negozio.negozio ??
-          negozio.NOME ??
-          negozio.Nome ??
-          negozio.nome ??
-          '';
-
-
-        const settore =
-          negozio.SETTORE ??
-          negozio.Settore ??
-          negozio.settore ??
-          '';
-
-
-        const stato =
-          negozio.ATTIVO ??
-          negozio.Attivo ??
-          negozio.attivo ??
-          negozio.STATO ??
-          negozio.Stato ??
-          negozio.stato ??
-          'Attivo';
-
-
-        const vantaggio =
-          negozio['VANTAGGIO CARD'] ??
-          negozio['Vantaggio Card'] ??
-          negozio['vantaggio card'] ??
-          negozio.VANTAGGIO ??
-          negozio.Vantaggio ??
-          negozio.vantaggio ??
-          '';
-
-
-        const telefono =
-          negozio.TELEFONO ??
-          negozio.Telefono ??
-          negozio.telefono ??
-          '';
-
-
-        const indirizzo =
-          negozio.INDIRIZZO ??
-          negozio.Indirizzo ??
-          negozio.indirizzo ??
-          '';
-
-
-        const note =
-          negozio.NOTE ??
-          negozio.Note ??
-          negozio.note ??
-          '';
-
-
-        const tr =
-          document.createElement(
-            'tr'
-          );
-
-
-        /************************************************
-         * ID
-         ************************************************/
-
-        const tdID =
-          document.createElement(
-            'td'
-          );
-
-        tdID.textContent =
-          id;
-
-
-        /************************************************
-         * NEGOZIO
-         ************************************************/
-
-        const tdNome =
-          document.createElement(
-            'td'
-          );
-
-        const strong =
-          document.createElement(
-            'strong'
-          );
-
-        strong.textContent =
-          nome;
-
-        tdNome.appendChild(
-          strong
-        );
-
-
-        /************************************************
-         * SETTORE
-         ************************************************/
-
-        const tdSettore =
-          document.createElement(
-            'td'
-          );
-
-        tdSettore.textContent =
-          settore;
-
-
-        /************************************************
-         * STATO
-         ************************************************/
-
-        const tdStato =
-          document.createElement(
-            'td'
-          );
-
-        const badge =
-          document.createElement(
-            'span'
-          );
-
-        badge.className =
-          'badge badge-active';
-
-        badge.textContent =
-          stato;
-
-        tdStato.appendChild(
-          badge
-        );
-
-
-        /************************************************
-         * VANTAGGIO CARD
-         ************************************************/
-
-        const tdVantaggio =
-          document.createElement(
-            'td'
-          );
-
-        tdVantaggio.textContent =
-          vantaggio;
-
-
-        /************************************************
-         * TELEFONO
-         ************************************************/
-
-        const tdTelefono =
-          document.createElement(
-            'td'
-          );
-
-        tdTelefono.textContent =
-          telefono;
-
-
-        /************************************************
-         * INDIRIZZO
-         ************************************************/
-
-        const tdIndirizzo =
-          document.createElement(
-            'td'
-          );
-
-        tdIndirizzo.textContent =
-          indirizzo;
-
-
-        /************************************************
-         * NOTE
-         ************************************************/
-
-        const tdNote =
-          document.createElement(
-            'td'
-          );
-
-        tdNote.textContent =
-          note;
-
-
-        /************************************************
-         * AGGIUNGI CELLE ALLA RIGA
-         ************************************************/
-
-        tr.appendChild(
-          tdID
-        );
-
-        tr.appendChild(
-          tdNome
-        );
-
-        tr.appendChild(
-          tdSettore
-        );
-
-        tr.appendChild(
-          tdStato
-        );
-
-        tr.appendChild(
-          tdVantaggio
-        );
-
-        tr.appendChild(
-          tdTelefono
-        );
-
-        tr.appendChild(
-          tdIndirizzo
-        );
-
-        tr.appendChild(
-          tdNote
-        );
-
-
-        tbody.appendChild(
-          tr
-        );
+        caricaNegozi();
 
       }
     );
 
+  </script>
 
-    /***************************************************
-     * MOSTRA TABELLA
-     ***************************************************/
+</body>
 
-    if (tableContainer) {
-
-      tableContainer.style.display =
-        'block';
-
-    }
-
-
-    if (empty) {
-
-      empty.style.display =
-        'none';
-
-    }
-
-
-    impostaStato(
-      'Collegamento attivo',
-      false
-    );
-
-
-  } catch (errore) {
-
-    console.error(
-      'ERRORE NEGOZI:',
-      errore
-    );
-
-
-    if (loading) {
-
-      loading.style.display =
-        'none';
-
-    }
-
-
-    if (tableContainer) {
-
-      tableContainer.style.display =
-        'none';
-
-    }
-
-
-    if (error) {
-
-      error.style.display =
-        'block';
-
-    }
-
-
-    if (errorDetail) {
-
-      errorDetail.textContent =
-        'Negozi: ' +
-        errore.message;
-
-    }
-
-
-    impostaStato(
-      'Errore collegamento',
-      true
-    );
-
-  }
-
-}
-
-
-/*******************************************************
- * AVVIO AUTOMATICO
- *******************************************************/
-
-document.addEventListener(
-  'DOMContentLoaded',
-  function() {
-
-    caricaDashboard();
-
-    caricaNegozi();
-
-  }
-);
+</html>
