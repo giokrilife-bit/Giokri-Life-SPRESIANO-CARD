@@ -546,33 +546,32 @@
  * COLLEGAMENTO API
  *******************************************************/
 
-async function richiestaJSONP(url) {
+function richiestaJSONP(url, callback) {
 
-  const risposta = await fetch(url, {
-    method: 'GET',
-    cache: 'no-store'
-  });
+  const script = document.createElement('script');
 
-  if (!risposta.ok) {
-    throw new Error(
-      'Errore HTTP ' + risposta.status
-    );
-  }
+  script.src =
+    url +
+    (url.includes('?') ? '&' : '?') +
+    'callback=' +
+    encodeURIComponent(callback);
 
-  const testo = await risposta.text();
+  script.onerror = function() {
 
-  try {
-
-    return JSON.parse(testo);
-
-  } catch (errore) {
-
-    throw new Error(
-      'La risposta del database non è JSON valido'
+    console.error(
+      'Errore caricamento API:',
+      script.src
     );
 
-  }
+    document.getElementById('error').style.display =
+      'block';
 
+    document.getElementById('errorDetail').textContent =
+      'Errore collegamento API';
+
+  };
+
+  document.head.appendChild(script);
 }
 
 
@@ -629,433 +628,195 @@ async function richiestaJSONP(url) {
      * CARICA DASHBOARD
      *******************************************************/
 
-    async function caricaDashboard() {
+    function caricaDashboard() {
 
-      try {
+  window.giokriDashboardCallback = function(dati) {
 
-        const dati =
-          await richiestaJSONP(
-            API_URL +
-            '?azione=dashboard'
-          );
+    console.log('DASHBOARD:', dati);
 
+    if (!dati || dati.success !== true || !dati.dashboard) {
 
-        console.log(
-          'RISPOSTA DASHBOARD:',
-          dati
-        );
+      document.getElementById('error').style.display =
+        'block';
 
+      document.getElementById('errorDetail').textContent =
+        'Dashboard: risposta non valida';
 
-        if (
-          !dati ||
-          dati.success !== true ||
-          !dati.dashboard
-        ) {
-
-          throw new Error(
-            'Risposta dashboard non valida'
-          );
-
-        }
-
-
-        const dashboard =
-          dati.dashboard;
-
-
-        document.getElementById('negozi').textContent =
-          dashboard.negozi ?? 0;
-
-        document.getElementById('card').textContent =
-          dashboard.card ?? 0;
-
-        document.getElementById('clienti').textContent =
-          dashboard.clienti ?? 0;
-
-        document.getElementById('utilizzi').textContent =
-          dashboard.utilizzi ?? 0;
-
-        document.getElementById('punti').textContent =
-          dashboard.punti ?? 0;
-
-        document.getElementById('offerte').textContent =
-          dashboard.offerte ?? 0;
-
-
-        impostaStato(
-          'Collegamento attivo',
-          false
-        );
-
-
-      } catch (errore) {
-
-        console.error(
-          'ERRORE DASHBOARD:',
-          errore
-        );
-
-
-        impostaStato(
-          'Errore collegamento',
-          true
-        );
-
-
-        document.getElementById(
-          'errorDetail'
-        ).textContent =
-          'Dashboard: ' +
-          errore.message;
-
-
-        document.getElementById(
-          'error'
-        ).style.display =
-          'block';
-
-      }
-
+      return;
     }
+
+    const dashboard = dati.dashboard;
+
+    document.getElementById('negozi').textContent =
+      dashboard.negozi ?? 0;
+
+    document.getElementById('card').textContent =
+      dashboard.card ?? 0;
+
+    document.getElementById('clienti').textContent =
+      dashboard.clienti ?? 0;
+
+    document.getElementById('utilizzi').textContent =
+      dashboard.utilizzi ?? 0;
+
+    document.getElementById('punti').textContent =
+      dashboard.punti ?? 0;
+
+    document.getElementById('offerte').textContent =
+      dashboard.offerte ?? 0;
+
+    document.getElementById('statusText').textContent =
+      'Collegamento attivo';
+
+    document.getElementById('statusDot').classList.remove(
+      'error'
+    );
+  };
+
+  richiestaJSONP(
+    API_URL + '?azione=dashboard',
+    'giokriDashboardCallback'
+  );
+}
 
 
     /*******************************************************
      * CARICA NEGOZI
      *******************************************************/
 
-    async function caricaNegozi() {
+    function caricaNegozi() {
 
-      const loading =
-        document.getElementById(
-          'loading'
-        );
+  const loading =
+    document.getElementById('loading');
 
-      const tableContainer =
-        document.getElementById(
-          'tableContainer'
-        );
+  const tableContainer =
+    document.getElementById('tableContainer');
 
-      const empty =
-        document.getElementById(
-          'empty'
-        );
+  const empty =
+    document.getElementById('empty');
 
-      const error =
-        document.getElementById(
-          'error'
-        );
+  const tbody =
+    document.getElementById('negoziBody');
 
-      const errorDetail =
-        document.getElementById(
-          'errorDetail'
-        );
+  loading.style.display = 'block';
+  tableContainer.style.display = 'none';
+  empty.style.display = 'none';
 
-      const tbody =
-        document.getElementById(
-          'negoziBody'
-        );
+  window.giokriNegoziCallback = function(dati) {
 
+    console.log('NEGOZI:', dati);
 
-      try {
+    loading.style.display = 'none';
 
-        loading.style.display =
-          'block';
+    if (!dati || dati.success !== true) {
 
-        tableContainer.style.display =
-          'none';
+      empty.textContent =
+        'Errore nella risposta del database.';
 
-        empty.style.display =
-          'none';
+      empty.style.display = 'block';
 
-
-        const dati =
-          await richiestaJSONP(
-            API_URL
-          );
-
-
-        console.log(
-          'RISPOSTA NEGOZI:',
-          dati
-        );
-
-
-        if (
-          !dati ||
-          dati.success !== true
-        ) {
-
-          throw new Error(
-            'Risposta negozi non valida'
-          );
-
-        }
-
-
-        let negozi =
-          Array.isArray(
-            dati.negozi
-          )
-            ? dati.negozi
-            : [];
-
-
-        console.log(
-          'NEGOZI RICEVUTI:',
-          negozi.length
-        );
-
-
-        negozi =
-          negozi.filter(
-            function(negozio) {
-
-              const stato =
-                negozio.ATTIVO ??
-                negozio.Attivo ??
-                negozio.attivo ??
-                negozio.STATO ??
-                negozio.Stato ??
-                negozio.stato;
-
-
-              if (
-                stato === undefined ||
-                stato === null ||
-                stato === ''
-              ) {
-
-                return true;
-
-              }
-
-
-              const valore =
-                String(stato)
-                  .trim()
-                  .toLowerCase();
-
-
-              return (
-                valore === 'si' ||
-                valore === 'sì' ||
-                valore === 'true' ||
-                valore === 'attivo' ||
-                valore === '1'
-              );
-
-            }
-          );
-
-
-        console.log(
-          'NEGOZI ATTIVI:',
-          negozi.length
-        );
-
-
-        loading.style.display =
-          'none';
-
-
-        if (
-          negozi.length === 0
-        ) {
-
-          empty.style.display =
-            'block';
-
-          return;
-
-        }
-
-
-        tbody.innerHTML =
-          '';
-
-
-        negozi.forEach(
-          function(negozio) {
-
-            const tr =
-              document.createElement(
-                'tr'
-              );
-
-
-            const valori = [
-
-              negozio.ID ??
-                negozio.Id ??
-                negozio.id ??
-                '',
-
-              negozio.NEGOZIO ??
-                negozio.Negozio ??
-                negozio.negozio ??
-                negozio.NOME ??
-                negozio.Nome ??
-                negozio.nome ??
-                '',
-
-              negozio.SETTORE ??
-                negozio.Settore ??
-                negozio.settore ??
-                '',
-
-              negozio.ATTIVO ??
-                negozio.Attivo ??
-                negozio.attivo ??
-                negozio.STATO ??
-                negozio.Stato ??
-                negozio.stato ??
-                'Attivo',
-
-              negozio['VANTAGGIO CARD'] ??
-                negozio['Vantaggio Card'] ??
-                negozio['vantaggio card'] ??
-                negozio.VANTAGGIO ??
-                negozio.Vantaggio ??
-                negozio.vantaggio ??
-                '',
-
-              negozio.TELEFONO ??
-                negozio.Telefono ??
-                negozio.telefono ??
-                '',
-
-              negozio.INDIRIZZO ??
-                negozio.Indirizzo ??
-                negozio.indirizzo ??
-                '',
-
-              negozio.NOTE ??
-                negozio.Note ??
-                negozio.note ??
-                ''
-
-            ];
-
-
-            valori.forEach(
-              function(valore, indice) {
-
-                const td =
-                  document.createElement(
-                    'td'
-                  );
-
-
-                td.textContent =
-                  valore;
-
-
-                if (indice === 1) {
-
-                  const strong =
-                    document.createElement(
-                      'strong'
-                    );
-
-                  strong.textContent =
-                    valore;
-
-                  td.textContent =
-                    '';
-
-                  td.appendChild(
-                    strong
-                  );
-
-                }
-
-
-                if (indice === 3) {
-
-                  const badge =
-                    document.createElement(
-                      'span'
-                    );
-
-                  badge.className =
-                    'badge badge-active';
-
-                  badge.textContent =
-                    valore;
-
-                  td.textContent =
-                    '';
-
-                  td.appendChild(
-                    badge
-                  );
-
-                }
-
-
-                tr.appendChild(
-                  td
-                );
-
-              }
-            );
-
-
-            tbody.appendChild(
-              tr
-            );
-
-          }
-        );
-
-
-        tableContainer.style.display =
-          'block';
-
-
-        empty.style.display =
-          'none';
-
-
-        impostaStato(
-          'Collegamento attivo',
-          false
-        );
-
-
-      } catch (errore) {
-
-        console.error(
-          'ERRORE NEGOZI:',
-          errore
-        );
-
-
-        loading.style.display =
-          'none';
-
-        tableContainer.style.display =
-          'none';
-
-
-        error.style.display =
-          'block';
-
-
-        errorDetail.textContent =
-          'Negozi: ' +
-          errore.message;
-
-
-        impostaStato(
-          'Errore collegamento',
-          true
-        );
-
-      }
-
+      return;
     }
 
+    const negozi =
+      Array.isArray(dati.negozi)
+        ? dati.negozi
+        : [];
+
+    if (negozi.length === 0) {
+
+      empty.textContent =
+        'Nessun negozio attivo trovato.';
+
+      empty.style.display = 'block';
+
+      return;
+    }
+
+    tbody.innerHTML = '';
+
+    negozi.forEach(function(negozio) {
+
+      const tr =
+        document.createElement('tr');
+
+      const valori = [
+
+        negozio.ID ?? '',
+
+        negozio.NEGOZIO ?? '',
+
+        negozio.SETTORE ?? '',
+
+        negozio.ATTIVO ?? '',
+
+        negozio['VANTAGGIO CARD'] ?? '',
+
+        negozio.TELEFONO ?? '',
+
+        negozio.INDIRIZZO ?? '',
+
+        negozio.NOTE ?? ''
+
+      ];
+
+      valori.forEach(function(valore, indice) {
+
+        const td =
+          document.createElement('td');
+
+        if (indice === 1) {
+
+          const strong =
+            document.createElement('strong');
+
+          strong.textContent =
+            valore;
+
+          td.appendChild(strong);
+
+        }
+
+        else if (indice === 3) {
+
+          const badge =
+            document.createElement('span');
+
+          badge.className =
+            'badge badge-active';
+
+          badge.textContent =
+            valore;
+
+          td.appendChild(badge);
+
+        }
+
+        else {
+
+          td.textContent =
+            valore;
+
+        }
+
+        tr.appendChild(td);
+
+      });
+
+      tbody.appendChild(tr);
+
+    });
+
+    tableContainer.style.display =
+      'block';
+
+  };
+
+  richiestaJSONP(
+    API_URL,
+    'giokriNegoziCallback'
+  );
+}
 
     /*******************************************************
      * AVVIO
