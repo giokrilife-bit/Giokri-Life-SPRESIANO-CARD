@@ -1006,19 +1006,15 @@ async function caricaNegozi() {
           negozio.indirizzo ??
           '';
 
-        const tr =
-          document.createElement('tr');
+       const tr = document.createElement('tr');
 
-
-        tr.innerHTML = `
-          <td>${escapeHTML(id)}</td>
-          <td><strong>${escapeHTML(nome)}</strong></td>
-          <td>${escapeHTML(settore)}</td>
-          <td>${escapeHTML(vantaggio)}</td>
-          <td>${escapeHTML(telefono)}</td>
-          <td>${escapeHTML(indirizzo)}</td>
-        `;
-
+tr.innerHTML =
+  '<td>' + escapeHTML(id) + '</td>' +
+  '<td><strong>' + escapeHTML(nome) + '</strong></td>' +
+  '<td>' + escapeHTML(settore) + '</td>' +
+  '<td>' + escapeHTML(vantaggio) + '</td>' +
+  '<td>' + escapeHTML(telefono) + '</td>' +
+  '<td>' + escapeHTML(indirizzo) + '</td>';
 
         negoziBody.appendChild(tr);
 
