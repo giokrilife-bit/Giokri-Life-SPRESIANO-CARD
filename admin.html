@@ -510,283 +510,380 @@
      * CARICA DASHBOARD
      ***************************************************/
 
-    async function caricaDashboard() {
-
-      try {
-
-        const risposta =
-          await fetch(
-            API_URL + '?azione=dashboard'
-          );
-
-        const dati =
-          await risposta.json();
+    const API_URL =
+  'https://script.google.com/macros/s/AKfycbxHaUH-tBV6ijSEB6nwGXCwe-C2BZ5iw5qXO2lABAQibULYh2c2b7z--dUcHMqQpksS/exec';
 
 
-        if (
-          dati.success &&
-          dati.dashboard
-        ) {
+/***************************************************
+ * JSONP GENERICO
+ ***************************************************/
 
-          document.getElementById(
-            'negozi'
-          ).textContent =
-            dati.dashboard.negozi ?? 0;
+function richiestaJSONP(url) {
 
+  return new Promise(function(resolve, reject) {
 
-          document.getElementById(
-            'card'
-          ).textContent =
-            dati.dashboard.card ?? 0;
+    const nomeCallback =
+      'giokriCallback_' +
+      Date.now() +
+      '_' +
+      Math.floor(
+        Math.random() * 100000
+      );
 
+    const script =
+      document.createElement('script');
 
-          document.getElementById(
-            'clienti'
-          ).textContent =
-            dati.dashboard.clienti ?? 0;
+    const timeout =
+      setTimeout(function() {
 
+        pulisci();
 
-          document.getElementById(
-            'utilizzi'
-          ).textContent =
-            dati.dashboard.utilizzi ?? 0;
-
-
-          document.getElementById(
-            'punti'
-          ).textContent =
-            dati.dashboard.punti ?? 0;
-
-
-          document.getElementById(
-            'offerte'
-          ).textContent =
-            dati.dashboard.offerte ?? 0;
-
-        }
-
-      }
-
-      catch (errore) {
-
-        console.error(
-          'Errore dashboard:',
-          errore
-        );
-
-      }
-
-    }
-
-
-    /***************************************************
-     * CARICA NEGOZI
-     ***************************************************/
-
-    async function caricaNegozi() {
-
-      const loading =
-        document.getElementById(
-          'loading'
-        );
-
-      const tableContainer =
-        document.getElementById(
-          'tableContainer'
-        );
-
-      const empty =
-        document.getElementById(
-          'empty'
-        );
-
-      const error =
-        document.getElementById(
-          'error'
-        );
-
-      const tbody =
-        document.getElementById(
-          'negoziBody'
-        );
-
-
-      try {
-
-        const risposta =
-          await fetch(
-            API_URL
-          );
-
-        const dati =
-          await risposta.json();
-
-
-        loading.style.display =
-          'none';
-
-
-        if (
-          !dati.success ||
-          !Array.isArray(
-            dati.negozi
+        reject(
+          new Error(
+            'Timeout collegamento API'
           )
-        ) {
-
-          empty.style.display =
-            'block';
-
-          return;
-
-        }
-
-
-        if (
-          dati.negozi.length === 0
-        ) {
-
-          empty.style.display =
-            'block';
-
-          return;
-
-        }
-
-
-        tbody.innerHTML =
-          '';
-
-
-        dati.negozi.forEach(
-          function(negozio) {
-
-            const tr =
-              document.createElement(
-                'tr'
-              );
-
-
-            tr.innerHTML = `
-
-              <td>
-                ${sicuro(negozio.ID)}
-              </td>
-
-              <td>
-                <strong>
-                  ${sicuro(negozio.NEGOZIO)}
-                </strong>
-              </td>
-
-              <td>
-                ${sicuro(negozio.SETTORE)}
-              </td>
-
-              <td>
-                <span class="badge badge-active">
-                  ${sicuro(negozio.ATTIVO)}
-                </span>
-              </td>
-
-              <td>
-                ${sicuro(negozio['VANTAGGIO CARD'])}
-              </td>
-
-              <td>
-                ${sicuro(negozio.TELEFONO)}
-              </td>
-
-              <td>
-                ${sicuro(negozio.INDIRIZZO)}
-              </td>
-
-              <td>
-                ${sicuro(negozio.NOTE)}
-              </td>
-
-            `;
-
-
-            tbody.appendChild(
-              tr
-            );
-
-          }
         );
 
+      }, 10000);
 
-        tableContainer.style.display =
-          'block';
 
-      }
+    window[nomeCallback] =
+      function(dati) {
 
-      catch (errore) {
+        clearTimeout(timeout);
 
-        console.error(
-          'Errore negozi:',
-          errore
+        pulisci();
+
+        resolve(dati);
+
+      };
+
+
+    function pulisci() {
+
+      if (script.parentNode) {
+        script.parentNode.removeChild(
+          script
         );
-
-        loading.style.display =
-          'none';
-
-        error.style.display =
-          'block';
-
       }
+
+      delete window[nomeCallback];
 
     }
 
 
-    /***************************************************
-     * PROTEZIONE TESTO
-     ***************************************************/
+    script.onerror =
+      function() {
 
-    function sicuro(valore) {
+        clearTimeout(timeout);
 
-      if (
-        valore === null ||
-        valore === undefined
-      ) {
+        pulisci();
 
-        return '';
-
-      }
-
-      return String(valore)
-        .replace(
-          /&/g,
-          '&amp;'
-        )
-        .replace(
-          /</g,
-          '&lt;'
-        )
-        .replace(
-          />/g,
-          '&gt;'
-        )
-        .replace(
-          /"/g,
-          '&quot;'
-        )
-        .replace(
-          /'/g,
-          '&#039;'
+        reject(
+          new Error(
+            'Errore collegamento API'
+          )
         );
+
+      };
+
+
+    script.src =
+      url +
+      '&callback=' +
+      encodeURIComponent(
+        nomeCallback
+      );
+
+
+    document
+      .head
+      .appendChild(script);
+
+  });
+
+}
+
+
+/***************************************************
+ * CARICA DASHBOARD
+ ***************************************************/
+
+async function caricaDashboard() {
+
+  try {
+
+    const dati =
+      await richiestaJSONP(
+        API_URL +
+        '?azione=dashboard'
+      );
+
+
+    if (
+      dati.success &&
+      dati.dashboard
+    ) {
+
+      document.getElementById(
+        'negozi'
+      ).textContent =
+        dati.dashboard.negozi ?? 0;
+
+
+      document.getElementById(
+        'card'
+      ).textContent =
+        dati.dashboard.card ?? 0;
+
+
+      document.getElementById(
+        'clienti'
+      ).textContent =
+        dati.dashboard.clienti ?? 0;
+
+
+      document.getElementById(
+        'utilizzi'
+      ).textContent =
+        dati.dashboard.utilizzi ?? 0;
+
+
+      document.getElementById(
+        'punti'
+      ).textContent =
+        dati.dashboard.punti ?? 0;
+
+
+      document.getElementById(
+        'offerte'
+      ).textContent =
+        dati.dashboard.offerte ?? 0;
+
+    }
+
+  }
+
+  catch (errore) {
+
+    console.error(
+      'Errore dashboard:',
+      errore
+    );
+
+  }
+
+}
+
+
+/***************************************************
+ * CARICA NEGOZI
+ ***************************************************/
+
+async function caricaNegozi() {
+
+  const loading =
+    document.getElementById(
+      'loading'
+    );
+
+  const tableContainer =
+    document.getElementById(
+      'tableContainer'
+    );
+
+  const empty =
+    document.getElementById(
+      'empty'
+    );
+
+  const error =
+    document.getElementById(
+      'error'
+    );
+
+  const tbody =
+    document.getElementById(
+      'negoziBody'
+    );
+
+
+  try {
+
+    const dati =
+      await richiestaJSONP(
+        API_URL
+      );
+
+
+    loading.style.display =
+      'none';
+
+
+    if (
+      !dati.success ||
+      !Array.isArray(
+        dati.negozi
+      )
+    ) {
+
+      empty.style.display =
+        'block';
+
+      return;
 
     }
 
 
-    /***************************************************
-     * AVVIO
-     ***************************************************/
+    if (
+      dati.negozi.length === 0
+    ) {
 
-    caricaDashboard();
+      empty.style.display =
+        'block';
 
-    caricaNegozi();
+      return;
 
-  </script>
+    }
+
+
+    tbody.innerHTML =
+      '';
+
+
+    dati.negozi.forEach(
+      function(negozio) {
+
+        const tr =
+          document.createElement(
+            'tr'
+          );
+
+
+        tr.innerHTML = `
+
+          <td>
+            ${sicuro(negozio.ID)}
+          </td>
+
+          <td>
+            <strong>
+              ${sicuro(negozio.NEGOZIO)}
+            </strong>
+          </td>
+
+          <td>
+            ${sicuro(negozio.SETTORE)}
+          </td>
+
+          <td>
+            <span class="badge badge-active">
+              ${sicuro(negozio.ATTIVO)}
+            </span>
+          </td>
+
+          <td>
+            ${sicuro(negozio['VANTAGGIO CARD'])}
+          </td>
+
+          <td>
+            ${sicuro(negozio.TELEFONO)}
+          </td>
+
+          <td>
+            ${sicuro(negozio.INDIRIZZO)}
+          </td>
+
+          <td>
+            ${sicuro(negozio.NOTE)}
+          </td>
+
+        `;
+
+
+        tbody.appendChild(
+          tr
+        );
+
+      }
+    );
+
+
+    tableContainer.style.display =
+      'block';
+
+  }
+
+  catch (errore) {
+
+    console.error(
+      'Errore negozi:',
+      errore
+    );
+
+    loading.style.display =
+      'none';
+
+    error.style.display =
+      'block';
+
+  }
+
+}
+
+
+/***************************************************
+ * PROTEZIONE TESTO
+ ***************************************************/
+
+function sicuro(valore) {
+
+  if (
+    valore === null ||
+    valore === undefined
+  ) {
+
+    return '';
+
+  }
+
+  return String(valore)
+
+    .replace(
+      /&/g,
+      '&amp;'
+    )
+
+    .replace(
+      /</g,
+      '&lt;'
+    )
+
+    .replace(
+      />/g,
+      '&gt;'
+    )
+
+    .replace(
+      /"/g,
+      '&quot;'
+    )
+
+    .replace(
+      /'/g,
+      '&#039;'
+    );
+
+}
+
+
+/***************************************************
+ * AVVIO
+ ***************************************************/
+
+caricaDashboard();
+
+caricaNegozi();
 
 </body>
 </html>
