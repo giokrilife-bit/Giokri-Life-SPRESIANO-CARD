@@ -526,9 +526,7 @@ function richiestaJSONP(url) {
       'giokriCallback_' +
       Date.now() +
       '_' +
-      Math.floor(
-        Math.random() * 100000
-      );
+      Math.floor(Math.random() * 100000);
 
     const script =
       document.createElement('script');
@@ -562,9 +560,11 @@ function richiestaJSONP(url) {
     function pulisci() {
 
       if (script.parentNode) {
+
         script.parentNode.removeChild(
           script
         );
+
       }
 
       delete window[nomeCallback];
@@ -588,22 +588,28 @@ function richiestaJSONP(url) {
       };
 
 
+    const separatore =
+      url.indexOf('?') >= 0
+        ? '&'
+        : '?';
+
+
     script.src =
       url +
-      '&callback=' +
+      separatore +
+      'callback=' +
       encodeURIComponent(
         nomeCallback
       );
 
 
-    document
-      .head
-      .appendChild(script);
+    document.head.appendChild(
+      script
+    );
 
   });
 
 }
-
 
 /***************************************************
  * CARICA DASHBOARD
