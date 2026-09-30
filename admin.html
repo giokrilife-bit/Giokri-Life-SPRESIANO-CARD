@@ -594,61 +594,182 @@ Giokri Life · SPRESIANO CARD
 
 /*******************************************************
  * GIOKRI LIFE – SPRESIANO CARD
- * ADMIN – COLLEGAMENTO API
+ * PANNELLO AMMINISTRATORE
  *******************************************************/
 
 const API_URL =
-  'https://script.google.com/macros/s/AKfycbxHaUH-tBV6ijSEB6nwGXCwe-C2BZ5iw5qXO2lABAQibULYh2c2b7z--dUcHMqPqksS/exec';
+  'https://script.google.com/macros/s/AKfycbxHaUH-tBV6ijSEB6nwGXCwe-C2BZ5iw5qXO2lABAQibULYh2c2b7z--dUcHMqPksS/exec';
 
 
 /*******************************************************
- * LETTURA API
- * Utilizza direttamente JSON / fetch
+ * LETTURA API JSONP
  *******************************************************/
 
-async function leggiAPI(url) {
+function richiestaJSONP(url) {
 
-  const risposta = await fetch(url, {
-    method: 'GET',
-    cache: 'no-store',
-    redirect: 'follow'
+  return new Promise(function(resolve, reject) {
+
+    const nomeCallback =
+      'giokriCallback_' +
+      Date.now() +
+      '_' +
+      Math.floor(Math.random() * 100000);
+
+    const script =
+      document.createElement('script');
+
+    let conclusa = false;
+
+    const timeout =
+      setTimeout(function() {
+
+        if (conclusa) {
+          return;
+        }
+
+        conclusa = true;
+
+        pulisci();
+
+        reject(
+          new Error(
+            'Timeout collegamento API'
+          )
+        );
+
+      }, 15000);
+
+
+    window[nomeCallback] =
+      function(dati) {
+
+        if (conclusa) {
+          return;
+        }
+
+        conclusa = true;
+
+        clearTimeout(timeout);
+
+        pulisci();
+
+        resolve(dati);
+
+      };
+
+
+    function pulisci() {
+
+      if (script.parentNode) {
+        script.parentNode.removeChild(script);
+      }
+
+      try {
+
+        delete window[nomeCallback];
+
+      } catch (e) {
+
+        window[nomeCallback] =
+          undefined;
+
+      }
+
+    }
+
+
+    script.onerror =
+      function() {
+
+        if (conclusa) {
+          return;
+        }
+
+        conclusa = true;
+
+        clearTimeout(timeout);
+
+        pulisci();
+
+        reject(
+          new Error(
+            'Errore collegamento API'
+          )
+        );
+
+      };
+
+
+    const separatore =
+      url.indexOf('?') >= 0
+        ? '&'
+        : '?';
+
+
+    script.src =
+      url +
+      separatore +
+      'callback=' +
+      encodeURIComponent(
+        nomeCallback
+      );
+
+
+    document.head.appendChild(
+      script
+    );
+
   });
 
-  if (!risposta.ok) {
-    throw new Error(
-      'Errore HTTP ' +
-      risposta.status +
-      ' – ' +
-      risposta.statusText
-    );
-  }
-
-  const dati = await risposta.json();
-
-  return dati;
 }
 
 
 /*******************************************************
- * AGGIORNA STATO COLLEGAMENTO
+ * STATO COLLEGAMENTO
  *******************************************************/
 
-function impostaStatoCollegamento(testo, errore) {
+function impostaStato(
+  testo,
+  errore
+) {
 
-  const elemento =
-    document.getElementById('status');
+  const dot =
+    document.getElementById(
+      'statusDot'
+    );
 
-  if (!elemento) {
-    return;
+  const text =
+    document.getElementById(
+      'statusText'
+    );
+
+
+  if (text) {
+
+    text.textContent =
+      testo;
+
   }
 
-  elemento.textContent = testo;
 
-  if (errore) {
-    elemento.classList.add('errore');
-  } else {
-    elemento.classList.remove('errore');
+  if (dot) {
+
+    if (errore) {
+
+      dot.classList.add(
+        'error'
+      );
+
+    } else {
+
+      dot.classList.remove(
+        'error'
+      );
+
+    }
+
   }
+
 }
 
 
@@ -661,35 +782,39 @@ async function caricaDashboard() {
   try {
 
     const dati =
-      await leggiAPI(
-        API_URL + '?azione=dashboard'
+      await richiestaJSONP(
+        API_URL +
+        '?azione=dashboard'
       );
+
 
     console.log(
       'RISPOSTA DASHBOARD:',
       dati
     );
 
+
     if (
       !dati ||
       dati.success !== true ||
       !dati.dashboard
     ) {
+
       throw new Error(
         'Risposta dashboard non valida'
       );
+
     }
+
 
     const dashboard =
       dati.dashboard;
 
 
-    /***************************************************
-     * NEGOZI
-     ***************************************************/
-
     const negozi =
-      document.getElementById('negozi');
+      document.getElementById(
+        'negozi'
+      );
 
     if (negozi) {
       negozi.textContent =
@@ -697,12 +822,10 @@ async function caricaDashboard() {
     }
 
 
-    /***************************************************
-     * CARD
-     ***************************************************/
-
     const card =
-      document.getElementById('card');
+      document.getElementById(
+        'card'
+      );
 
     if (card) {
       card.textContent =
@@ -710,12 +833,10 @@ async function caricaDashboard() {
     }
 
 
-    /***************************************************
-     * CLIENTI
-     ***************************************************/
-
     const clienti =
-      document.getElementById('clienti');
+      document.getElementById(
+        'clienti'
+      );
 
     if (clienti) {
       clienti.textContent =
@@ -723,12 +844,10 @@ async function caricaDashboard() {
     }
 
 
-    /***************************************************
-     * UTILIZZI
-     ***************************************************/
-
     const utilizzi =
-      document.getElementById('utilizzi');
+      document.getElementById(
+        'utilizzi'
+      );
 
     if (utilizzi) {
       utilizzi.textContent =
@@ -736,12 +855,10 @@ async function caricaDashboard() {
     }
 
 
-    /***************************************************
-     * PUNTI
-     ***************************************************/
-
     const punti =
-      document.getElementById('punti');
+      document.getElementById(
+        'punti'
+      );
 
     if (punti) {
       punti.textContent =
@@ -749,12 +866,10 @@ async function caricaDashboard() {
     }
 
 
-    /***************************************************
-     * OFFERTE
-     ***************************************************/
-
     const offerte =
-      document.getElementById('offerte');
+      document.getElementById(
+        'offerte'
+      );
 
     if (offerte) {
       offerte.textContent =
@@ -762,116 +877,119 @@ async function caricaDashboard() {
     }
 
 
-    impostaStatoCollegamento(
+    impostaStato(
       'Collegamento attivo',
       false
     );
 
+
   } catch (errore) {
 
     console.error(
-      'Dashboard:',
+      'ERRORE DASHBOARD:',
       errore
     );
 
-    impostaStatoCollegamento(
+
+    impostaStato(
       'Errore collegamento',
       true
     );
 
-    const negozi =
-      document.getElementById('negozi');
 
-    if (negozi) {
-      negozi.textContent = '-';
+    const dettaglio =
+      document.getElementById(
+        'errorDetail'
+      );
+
+
+    if (dettaglio) {
+
+      dettaglio.textContent =
+        'Dashboard: ' +
+        errore.message;
+
     }
 
-    const card =
-      document.getElementById('card');
 
-    if (card) {
-      card.textContent = '-';
+    const error =
+      document.getElementById(
+        'error'
+      );
+
+
+    if (error) {
+
+      error.style.display =
+        'block';
+
     }
 
-    const clienti =
-      document.getElementById('clienti');
-
-    if (clienti) {
-      clienti.textContent = '-';
-    }
-
-    const utilizzi =
-      document.getElementById('utilizzi');
-
-    if (utilizzi) {
-      utilizzi.textContent = '-';
-    }
-
-    const punti =
-      document.getElementById('punti');
-
-    if (punti) {
-      punti.textContent = '-';
-    }
-
-    const offerte =
-      document.getElementById('offerte');
-
-    if (offerte) {
-      offerte.textContent = '-';
-    }
-
-    throw errore;
   }
+
 }
 
 
 /*******************************************************
- * CARICA ELENCO NEGOZI
+ * CARICA NEGOZI
  *******************************************************/
 
 async function caricaNegozi() {
 
   const loading =
-    document.getElementById('loading');
+    document.getElementById(
+      'loading'
+    );
 
   const tableContainer =
-    document.getElementById('tableContainer');
+    document.getElementById(
+      'tableContainer'
+    );
 
   const empty =
-    document.getElementById('empty');
+    document.getElementById(
+      'empty'
+    );
 
   const error =
-    document.getElementById('error');
+    document.getElementById(
+      'error'
+    );
 
   const errorDetail =
-    document.getElementById('errorDetail');
+    document.getElementById(
+      'errorDetail'
+    );
 
-  const negoziBody =
-    document.getElementById('negoziBody');
-
-
-  if (loading) {
-    loading.style.display = 'block';
-  }
-
-  if (tableContainer) {
-    tableContainer.style.display = 'none';
-  }
-
-  if (empty) {
-    empty.style.display = 'none';
-  }
-
-  if (error) {
-    error.style.display = 'none';
-  }
+  const tbody =
+    document.getElementById(
+      'negoziBody'
+    );
 
 
   try {
 
+    if (loading) {
+      loading.style.display =
+        'block';
+    }
+
+    if (tableContainer) {
+      tableContainer.style.display =
+        'none';
+    }
+
+    if (empty) {
+      empty.style.display =
+        'none';
+    }
+
+
     const dati =
-      await leggiAPI(API_URL);
+      await richiestaJSONP(
+        API_URL
+      );
+
 
     console.log(
       'RISPOSTA NEGOZI:',
@@ -883,92 +1001,125 @@ async function caricaNegozi() {
       !dati ||
       dati.success !== true
     ) {
+
       throw new Error(
-        'Risposta API negozi non valida'
+        'Risposta negozi non valida'
       );
+
     }
 
 
     let negozi =
-      Array.isArray(dati.negozi)
+      Array.isArray(
+        dati.negozi
+      )
         ? dati.negozi
         : [];
 
 
+    console.log(
+      'NEGOZI RICEVUTI:',
+      negozi.length
+    );
+
+
     /***************************************************
-     * MOSTRA SOLO I NEGOZI ATTIVI
+     * FILTRO NEGOZI ATTIVI
      ***************************************************/
 
     negozi =
-      negozi.filter(function(negozio) {
+      negozi.filter(
+        function(negozio) {
 
-        const stato =
-          negozio.ATTIVO ??
-          negozio.Attivo ??
-          negozio.attivo ??
-          negozio.STATO ??
-          negozio.Stato ??
-          negozio.stato;
+          const stato =
+            negozio.ATTIVO ??
+            negozio.Attivo ??
+            negozio.attivo ??
+            negozio.STATO ??
+            negozio.Stato ??
+            negozio.stato;
 
-        if (
-          stato === undefined ||
-          stato === null ||
-          stato === ''
-        ) {
-          return true;
+
+          if (
+            stato === undefined ||
+            stato === null ||
+            stato === ''
+          ) {
+
+            return true;
+
+          }
+
+
+          const valore =
+            String(stato)
+              .trim()
+              .toLowerCase();
+
+
+          return (
+            valore === 'si' ||
+            valore === 'sì' ||
+            valore === 'true' ||
+            valore === 'attivo' ||
+            valore === '1'
+          );
+
         }
+      );
 
-        const valore =
-          String(stato)
-            .trim()
-            .toLowerCase();
 
-        return (
-          valore === 'si' ||
-          valore === 'sì' ||
-          valore === 'true' ||
-          valore === 'attivo' ||
-          valore === '1'
-        );
-
-      });
+    console.log(
+      'NEGOZI ATTIVI:',
+      negozi.length
+    );
 
 
     if (loading) {
-      loading.style.display = 'none';
+      loading.style.display =
+        'none';
     }
 
 
-    /***************************************************
-     * NESSUN NEGOZIO
-     ***************************************************/
-
-    if (negozi.length === 0) {
+    if (
+      negozi.length === 0
+    ) {
 
       if (empty) {
-        empty.style.display = 'block';
+        empty.style.display =
+          'block';
       }
 
       return;
+
     }
 
 
+    if (!tbody) {
+
+      throw new Error(
+        'Elemento negoziBody non trovato'
+      );
+
+    }
+
+
+    tbody.innerHTML = '';
+
+
     /***************************************************
-     * COSTRUZIONE TABELLA
+     * CREA LE RIGHE DELLA TABELLA
      ***************************************************/
 
-    if (negoziBody) {
-
-      negoziBody.innerHTML = '';
-
-
-      negozi.forEach(function(negozio) {
+    negozi.forEach(
+      function(negozio) {
 
         const id =
           negozio.ID ??
           negozio.Id ??
           negozio.id ??
           '';
+
 
         const nome =
           negozio.NEGOZIO ??
@@ -979,11 +1130,23 @@ async function caricaNegozi() {
           negozio.nome ??
           '';
 
+
         const settore =
           negozio.SETTORE ??
           negozio.Settore ??
           negozio.settore ??
           '';
+
+
+        const stato =
+          negozio.ATTIVO ??
+          negozio.Attivo ??
+          negozio.attivo ??
+          negozio.STATO ??
+          negozio.Stato ??
+          negozio.stato ??
+          'Attivo';
+
 
         const vantaggio =
           negozio['VANTAGGIO CARD'] ??
@@ -994,11 +1157,13 @@ async function caricaNegozi() {
           negozio.vantaggio ??
           '';
 
+
         const telefono =
           negozio.TELEFONO ??
           negozio.Telefono ??
           negozio.telefono ??
           '';
+
 
         const indirizzo =
           negozio.INDIRIZZO ??
@@ -1006,97 +1171,263 @@ async function caricaNegozi() {
           negozio.indirizzo ??
           '';
 
-       const tr = document.createElement('tr');
 
-tr.innerHTML =
-  '<td>' + escapeHTML(id) + '</td>' +
-  '<td><strong>' + escapeHTML(nome) + '</strong></td>' +
-  '<td>' + escapeHTML(settore) + '</td>' +
-  '<td>' + escapeHTML(vantaggio) + '</td>' +
-  '<td>' + escapeHTML(telefono) + '</td>' +
-  '<td>' + escapeHTML(indirizzo) + '</td>';
+        const note =
+          negozio.NOTE ??
+          negozio.Note ??
+          negozio.note ??
+          '';
 
-        negoziBody.appendChild(tr);
 
-      });
+        const tr =
+          document.createElement(
+            'tr'
+          );
 
-    }
 
+        /************************************************
+         * ID
+         ************************************************/
+
+        const tdID =
+          document.createElement(
+            'td'
+          );
+
+        tdID.textContent =
+          id;
+
+
+        /************************************************
+         * NEGOZIO
+         ************************************************/
+
+        const tdNome =
+          document.createElement(
+            'td'
+          );
+
+        const strong =
+          document.createElement(
+            'strong'
+          );
+
+        strong.textContent =
+          nome;
+
+        tdNome.appendChild(
+          strong
+        );
+
+
+        /************************************************
+         * SETTORE
+         ************************************************/
+
+        const tdSettore =
+          document.createElement(
+            'td'
+          );
+
+        tdSettore.textContent =
+          settore;
+
+
+        /************************************************
+         * STATO
+         ************************************************/
+
+        const tdStato =
+          document.createElement(
+            'td'
+          );
+
+        const badge =
+          document.createElement(
+            'span'
+          );
+
+        badge.className =
+          'badge badge-active';
+
+        badge.textContent =
+          stato;
+
+        tdStato.appendChild(
+          badge
+        );
+
+
+        /************************************************
+         * VANTAGGIO CARD
+         ************************************************/
+
+        const tdVantaggio =
+          document.createElement(
+            'td'
+          );
+
+        tdVantaggio.textContent =
+          vantaggio;
+
+
+        /************************************************
+         * TELEFONO
+         ************************************************/
+
+        const tdTelefono =
+          document.createElement(
+            'td'
+          );
+
+        tdTelefono.textContent =
+          telefono;
+
+
+        /************************************************
+         * INDIRIZZO
+         ************************************************/
+
+        const tdIndirizzo =
+          document.createElement(
+            'td'
+          );
+
+        tdIndirizzo.textContent =
+          indirizzo;
+
+
+        /************************************************
+         * NOTE
+         ************************************************/
+
+        const tdNote =
+          document.createElement(
+            'td'
+          );
+
+        tdNote.textContent =
+          note;
+
+
+        /************************************************
+         * AGGIUNGI CELLE ALLA RIGA
+         ************************************************/
+
+        tr.appendChild(
+          tdID
+        );
+
+        tr.appendChild(
+          tdNome
+        );
+
+        tr.appendChild(
+          tdSettore
+        );
+
+        tr.appendChild(
+          tdStato
+        );
+
+        tr.appendChild(
+          tdVantaggio
+        );
+
+        tr.appendChild(
+          tdTelefono
+        );
+
+        tr.appendChild(
+          tdIndirizzo
+        );
+
+        tr.appendChild(
+          tdNote
+        );
+
+
+        tbody.appendChild(
+          tr
+        );
+
+      }
+    );
+
+
+    /***************************************************
+     * MOSTRA TABELLA
+     ***************************************************/
 
     if (tableContainer) {
-      tableContainer.style.display = 'block';
+
+      tableContainer.style.display =
+        'block';
+
     }
+
+
+    if (empty) {
+
+      empty.style.display =
+        'none';
+
+    }
+
+
+    impostaStato(
+      'Collegamento attivo',
+      false
+    );
 
 
   } catch (errore) {
 
     console.error(
-      'Negozi:',
+      'ERRORE NEGOZI:',
       errore
     );
 
 
     if (loading) {
-      loading.style.display = 'none';
+
+      loading.style.display =
+        'none';
+
+    }
+
+
+    if (tableContainer) {
+
+      tableContainer.style.display =
+        'none';
+
     }
 
 
     if (error) {
-      error.style.display = 'block';
+
+      error.style.display =
+        'block';
+
     }
 
 
     if (errorDetail) {
+
       errorDetail.textContent =
-        errore.message ||
-        'Errore collegamento API';
+        'Negozi: ' +
+        errore.message;
+
     }
 
+
+    impostaStato(
+      'Errore collegamento',
+      true
+    );
+
   }
-
-}
-
-
-/*******************************************************
- * SICUREZZA HTML
- *******************************************************/
-
-function escapeHTML(valore) {
-
-  return String(valore ?? '')
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#039;');
-
-}
-
-
-/*******************************************************
- * AVVIO
- *******************************************************/
-
-async function avviaAdmin() {
-
-  console.log(
-    'GiOKri Life – SPRESIANO CARD'
-  );
-
-  console.log(
-    'API:',
-    API_URL
-  );
-
-
-  try {
-    await caricaDashboard();
-  } catch (e) {
-    console.error(e);
-  }
-
-
-  await caricaNegozi();
 
 }
 
@@ -1107,16 +1438,11 @@ async function avviaAdmin() {
 
 document.addEventListener(
   'DOMContentLoaded',
-  avviaAdmin
+  function() {
+
+    caricaDashboard();
+
+    caricaNegozi();
+
+  }
 );
-
-
-
-
-
-
-  </script>
-
-</body>
-
-</html>
