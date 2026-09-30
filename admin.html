@@ -1,0 +1,253 @@
+```html
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Giokri Life – SPRESIANO CARD Admin</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f7fa;
+      color: #1f2937;
+    }
+
+    header {
+      background: #111827;
+      color: white;
+      padding: 22px 18px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    header p {
+      margin: 7px 0 0;
+      font-size: 14px;
+      opacity: 0.8;
+    }
+
+    main {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .stato {
+      background: white;
+      border-radius: 14px;
+      padding: 16px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+
+    .stato strong {
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .dashboard {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 16px;
+      padding: 22px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+
+    .card .icona {
+      font-size: 28px;
+      margin-bottom: 12px;
+    }
+
+    .card .titolo {
+      font-size: 14px;
+      color: #6b7280;
+      margin-bottom: 8px;
+    }
+
+    .card .valore {
+      font-size: 32px;
+      font-weight: bold;
+    }
+
+    .errore {
+      color: #b91c1c;
+    }
+
+    .successo {
+      color: #15803d;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px 15px;
+      font-size: 13px;
+      color: #6b7280;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>Giokri Life</h1>
+  <p>SPRESIANO CARD · Pannello Amministratore</p>
+</header>
+
+<main>
+
+  <div class="stato">
+    <strong>Stato collegamento</strong>
+    <span id="stato">Connessione in corso...</span>
+  </div>
+
+  <div class="dashboard">
+
+    <div class="card">
+      <div class="icona">🏪</div>
+      <div class="titolo">Negozi aderenti</div>
+      <div class="valore" id="negozi">—</div>
+    </div>
+
+    <div class="card">
+      <div class="icona">💳</div>
+      <div class="titolo">Card emesse</div>
+      <div class="valore" id="card">—</div>
+    </div>
+
+    <div class="card">
+      <div class="icona">👤</div>
+      <div class="titolo">Clienti registrati</div>
+      <div class="valore" id="clienti">—</div>
+    </div>
+
+    <div class="card">
+      <div class="icona">🧾</div>
+      <div class="titolo">Utilizzi registrati</div>
+      <div class="valore" id="utilizzi">—</div>
+    </div>
+
+    <div class="card">
+      <div class="icona">⭐</div>
+      <div class="titolo">Punti totali</div>
+      <div class="valore" id="punti">—</div>
+    </div>
+
+    <div class="card">
+      <div class="icona">🎁</div>
+      <div class="titolo">Offerte attive</div>
+      <div class="valore" id="offerte">—</div>
+    </div>
+
+  </div>
+
+</main>
+
+<footer>
+  Giokri Life · SPRESIANO CARD
+</footer>
+
+
+<script>
+
+const API_URL =
+  'https://script.google.com/macros/s/AKfycbxHaUH-tBV6IjSEB6nwGXCwe-C2BZ5iw5qXO2lABAQibULYh2c2b7z--dUcHMqQpksS/exec';
+
+
+async function caricaDashboard() {
+
+  const stato =
+    document.getElementById('stato');
+
+  try {
+
+    const response =
+      await fetch(
+        API_URL + '?azione=dashboard',
+        {
+          method: 'GET',
+          cache: 'no-store'
+        }
+      );
+
+    if (!response.ok) {
+      throw new Error(
+        'Errore HTTP ' + response.status
+      );
+    }
+
+    const dati =
+      await response.json();
+
+
+    if (!dati.success) {
+      throw new Error(
+        'Risposta API non valida.'
+      );
+    }
+
+
+    document.getElementById('negozi')
+      .textContent = dati.dashboard?.negozi ?? dati.totale ?? 0;
+
+    document.getElementById('card')
+      .textContent = dati.dashboard?.card ?? 0;
+
+    document.getElementById('clienti')
+      .textContent = dati.dashboard?.clienti ?? 0;
+
+    document.getElementById('utilizzi')
+      .textContent = dati.dashboard?.utilizzi ?? 0;
+
+    document.getElementById('punti')
+      .textContent = dati.dashboard?.punti ?? 0;
+
+    document.getElementById('offerte')
+      .textContent = dati.dashboard?.offerte ?? 0;
+
+
+    stato.textContent =
+      'Collegamento attivo';
+
+    stato.className =
+      'successo';
+
+  }
+
+  catch (errore) {
+
+    console.error(errore);
+
+    stato.textContent =
+      'Errore nel collegamento al database';
+
+    stato.className =
+      'errore';
+
+  }
+
+}
+
+
+caricaDashboard();
+
+</script>
+
+</body>
+</html>
+```
