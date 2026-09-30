@@ -543,127 +543,37 @@
 
 
     /*******************************************************
-     * JSONP
-     *******************************************************/
+ * COLLEGAMENTO API
+ *******************************************************/
 
-    function richiestaJSONP(url) {
+async function richiestaJSONP(url) {
 
-      return new Promise(function(resolve, reject) {
+  const risposta = await fetch(url, {
+    method: 'GET',
+    cache: 'no-store'
+  });
 
-        const nomeCallback =
-          'giokriCallback_' +
-          Date.now() +
-          '_' +
-          Math.floor(Math.random() * 100000);
+  if (!risposta.ok) {
+    throw new Error(
+      'Errore HTTP ' + risposta.status
+    );
+  }
 
-        const script =
-          document.createElement('script');
+  const testo = await risposta.text();
 
-        let conclusa = false;
+  try {
 
+    return JSON.parse(testo);
 
-        const timeout =
-          setTimeout(function() {
+  } catch (errore) {
 
-            if (conclusa) {
-              return;
-            }
+    throw new Error(
+      'La risposta del database non è JSON valido'
+    );
 
-            conclusa = true;
+  }
 
-            pulisci();
-
-            reject(
-              new Error(
-                'Timeout collegamento API'
-              )
-            );
-
-          }, 15000);
-
-
-        window[nomeCallback] =
-          function(dati) {
-
-            if (conclusa) {
-              return;
-            }
-
-            conclusa = true;
-
-            clearTimeout(timeout);
-
-            pulisci();
-
-            resolve(dati);
-
-          };
-
-
-        function pulisci() {
-
-          if (script.parentNode) {
-            script.parentNode.removeChild(script);
-          }
-
-          try {
-
-            delete window[nomeCallback];
-
-          } catch (e) {
-
-            window[nomeCallback] =
-              undefined;
-
-          }
-
-        }
-
-
-        script.onerror =
-          function() {
-
-            if (conclusa) {
-              return;
-            }
-
-            conclusa = true;
-
-            clearTimeout(timeout);
-
-            pulisci();
-
-            reject(
-              new Error(
-                'Errore collegamento API'
-              )
-            );
-
-          };
-
-
-        const separatore =
-          url.indexOf('?') >= 0
-            ? '&'
-            : '?';
-
-
-        script.src =
-          url +
-          separatore +
-          'callback=' +
-          encodeURIComponent(
-            nomeCallback
-          );
-
-
-        document.head.appendChild(
-          script
-        );
-
-      });
-
-    }
+}
 
 
     /*******************************************************
