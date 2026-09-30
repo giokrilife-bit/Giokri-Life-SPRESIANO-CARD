@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -8,28 +9,290 @@
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <title>GiOKri Loyalty</title>
+
 <style>
-:root{--blue:#17324d;--blue2:#244d70;--light:#f3f6f8;--white:#fff;--text:#17202a;--muted:#6b7785;--green:#2e8b57;--gold:#d99b20;--red:#c94c4c;--border:#dfe5ea}
-*{box-sizing:border-box} body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--light);color:var(--text)}
-.app{max-width:520px;margin:auto;min-height:100vh;background:var(--light);padding-bottom:82px}
-header{background:var(--blue);color:#fff;padding:22px 18px 20px;border-radius:0 0 24px 24px}
-.brand{font-size:22px;font-weight:700}.tag{font-size:12px;opacity:.8;margin-top:4px}
-.welcome{margin-top:22px;font-size:14px}.name{font-size:25px;font-weight:700;margin-top:3px}
-.card{background:var(--white);border:1px solid var(--border);border-radius:18px;padding:18px;margin:14px 14px 0;box-shadow:0 3px 12px rgba(0,0,0,.04)}
-.points{text-align:center}.points-label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.8px}.points-number{font-size:42px;font-weight:800;color:var(--blue);margin:4px 0}.progress{height:9px;background:#e7ebee;border-radius:99px;overflow:hidden}.progress>div{height:100%;background:var(--green);border-radius:99px}.small{font-size:12px;color:var(--muted);margin-top:8px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.btn{border:0;border-radius:14px;padding:15px;font-weight:700;font-size:14px;cursor:pointer}.primary{background:var(--blue);color:#fff}.secondary{background:#e9eff3;color:var(--blue)}.green{background:#e4f3ea;color:#216b42}
-.section-title{font-size:17px;font-weight:800;margin-bottom:12px}.item{padding:13px 0;border-bottom:1px solid var(--border)}.item:last-child{border-bottom:0;padding-bottom:0}.row{display:flex;justify-content:space-between;gap:12px}.store{font-weight:700}.meta{font-size:12px;color:var(--muted);margin-top:4px}.badge{font-size:12px;font-weight:700;padding:5px 9px;border-radius:20px;background:#e4f3ea;color:#216b42;white-space:nowrap}
-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(520px,100%);background:#fff;border-top:1px solid var(--border);display:grid;grid-template-columns:repeat(4,1fr);padding:8px 4px calc(8px + env(safe-area-inset-bottom));z-index:10}
-nav button{background:none;border:0;color:var(--muted);font-size:11px;padding:7px 2px;cursor:pointer}nav button.active{color:var(--blue);font-weight:800}nav span{display:block;font-size:20px;margin-bottom:2px}
-.page{display:none}.page.active{display:block}.hidden{display:none!important}
-input,select{width:100%;padding:13px;border:1px solid var(--border);border-radius:12px;font-size:15px;margin:7px 0 12px;background:#fff}
-label{font-size:12px;color:var(--muted);font-weight:700}
-.preview{width:100%;max-height:260px;object-fit:contain;background:#eef2f4;border-radius:12px;margin:8px 0}
-.notice{font-size:12px;background:#fff8e7;border:1px solid #f0dfb4;padding:12px;border-radius:12px;color:#715414}
-.empty{text-align:center;color:var(--muted);padding:18px 0;font-size:14px}
+:root{
+  --blue:#17324d;
+  --blue2:#244d70;
+  --light:#f3f6f8;
+  --white:#fff;
+  --text:#17202a;
+  --muted:#6b7785;
+  --green:#2e8b57;
+  --gold:#d99b20;
+  --red:#c94c4c;
+  --border:#dfe5ea
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:var(--light);
+  color:var(--text)
+}
+
+.app{
+  max-width:520px;
+  margin:auto;
+  min-height:100vh;
+  background:var(--light);
+  padding-bottom:82px
+}
+
+header{
+  background:var(--blue);
+  color:#fff;
+  padding:22px 18px 20px;
+  border-radius:0 0 24px 24px
+}
+
+.brand{
+  font-size:22px;
+  font-weight:700
+}
+
+.tag{
+  font-size:12px;
+  opacity:.8;
+  margin-top:4px
+}
+
+.welcome{
+  margin-top:22px;
+  font-size:14px
+}
+
+.name{
+  font-size:25px;
+  font-weight:700;
+  margin-top:3px
+}
+
+.card{
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:18px;
+  margin:14px 14px 0;
+  box-shadow:0 3px 12px rgba(0,0,0,.04)
+}
+
+.points{
+  text-align:center
+}
+
+.points-label{
+  font-size:12px;
+  color:var(--muted);
+  text-transform:uppercase;
+  letter-spacing:.8px
+}
+
+.points-number{
+  font-size:42px;
+  font-weight:800;
+  color:var(--blue);
+  margin:4px 0
+}
+
+.progress{
+  height:9px;
+  background:#e7ebee;
+  border-radius:99px;
+  overflow:hidden
+}
+
+.progress>div{
+  height:100%;
+  background:var(--green);
+  border-radius:99px
+}
+
+.small{
+  font-size:12px;
+  color:var(--muted);
+  margin-top:8px
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px
+}
+
+.btn{
+  border:0;
+  border-radius:14px;
+  padding:15px;
+  font-weight:700;
+  font-size:14px;
+  cursor:pointer
+}
+
+.primary{
+  background:var(--blue);
+  color:#fff
+}
+
+.secondary{
+  background:#e9eff3;
+  color:var(--blue)
+}
+
+.green{
+  background:#e4f3ea;
+  color:#216b42
+}
+
+.section-title{
+  font-size:17px;
+  font-weight:800;
+  margin-bottom:12px
+}
+
+.item{
+  padding:13px 0;
+  border-bottom:1px solid var(--border)
+}
+
+.item:last-child{
+  border-bottom:0;
+  padding-bottom:0
+}
+
+.row{
+  display:flex;
+  justify-content:space-between;
+  gap:12px
+}
+
+.store{
+  font-weight:700
+}
+
+.meta{
+  font-size:12px;
+  color:var(--muted);
+  margin-top:4px
+}
+
+.badge{
+  font-size:12px;
+  font-weight:700;
+  padding:5px 9px;
+  border-radius:20px;
+  background:#e4f3ea;
+  color:#216b42;
+  white-space:nowrap
+}
+
+nav{
+  position:fixed;
+  bottom:0;
+  left:50%;
+  transform:translateX(-50%);
+  width:min(520px,100%);
+  background:#fff;
+  border-top:1px solid var(--border);
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  padding:8px 4px calc(8px + env(safe-area-inset-bottom));
+  z-index:10
+}
+
+nav button{
+  background:none;
+  border:0;
+  color:var(--muted);
+  font-size:11px;
+  padding:7px 2px;
+  cursor:pointer
+}
+
+nav button.active{
+  color:var(--blue);
+  font-weight:800
+}
+
+nav span{
+  display:block;
+  font-size:20px;
+  margin-bottom:2px
+}
+
+.page{
+  display:none
+}
+
+.page.active{
+  display:block
+}
+
+.hidden{
+  display:none!important
+}
+
+input,select{
+  width:100%;
+  padding:13px;
+  border:1px solid var(--border);
+  border-radius:12px;
+  font-size:15px;
+  margin:7px 0 12px;
+  background:#fff
+}
+
+label{
+  font-size:12px;
+  color:var(--muted);
+  font-weight:700
+}
+
+.preview{
+  width:100%;
+  max-height:260px;
+  object-fit:contain;
+  background:#eef2f4;
+  border-radius:12px;
+  margin:8px 0
+}
+
+.notice{
+  font-size:12px;
+  background:#fff8e7;
+  border:1px solid #f0dfb4;
+  padding:12px;
+  border-radius:12px;
+  color:#715414
+}
+
+.empty{
+  text-align:center;
+  color:var(--muted);
+  padding:18px 0;
+  font-size:14px
+}
+
+.loading{
+  text-align:center;
+  color:var(--muted);
+  padding:18px 0;
+  font-size:14px
+}
+
+.error{
+  text-align:center;
+  color:var(--red);
+  padding:18px 0;
+  font-size:13px
+}
 </style>
 </head>
+
 <body>
+
 <div class="app">
 
 <header>
@@ -40,151 +303,1068 @@ label{font-size:12px;color:var(--muted);font-weight:700}
 </header>
 
 <main>
+
+<!-- HOME -->
 <section id="home" class="page active">
+
   <div class="card points">
-    <div class="points-label">I tuoi punti</div>
-    <div class="points-number" id="points">0</div>
-    <div class="progress"><div id="progressBar" style="width:0%"></div></div>
-    <div class="small" id="targetText">0 punti al prossimo obiettivo</div>
-  </div>
 
-  <div class="card">
-    <div class="grid">
-      <button class="btn primary" onclick="showPage('receipt')">📸 Registra acquisto</button>
-      <button class="btn secondary" onclick="showPage('rewards')">🎁 Premi</button>
+    <div class="points-label">
+      I tuoi punti
     </div>
+
+    <div class="points-number" id="points">
+      0
+    </div>
+
+    <div class="progress">
+      <div id="progressBar" style="width:0%"></div>
+    </div>
+
+    <div class="small" id="targetText">
+      0 punti al prossimo obiettivo
+    </div>
+
   </div>
 
-  <div class="card">
-    <div class="section-title">🎯 La tua missione</div>
-    <div class="row"><div><div class="store">Prima missione</div><div class="meta">Registra il tuo primo acquisto</div></div><span class="badge" id="missionStatus">0 / 1</span></div>
-  </div>
 
   <div class="card">
-    <div class="section-title">🏪 Negozi aderenti</div>
-    <div id="homeStores"></div>
+
+    <div class="grid">
+
+      <button
+        class="btn primary"
+        onclick="showPage('receipt')">
+        📸 Registra acquisto
+      </button>
+
+      <button
+        class="btn secondary"
+        onclick="showPage('rewards')">
+        🎁 Premi
+      </button>
+
+    </div>
+
   </div>
+
+
+  <div class="card">
+
+    <div class="section-title">
+      🎯 La tua missione
+    </div>
+
+    <div class="row">
+
+      <div>
+
+        <div class="store">
+          Prima missione
+        </div>
+
+        <div class="meta">
+          Registra il tuo primo acquisto
+        </div>
+
+      </div>
+
+      <span
+        class="badge"
+        id="missionStatus">
+        0 / 1
+      </span>
+
+    </div>
+
+  </div>
+
+
+  <div class="card">
+
+    <div class="section-title">
+      🏪 Negozi aderenti
+    </div>
+
+    <div id="homeStores">
+      <div class="loading">
+        Caricamento negozi...
+      </div>
+    </div>
+
+  </div>
+
 </section>
 
+
+<!-- ACQUISTO -->
 <section id="receipt" class="page">
+
   <div class="card">
-    <div class="section-title">📸 Registra un acquisto</div>
-    <div class="notice">Nella V1 lo scontrino viene salvato sul dispositivo. In questa fase i punti vengono simulati localmente; nella V2 potremo farlo verificare da GiOKri Life.</div>
+
+    <div class="section-title">
+      📸 Registra un acquisto
+    </div>
+
+    <div class="notice">
+
+      Nella V1 lo scontrino viene salvato sul dispositivo.
+      In questa fase i punti vengono simulati localmente;
+      nella V2 potremo farlo verificare da GiOKri Life.
+
+    </div>
+
     <br>
-    <label>Negozio</label>
+
+    <label>
+      Negozio
+    </label>
+
     <select id="store">
-      <option>Negozio aderente 1</option><option>Negozio aderente 2</option><option>Negozio aderente 3</option>
-      <option>Negozio aderente 4</option><option>Negozio aderente 5</option><option>Negozio aderente 6</option>
-      <option>Negozio aderente 7</option><option>Negozio aderente 8</option><option>Negozio aderente 9</option><option>Negozio aderente 10</option>
+
+      <option value="">
+        Caricamento negozi...
+      </option>
+
     </select>
-    <label>Data acquisto</label>
-    <input type="date" id="date">
-    <label>Importo dello scontrino (€)</label>
-    <input type="number" id="amount" min="0.01" step="0.01" placeholder="es. 48,70">
-    <label>Foto dello scontrino</label>
-    <input type="file" id="photo" accept="image/*" capture="environment">
-    <img id="preview" class="preview hidden">
-    <button class="btn primary" style="width:100%;margin-top:8px" onclick="addPurchase()">Invia acquisto</button>
+
+
+    <label>
+      Data acquisto
+    </label>
+
+    <input
+      type="date"
+      id="date">
+
+
+    <label>
+      Importo dello scontrino (€)
+    </label>
+
+    <input
+      type="number"
+      id="amount"
+      min="0.01"
+      step="0.01"
+      placeholder="es. 48,70">
+
+
+    <label>
+      Foto dello scontrino
+    </label>
+
+    <input
+      type="file"
+      id="photo"
+      accept="image/*"
+      capture="environment">
+
+
+    <img
+      id="preview"
+      class="preview hidden">
+
+
+    <button
+      class="btn primary"
+      style="width:100%;margin-top:8px"
+      onclick="addPurchase()">
+
+      Invia acquisto
+
+    </button>
+
   </div>
+
 </section>
 
+
+<!-- STORICO -->
 <section id="history" class="page">
+
   <div class="card">
-    <div class="section-title">🧾 I tuoi acquisti</div>
+
+    <div class="section-title">
+      🧾 I tuoi acquisti
+    </div>
+
     <div id="historyList"></div>
+
   </div>
+
 </section>
 
+
+<!-- PREMI -->
 <section id="rewards" class="page">
+
   <div class="card">
-    <div class="section-title">🎁 Premi</div>
-    <div class="item"><div class="row"><div><div class="store">Premio 500</div><div class="meta">Premio dimostrativo</div></div><span class="badge">500 punti</span></div></div>
-    <div class="item"><div class="row"><div><div class="store">Premio 1.000</div><div class="meta">Premio dimostrativo</div></div><span class="badge">1.000 punti</span></div></div>
-    <div class="item"><div class="row"><div><div class="store">Premio 2.500</div><div class="meta">Premio speciale</div></div><span class="badge">2.500 punti</span></div></div>
+
+    <div class="section-title">
+      🎁 Premi
+    </div>
+
+
+    <div class="item">
+
+      <div class="row">
+
+        <div>
+
+          <div class="store">
+            Premio 500
+          </div>
+
+          <div class="meta">
+            Premio dimostrativo
+          </div>
+
+        </div>
+
+        <span class="badge">
+          500 punti
+        </span>
+
+      </div>
+
+    </div>
+
+
+    <div class="item">
+
+      <div class="row">
+
+        <div>
+
+          <div class="store">
+            Premio 1.000
+          </div>
+
+          <div class="meta">
+            Premio dimostrativo
+          </div>
+
+        </div>
+
+        <span class="badge">
+          1.000 punti
+        </span>
+
+      </div>
+
+    </div>
+
+
+    <div class="item">
+
+      <div class="row">
+
+        <div>
+
+          <div class="store">
+            Premio 2.500
+          </div>
+
+          <div class="meta">
+            Premio speciale
+          </div>
+
+        </div>
+
+        <span class="badge">
+          2.500 punti
+        </span>
+
+      </div>
+
+    </div>
+
   </div>
+
 </section>
 
+
+<!-- PROFILO -->
 <section id="profile" class="page">
+
   <div class="card">
-    <div class="section-title">👤 Il mio profilo</div>
-    <label>Nome</label><input id="nameInput" placeholder="Il tuo nome">
-    <button class="btn primary" style="width:100%" onclick="saveProfile()">Salva profilo</button>
+
+    <div class="section-title">
+      👤 Il mio profilo
+    </div>
+
+    <label>
+      Nome
+    </label>
+
+    <input
+      id="nameInput"
+      placeholder="Il tuo nome">
+
+    <button
+      class="btn primary"
+      style="width:100%"
+      onclick="saveProfile()">
+
+      Salva profilo
+
+    </button>
+
   </div>
+
+
   <div class="card">
-    <div class="section-title">ℹ️ V1 Demo</div>
-    <div class="meta">Questa prima versione è pensata per essere pubblicata su GitHub Pages e provata con i primi negozi. I dati restano sul dispositivo.</div>
+
+    <div class="section-title">
+      ℹ️ V1 Demo
+    </div>
+
+    <div class="meta">
+
+      Questa prima versione è pensata per essere
+      pubblicata su GitHub Pages e provata con
+      i primi negozi. I dati personali e gli
+      acquisti della V1 restano sul dispositivo.
+
+    </div>
+
   </div>
+
 </section>
+
 </main>
 
+
+<!-- NAVIGAZIONE -->
 <nav>
-<button id="navHome" class="active" onclick="showPage('home')"><span>⌂</span>Home</button>
-<button id="navReceipt" onclick="showPage('receipt')"><span>📸</span>Acquisto</button>
-<button id="navHistory" onclick="showPage('history')"><span>🧾</span>Storico</button>
-<button id="navProfile" onclick="showPage('profile')"><span>👤</span>Profilo</button>
+
+<button
+  id="navHome"
+  class="active"
+  onclick="showPage('home')">
+
+  <span>⌂</span>
+  Home
+
+</button>
+
+
+<button
+  id="navReceipt"
+  onclick="showPage('receipt')">
+
+  <span>📸</span>
+  Acquisto
+
+</button>
+
+
+<button
+  id="navHistory"
+  onclick="showPage('history')">
+
+  <span>🧾</span>
+  Storico
+
+</button>
+
+
+<button
+  id="navProfile"
+  onclick="showPage('profile')">
+
+  <span>👤</span>
+  Profilo
+
+</button>
+
 </nav>
+
 </div>
 
+
 <script>
-const KEY='giokriLoyaltyV1';
-const defaultData={name:'Cliente',points:0,purchases:[]};
-let data=JSON.parse(localStorage.getItem(KEY)||'null')||defaultData;
 
-const stores=[
-'Negozio aderente 1','Negozio aderente 2','Negozio aderente 3','Negozio aderente 4','Negozio aderente 5',
-'Negozio aderente 6','Negozio aderente 7','Negozio aderente 8','Negozio aderente 9','Negozio aderente 10'
-];
+/*******************************************************
+ * GIOKRI LIFE – SPRESIANO CARD
+ * COLLEGAMENTO DATABASE NEGOZI
+ *******************************************************/
 
-function save(){localStorage.setItem(KEY,JSON.stringify(data));}
+const API_URL =
+  'https://script.google.com/macros/s/AKfycbxHaUH-tBV6IjSEB6nwGXCwe-C2BZ5iw5qXO2lABAQibULYh2c2b7z--dUcHMqQpksS/exec';
+
+
+/*******************************************************
+ * DATI LOCALI V1
+ *******************************************************/
+
+const KEY =
+  'giokriLoyaltyV1';
+
+
+const defaultData = {
+
+  name:'Cliente',
+
+  points:0,
+
+  purchases:[]
+
+};
+
+
+let data =
+  JSON.parse(
+    localStorage.getItem(KEY) || 'null'
+  ) || defaultData;
+
+
+/*******************************************************
+ * DATABASE NEGOZI
+ *******************************************************/
+
+let stores = [];
+
+
+/*******************************************************
+ * SALVA DATI LOCALI
+ *******************************************************/
+
+function save(){
+
+  localStorage.setItem(
+    KEY,
+    JSON.stringify(data)
+  );
+
+}
+
+
+/*******************************************************
+ * CARICA NEGOZI DAL DATABASE
+ *******************************************************/
+
+async function loadStores(){
+
+  const home =
+    document.getElementById(
+      'homeStores'
+    );
+
+  const select =
+    document.getElementById(
+      'store'
+    );
+
+
+  try {
+
+    home.innerHTML =
+      '<div class="loading">Caricamento negozi...</div>';
+
+    select.innerHTML =
+      '<option value="">Caricamento negozi...</option>';
+
+
+    const response =
+      await fetch(
+        API_URL,
+        {
+          method:'GET',
+          cache:'no-store'
+        }
+      );
+
+
+    if(!response.ok){
+
+      throw new Error(
+        'Errore HTTP ' +
+        response.status
+      );
+
+    }
+
+
+    const result =
+      await response.json();
+
+
+    if(
+      !result.success ||
+      !Array.isArray(result.negozi)
+    ){
+
+      throw new Error(
+        'Risposta API non valida'
+      );
+
+    }
+
+
+    stores =
+      result.negozi;
+
+
+    renderStores();
+
+
+  } catch(error) {
+
+    console.error(
+      'Errore caricamento negozi:',
+      error
+    );
+
+
+    home.innerHTML =
+      '<div class="error">Impossibile caricare i negozi. Riprova più tardi.</div>';
+
+
+    select.innerHTML =
+      '<option value="">Negozi non disponibili</option>';
+
+  }
+
+}
+
+
+/*******************************************************
+ * VISUALIZZA NEGOZI
+ *******************************************************/
+
+function renderStores(){
+
+  const home =
+    document.getElementById(
+      'homeStores'
+    );
+
+
+  const select =
+    document.getElementById(
+      'store'
+    );
+
+
+  if(!stores.length){
+
+    home.innerHTML =
+      '<div class="empty">Nessun negozio aderente disponibile.</div>';
+
+    select.innerHTML =
+      '<option value="">Nessun negozio disponibile</option>';
+
+    return;
+
+  }
+
+
+  /*****************************************************
+   * HOME
+   *****************************************************/
+
+  home.innerHTML =
+    stores
+      .slice(0,5)
+      .map(
+        s => `
+
+        <div class="item">
+
+          <div class="row">
+
+            <div>
+
+              <div class="store">
+                ${escapeHtml(s.NEGOZIO)}
+              </div>
+
+              <div class="meta">
+                Spresiano ·
+                ${escapeHtml(s.SETTORE || 'Attività locale')}
+              </div>
+
+            </div>
+
+            <span class="badge">
+              ADERENTE
+            </span>
+
+          </div>
+
+        </div>
+
+        `
+      )
+      .join('');
+
+
+  /*****************************************************
+   * SELECT ACQUISTO
+   *****************************************************/
+
+  select.innerHTML =
+    '<option value="">Seleziona un negozio</option>' +
+
+    stores
+      .map(
+        s => `
+
+        <option value="${escapeHtml(s.NEGOZIO)}">
+          ${escapeHtml(s.NEGOZIO)}
+        </option>
+
+        `
+      )
+      .join('');
+
+}
+
+
+/*******************************************************
+ * SICUREZZA TESTO HTML
+ *******************************************************/
+
+function escapeHtml(value){
+
+  return String(value ?? '')
+    .replace(/&/g,'&amp;')
+    .replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;')
+    .replace(/'/g,'&#039;');
+
+}
+
+
+/*******************************************************
+ * RENDER PRINCIPALE
+ *******************************************************/
+
 function render(){
- document.getElementById('headerName').textContent=data.name||'Cliente';
- document.getElementById('points').textContent=data.points.toLocaleString('it-IT');
- const next=data.points<500?500:data.points<1000?1000:data.points<2500?2500:5000;
- const prev=next===500?0:next===1000?500:next===2500?1000:2500;
- const pct=Math.min(100,((data.points-prev)/(next-prev))*100);
- document.getElementById('progressBar').style.width=pct+'%';
- document.getElementById('targetText').textContent=(next-data.points).toLocaleString('it-IT')+' punti al prossimo obiettivo';
- document.getElementById('missionStatus').textContent=(data.purchases.length?'1':'0')+' / 1';
- document.getElementById('nameInput').value=data.name==='Cliente'?'':data.name;
- document.getElementById('homeStores').innerHTML=stores.slice(0,5).map(s=>`<div class="item"><div class="row"><div><div class="store">${s}</div><div class="meta">Spresiano · Loyalty</div></div><span class="badge">ADERENTE</span></div></div>`).join('');
- const list=document.getElementById('historyList');
- if(!data.purchases.length){list.innerHTML='<div class="empty">Non hai ancora registrato acquisti.</div>';}
- else list.innerHTML=[...data.purchases].reverse().map(p=>`<div class="item"><div class="row"><div><div class="store">${p.store}</div><div class="meta">${p.date} · € ${p.amount.toFixed(2).replace('.',',')}</div></div><span class="badge">+${p.points} punti</span></div></div>`).join('');
+
+  document.getElementById(
+    'headerName'
+  ).textContent =
+    data.name || 'Cliente';
+
+
+  document.getElementById(
+    'points'
+  ).textContent =
+    data.points.toLocaleString(
+      'it-IT'
+    );
+
+
+  const next =
+    data.points < 500
+      ? 500
+      : data.points < 1000
+        ? 1000
+        : data.points < 2500
+          ? 2500
+          : 5000;
+
+
+  const prev =
+    next === 500
+      ? 0
+      : next === 1000
+        ? 500
+        : next === 2500
+          ? 1000
+          : 2500;
+
+
+  const pct =
+    Math.min(
+      100,
+      ((data.points-prev) /
+      (next-prev)) * 100
+    );
+
+
+  document.getElementById(
+    'progressBar'
+  ).style.width =
+    pct + '%';
+
+
+  document.getElementById(
+    'targetText'
+  ).textContent =
+    (next-data.points)
+      .toLocaleString(
+        'it-IT'
+      ) +
+    ' punti al prossimo obiettivo';
+
+
+  document.getElementById(
+    'missionStatus'
+  ).textContent =
+    (data.purchases.length ? '1' : '0') +
+    ' / 1';
+
+
+  document.getElementById(
+    'nameInput'
+  ).value =
+    data.name === 'Cliente'
+      ? ''
+      : data.name;
+
+
+  const list =
+    document.getElementById(
+      'historyList'
+    );
+
+
+  if(
+    !data.purchases.length
+  ){
+
+    list.innerHTML =
+      '<div class="empty">Non hai ancora registrato acquisti.</div>';
+
+  } else {
+
+    list.innerHTML =
+      [...data.purchases]
+        .reverse()
+        .map(
+          p => `
+
+          <div class="item">
+
+            <div class="row">
+
+              <div>
+
+                <div class="store">
+                  ${escapeHtml(p.store)}
+                </div>
+
+                <div class="meta">
+                  ${escapeHtml(p.date)}
+                  · €
+                  ${Number(p.amount)
+                    .toFixed(2)
+                    .replace('.',',')}
+                </div>
+
+              </div>
+
+              <span class="badge">
+                +${p.points} punti
+              </span>
+
+            </div>
+
+          </div>
+
+          `
+        )
+        .join('');
+
+  }
+
 }
+
+
+/*******************************************************
+ * CAMBIO PAGINA
+ *******************************************************/
+
 function showPage(id){
- document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
- document.getElementById(id).classList.add('active');
- document.querySelectorAll('nav button').forEach(x=>x.classList.remove('active'));
- const map={home:'navHome',receipt:'navReceipt',history:'navHistory',profile:'navProfile'};
- if(map[id]) document.getElementById(map[id]).classList.add('active');
- window.scrollTo(0,0);
- render();
+
+  document
+    .querySelectorAll('.page')
+    .forEach(
+      x => x.classList.remove('active')
+    );
+
+
+  document
+    .getElementById(id)
+    .classList.add('active');
+
+
+  document
+    .querySelectorAll('nav button')
+    .forEach(
+      x => x.classList.remove('active')
+    );
+
+
+  const map = {
+
+    home:'navHome',
+
+    receipt:'navReceipt',
+
+    history:'navHistory',
+
+    profile:'navProfile'
+
+  };
+
+
+  if(map[id]){
+
+    document
+      .getElementById(
+        map[id]
+      )
+      .classList.add('active');
+
+  }
+
+
+  window.scrollTo(
+    0,
+    0
+  );
+
+
+  render();
+
 }
+
+
+/*******************************************************
+ * SALVA PROFILO
+ *******************************************************/
+
 function saveProfile(){
- const n=document.getElementById('nameInput').value.trim();
- if(n){data.name=n;save();render();alert('Profilo salvato.');}
+
+  const n =
+    document
+      .getElementById(
+        'nameInput'
+      )
+      .value
+      .trim();
+
+
+  if(n){
+
+    data.name =
+      n;
+
+    save();
+
+    render();
+
+    alert(
+      'Profilo salvato.'
+    );
+
+  }
+
 }
+
+
+/*******************************************************
+ * REGISTRA ACQUISTO
+ *******************************************************/
+
 function addPurchase(){
- const amount=parseFloat(document.getElementById('amount').value);
- const store=document.getElementById('store').value;
- const date=document.getElementById('date').value||new Date().toISOString().slice(0,10);
- if(!amount||amount<=0){alert('Inserisci un importo valido.');return;}
- const pts=Math.floor(amount);
- data.purchases.push({store,date,amount,points:pts});
- data.points+=pts;
- save();
- document.getElementById('amount').value='';
- document.getElementById('photo').value='';
- document.getElementById('preview').classList.add('hidden');
- alert('Acquisto registrato nella V1. Hai ottenuto '+pts+' punti.');
- showPage('history');
+
+  const amount =
+    parseFloat(
+      document
+        .getElementById(
+          'amount'
+        )
+        .value
+    );
+
+
+  const store =
+    document
+      .getElementById(
+        'store'
+      )
+      .value;
+
+
+  const date =
+    document
+      .getElementById(
+        'date'
+      )
+      .value ||
+      new Date()
+        .toISOString()
+        .slice(
+          0,
+          10
+        );
+
+
+  if(!store){
+
+    alert(
+      'Seleziona un negozio.'
+    );
+
+    return;
+
+  }
+
+
+  if(
+    !amount ||
+    amount <= 0
+  ){
+
+    alert(
+      'Inserisci un importo valido.'
+    );
+
+    return;
+
+  }
+
+
+  const pts =
+    Math.floor(
+      amount
+    );
+
+
+  data.purchases.push({
+
+    store,
+
+    date,
+
+    amount,
+
+    points:pts
+
+  });
+
+
+  data.points +=
+    pts;
+
+
+  save();
+
+
+  document
+    .getElementById(
+      'amount'
+    )
+    .value =
+    '';
+
+
+  document
+    .getElementById(
+      'photo'
+    )
+    .value =
+    '';
+
+
+  document
+    .getElementById(
+      'preview'
+    )
+    .classList
+    .add('hidden');
+
+
+  alert(
+    'Acquisto registrato nella V1. Hai ottenuto ' +
+    pts +
+    ' punti.'
+  );
+
+
+  showPage(
+    'history'
+  );
+
 }
-document.getElementById('photo').addEventListener('change',e=>{
- const f=e.target.files[0]; if(!f)return;
- const img=document.getElementById('preview'); img.src=URL.createObjectURL(f); img.classList.remove('hidden');
-});
-document.getElementById('date').value=new Date().toISOString().slice(0,10);
+
+
+/*******************************************************
+ * ANTEPRIMA FOTO
+ *******************************************************/
+
+document
+  .getElementById(
+    'photo'
+  )
+  .addEventListener(
+    'change',
+    e => {
+
+      const f =
+        e.target.files[0];
+
+
+      if(!f)
+        return;
+
+
+      const img =
+        document
+          .getElementById(
+            'preview'
+          );
+
+
+      img.src =
+        URL.createObjectURL(
+          f
+        );
+
+
+      img.classList
+        .remove(
+          'hidden'
+        );
+
+    }
+  );
+
+
+/*******************************************************
+ * DATA PREDEFINITA
+ *******************************************************/
+
+document
+  .getElementById(
+    'date'
+  )
+  .value =
+  new Date()
+    .toISOString()
+    .slice(
+      0,
+      10
+    );
+
+
+/*******************************************************
+ * AVVIO
+ *******************************************************/
+
 render();
+
+loadStores();
+
 </script>
+
 </body>
 </html>
+```
