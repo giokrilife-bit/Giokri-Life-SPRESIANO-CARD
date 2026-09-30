@@ -1,253 +1,792 @@
-```html
 <!DOCTYPE html>
 <html lang="it">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Giokri Life – SPRESIANO CARD Admin</title>
+  <title>Giokri Life · SPRESIANO CARD · Admin</title>
 
   <style>
+
     * {
       box-sizing: border-box;
     }
 
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f5f7fa;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f4f6f8;
       color: #1f2937;
     }
 
-    header {
+    .header {
       background: #111827;
       color: white;
-      padding: 22px 18px;
-      text-align: center;
+      padding: 28px 20px;
     }
 
-    header h1 {
-      margin: 0;
-      font-size: 24px;
-    }
-
-    header p {
-      margin: 7px 0 0;
-      font-size: 14px;
-      opacity: 0.8;
-    }
-
-    main {
-      max-width: 1000px;
+    .header-inner {
+      max-width: 1200px;
       margin: 0 auto;
-      padding: 20px;
     }
 
-    .stato {
-      background: white;
-      border-radius: 14px;
-      padding: 16px;
-      margin-bottom: 20px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-    }
-
-    .stato strong {
-      display: block;
+    .brand {
+      font-size: 28px;
+      font-weight: 700;
       margin-bottom: 6px;
     }
 
-    .dashboard {
+    .subtitle {
+      font-size: 15px;
+      opacity: 0.8;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 25px 20px 50px;
+    }
+
+    .status {
+      background: white;
+      border-radius: 12px;
+      padding: 15px 18px;
+      margin-bottom: 22px;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .status-dot {
+      width: 11px;
+      height: 11px;
+      background: #22c55e;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .status-text {
+      font-weight: 600;
+    }
+
+    .dashboard-title {
+      font-size: 21px;
+      margin: 0 0 15px;
+    }
+
+    .cards {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 16px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      margin-bottom: 30px;
     }
 
     .card {
       background: white;
-      border-radius: 16px;
-      padding: 22px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      border-radius: 14px;
+      padding: 20px;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.06);
     }
 
-    .card .icona {
+    .card-icon {
       font-size: 28px;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
 
-    .card .titolo {
-      font-size: 14px;
+    .card-label {
       color: #6b7280;
-      margin-bottom: 8px;
+      font-size: 14px;
+      margin-bottom: 7px;
     }
 
-    .card .valore {
-      font-size: 32px;
-      font-weight: bold;
+    .card-value {
+      font-size: 30px;
+      font-weight: 700;
     }
 
-    .errore {
-      color: #b91c1c;
+    .section {
+      background: white;
+      border-radius: 14px;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+      overflow: hidden;
+      margin-top: 25px;
     }
 
-    .successo {
-      color: #15803d;
+    .section-header {
+      padding: 20px;
+      border-bottom: 1px solid #e5e7eb;
     }
 
-    footer {
-      text-align: center;
-      padding: 30px 15px;
+    .section-header h2 {
+      margin: 0 0 5px;
+      font-size: 21px;
+    }
+
+    .section-header p {
+      margin: 0;
+      color: #6b7280;
+      font-size: 14px;
+    }
+
+    .table-wrapper {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 850px;
+    }
+
+    th {
+      background: #f9fafb;
+      text-align: left;
+      padding: 13px 15px;
       font-size: 13px;
       color: #6b7280;
+      border-bottom: 1px solid #e5e7eb;
+      white-space: nowrap;
     }
+
+    td {
+      padding: 14px 15px;
+      border-bottom: 1px solid #f0f0f0;
+      font-size: 14px;
+      vertical-align: top;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 5px 9px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .badge-active {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .empty {
+      padding: 30px;
+      text-align: center;
+      color: #6b7280;
+    }
+
+    .loading {
+      padding: 30px;
+      text-align: center;
+      color: #6b7280;
+    }
+
+    .error {
+      margin-top: 20px;
+      background: #fee2e2;
+      color: #991b1b;
+      padding: 15px;
+      border-radius: 10px;
+      display: none;
+    }
+
+    .footer {
+      text-align: center;
+      color: #6b7280;
+      font-size: 13px;
+      padding: 30px 20px;
+    }
+
+    @media (max-width: 800px) {
+
+      .cards {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+    }
+
+    @media (max-width: 520px) {
+
+      .header {
+        padding: 22px 16px;
+      }
+
+      .container {
+        padding: 20px 14px 40px;
+      }
+
+      .brand {
+        font-size: 24px;
+      }
+
+      .cards {
+        grid-template-columns: 1fr;
+      }
+
+    }
+
   </style>
 </head>
 
 <body>
 
-<header>
-  <h1>Giokri Life</h1>
-  <p>SPRESIANO CARD · Pannello Amministratore</p>
-</header>
+  <header class="header">
 
-<main>
+    <div class="header-inner">
 
-  <div class="stato">
-    <strong>Stato collegamento</strong>
-    <span id="stato">Connessione in corso...</span>
-  </div>
+      <div class="brand">
+        Giokri Life
+      </div>
 
-  <div class="dashboard">
+      <div class="subtitle">
+        SPRESIANO CARD · Pannello Amministratore
+      </div>
 
-    <div class="card">
-      <div class="icona">🏪</div>
-      <div class="titolo">Negozi aderenti</div>
-      <div class="valore" id="negozi">—</div>
     </div>
 
-    <div class="card">
-      <div class="icona">💳</div>
-      <div class="titolo">Card emesse</div>
-      <div class="valore" id="card">—</div>
+  </header>
+
+
+  <main class="container">
+
+    <div class="status">
+
+      <span class="status-dot"></span>
+
+      <span class="status-text">
+        Stato collegamento
+      </span>
+
+      <span>
+        Collegamento attivo
+      </span>
+
     </div>
 
-    <div class="card">
-      <div class="icona">👤</div>
-      <div class="titolo">Clienti registrati</div>
-      <div class="valore" id="clienti">—</div>
+
+    <h1 class="dashboard-title">
+      Dashboard
+    </h1>
+
+
+    <div class="cards">
+
+      <div class="card">
+
+        <div class="card-icon">
+          🏪
+        </div>
+
+        <div class="card-label">
+          Negozi aderenti
+        </div>
+
+        <div
+          class="card-value"
+          id="negozi">
+          -
+        </div>
+
+      </div>
+
+
+      <div class="card">
+
+        <div class="card-icon">
+          💳
+        </div>
+
+        <div class="card-label">
+          Card emesse
+        </div>
+
+        <div
+          class="card-value"
+          id="card">
+          -
+        </div>
+
+      </div>
+
+
+      <div class="card">
+
+        <div class="card-icon">
+          👤
+        </div>
+
+        <div class="card-label">
+          Clienti registrati
+        </div>
+
+        <div
+          class="card-value"
+          id="clienti">
+          -
+        </div>
+
+      </div>
+
+
+      <div class="card">
+
+        <div class="card-icon">
+          🧾
+        </div>
+
+        <div class="card-label">
+          Utilizzi registrati
+        </div>
+
+        <div
+          class="card-value"
+          id="utilizzi">
+          -
+        </div>
+
+      </div>
+
+
+      <div class="card">
+
+        <div class="card-icon">
+          ⭐
+        </div>
+
+        <div class="card-label">
+          Punti totali
+        </div>
+
+        <div
+          class="card-value"
+          id="punti">
+          -
+        </div>
+
+      </div>
+
+
+      <div class="card">
+
+        <div class="card-icon">
+          🎁
+        </div>
+
+        <div class="card-label">
+          Offerte attive
+        </div>
+
+        <div
+          class="card-value"
+          id="offerte">
+          -
+        </div>
+
+      </div>
+
     </div>
 
-    <div class="card">
-      <div class="icona">🧾</div>
-      <div class="titolo">Utilizzi registrati</div>
-      <div class="valore" id="utilizzi">—</div>
+
+    <div class="section">
+
+      <div class="section-header">
+
+        <h2>
+          🏪 Negozi aderenti
+        </h2>
+
+        <p>
+          Elenco dei negozi attualmente attivi nella SPRESIANO CARD
+        </p>
+
+      </div>
+
+
+      <div
+        id="loading"
+        class="loading">
+
+        Caricamento negozi...
+
+      </div>
+
+
+      <div
+        id="tableContainer"
+        class="table-wrapper"
+        style="display:none;">
+
+        <table>
+
+          <thead>
+
+            <tr>
+
+              <th>
+                ID
+              </th>
+
+              <th>
+                Negozio
+              </th>
+
+              <th>
+                Settore
+              </th>
+
+              <th>
+                Stato
+              </th>
+
+              <th>
+                Vantaggio Card
+              </th>
+
+              <th>
+                Telefono
+              </th>
+
+              <th>
+                Indirizzo
+              </th>
+
+              <th>
+                Note
+              </th>
+
+            </tr>
+
+          </thead>
+
+          <tbody id="negoziBody">
+          </tbody>
+
+        </table>
+
+      </div>
+
+
+      <div
+        id="empty"
+        class="empty"
+        style="display:none;">
+
+        Nessun negozio attivo trovato.
+
+      </div>
+
     </div>
 
-    <div class="card">
-      <div class="icona">⭐</div>
-      <div class="titolo">Punti totali</div>
-      <div class="valore" id="punti">—</div>
+
+    <div
+      id="error"
+      class="error">
+
+      Errore nel collegamento con il database.
+
     </div>
 
-    <div class="card">
-      <div class="icona">🎁</div>
-      <div class="titolo">Offerte attive</div>
-      <div class="valore" id="offerte">—</div>
-    </div>
-
-  </div>
-
-</main>
-
-<footer>
-  Giokri Life · SPRESIANO CARD
-</footer>
+  </main>
 
 
-<script>
+  <footer class="footer">
 
-const API_URL =
-  'https://script.google.com/macros/s/AKfycbxHaUH-tBV6IjSEB6nwGXCwe-C2BZ5iw5qXO2lABAQibULYh2c2b7z--dUcHMqQpksS/exec';
+    Giokri Life · SPRESIANO CARD
+
+  </footer>
 
 
-async function caricaDashboard() {
+  <script>
 
-  const stato =
-    document.getElementById('stato');
+    const API_URL =
+      'https://script.google.com/macros/s/AKfycbxHaUH-tBV6ijSEB6nwGXCwe-C2BZ5iw5qXO2lABAQibULYh2c2b7z--dUcHMqQpksS/exec';
 
-  try {
 
-    const response =
-      await fetch(
-        API_URL + '?azione=dashboard',
-        {
-          method: 'GET',
-          cache: 'no-store'
+    /***************************************************
+     * CARICA DASHBOARD
+     ***************************************************/
+
+    async function caricaDashboard() {
+
+      try {
+
+        const risposta =
+          await fetch(
+            API_URL + '?azione=dashboard'
+          );
+
+        const dati =
+          await risposta.json();
+
+
+        if (
+          dati.success &&
+          dati.dashboard
+        ) {
+
+          document.getElementById(
+            'negozi'
+          ).textContent =
+            dati.dashboard.negozi ?? 0;
+
+
+          document.getElementById(
+            'card'
+          ).textContent =
+            dati.dashboard.card ?? 0;
+
+
+          document.getElementById(
+            'clienti'
+          ).textContent =
+            dati.dashboard.clienti ?? 0;
+
+
+          document.getElementById(
+            'utilizzi'
+          ).textContent =
+            dati.dashboard.utilizzi ?? 0;
+
+
+          document.getElementById(
+            'punti'
+          ).textContent =
+            dati.dashboard.punti ?? 0;
+
+
+          document.getElementById(
+            'offerte'
+          ).textContent =
+            dati.dashboard.offerte ?? 0;
+
         }
-      );
 
-    if (!response.ok) {
-      throw new Error(
-        'Errore HTTP ' + response.status
-      );
-    }
+      }
 
-    const dati =
-      await response.json();
+      catch (errore) {
 
+        console.error(
+          'Errore dashboard:',
+          errore
+        );
 
-    if (!dati.success) {
-      throw new Error(
-        'Risposta API non valida.'
-      );
+      }
+
     }
 
 
-    document.getElementById('negozi')
-      .textContent = dati.dashboard?.negozi ?? dati.totale ?? 0;
+    /***************************************************
+     * CARICA NEGOZI
+     ***************************************************/
 
-    document.getElementById('card')
-      .textContent = dati.dashboard?.card ?? 0;
+    async function caricaNegozi() {
 
-    document.getElementById('clienti')
-      .textContent = dati.dashboard?.clienti ?? 0;
+      const loading =
+        document.getElementById(
+          'loading'
+        );
 
-    document.getElementById('utilizzi')
-      .textContent = dati.dashboard?.utilizzi ?? 0;
+      const tableContainer =
+        document.getElementById(
+          'tableContainer'
+        );
 
-    document.getElementById('punti')
-      .textContent = dati.dashboard?.punti ?? 0;
+      const empty =
+        document.getElementById(
+          'empty'
+        );
 
-    document.getElementById('offerte')
-      .textContent = dati.dashboard?.offerte ?? 0;
+      const error =
+        document.getElementById(
+          'error'
+        );
 
-
-    stato.textContent =
-      'Collegamento attivo';
-
-    stato.className =
-      'successo';
-
-  }
-
-  catch (errore) {
-
-    console.error(errore);
-
-    stato.textContent =
-      'Errore nel collegamento al database';
-
-    stato.className =
-      'errore';
-
-  }
-
-}
+      const tbody =
+        document.getElementById(
+          'negoziBody'
+        );
 
 
-caricaDashboard();
+      try {
 
-</script>
+        const risposta =
+          await fetch(
+            API_URL
+          );
+
+        const dati =
+          await risposta.json();
+
+
+        loading.style.display =
+          'none';
+
+
+        if (
+          !dati.success ||
+          !Array.isArray(
+            dati.negozi
+          )
+        ) {
+
+          empty.style.display =
+            'block';
+
+          return;
+
+        }
+
+
+        if (
+          dati.negozi.length === 0
+        ) {
+
+          empty.style.display =
+            'block';
+
+          return;
+
+        }
+
+
+        tbody.innerHTML =
+          '';
+
+
+        dati.negozi.forEach(
+          function(negozio) {
+
+            const tr =
+              document.createElement(
+                'tr'
+              );
+
+
+            tr.innerHTML = `
+
+              <td>
+                ${sicuro(negozio.ID)}
+              </td>
+
+              <td>
+                <strong>
+                  ${sicuro(negozio.NEGOZIO)}
+                </strong>
+              </td>
+
+              <td>
+                ${sicuro(negozio.SETTORE)}
+              </td>
+
+              <td>
+                <span class="badge badge-active">
+                  ${sicuro(negozio.ATTIVO)}
+                </span>
+              </td>
+
+              <td>
+                ${sicuro(negozio['VANTAGGIO CARD'])}
+              </td>
+
+              <td>
+                ${sicuro(negozio.TELEFONO)}
+              </td>
+
+              <td>
+                ${sicuro(negozio.INDIRIZZO)}
+              </td>
+
+              <td>
+                ${sicuro(negozio.NOTE)}
+              </td>
+
+            `;
+
+
+            tbody.appendChild(
+              tr
+            );
+
+          }
+        );
+
+
+        tableContainer.style.display =
+          'block';
+
+      }
+
+      catch (errore) {
+
+        console.error(
+          'Errore negozi:',
+          errore
+        );
+
+        loading.style.display =
+          'none';
+
+        error.style.display =
+          'block';
+
+      }
+
+    }
+
+
+    /***************************************************
+     * PROTEZIONE TESTO
+     ***************************************************/
+
+    function sicuro(valore) {
+
+      if (
+        valore === null ||
+        valore === undefined
+      ) {
+
+        return '';
+
+      }
+
+      return String(valore)
+        .replace(
+          /&/g,
+          '&amp;'
+        )
+        .replace(
+          /</g,
+          '&lt;'
+        )
+        .replace(
+          />/g,
+          '&gt;'
+        )
+        .replace(
+          /"/g,
+          '&quot;'
+        )
+        .replace(
+          /'/g,
+          '&#039;'
+        );
+
+    }
+
+
+    /***************************************************
+     * AVVIO
+     ***************************************************/
+
+    caricaDashboard();
+
+    caricaNegozi();
+
+  </script>
 
 </body>
 </html>
-```
