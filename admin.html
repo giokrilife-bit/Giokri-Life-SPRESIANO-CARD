@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="it">
 
@@ -504,6 +503,7 @@
     /*******************************************************
      * GIOKRI LIFE – SPRESIANO CARD
      * PANNELLO AMMINISTRATORE
+     * VERSIONE JSONP ROBUSTA
      *******************************************************/
 
     const API_URL =
@@ -511,187 +511,374 @@
 
 
     /*******************************************************
-     * JSONP SEMPLICE
-     *
-     * Il Web App è già stato verificato con:
-     *
-     * ?callback=test123
-     *
-     * e restituisce correttamente:
-     *
-     * test123({...});
+     * ELEMENTI PAGINA
      *******************************************************/
 
-    function richiestaJSONP(url, callbackName) {
+    const statusText =
+      document.getElementById('statusText');
 
-      const script =
-        document.createElement('script');
+    const statusDot =
+      document.getElementById('statusDot');
 
-      script.src =
-        url +
-        (url.indexOf('?') >= 0 ? '&' : '?') +
-        'callback=' +
-        encodeURIComponent(callbackName);
+    const errorBox =
+      document.getElementById('error');
 
-      script.onerror =
-        function() {
+    const errorDetail =
+      document.getElementById('errorDetail');
 
-          console.error(
-            'Errore caricamento API:',
-            script.src
-          );
+    const loading =
+      document.getElementById('loading');
 
-          document.getElementById(
-            'statusText'
-          ).textContent =
-            'Errore collegamento';
+    const tableContainer =
+      document.getElementById('tableContainer');
 
-          document.getElementById(
-            'statusDot'
-          ).classList.add('error');
+    const empty =
+      document.getElementById('empty');
 
-          document.getElementById(
-            'error'
-          ).style.display =
-            'block';
+    const tbody =
+      document.getElementById('negoziBody');
 
-          document.getElementById(
-            'errorDetail'
-          ).textContent =
-            'Errore caricamento API';
 
-        };
+    /*******************************************************
+     * MOSTRA ERRORE
+     *******************************************************/
 
-      document.head.appendChild(script);
+    function mostraErrore(messaggio) {
+
+      statusText.textContent =
+        'Errore collegamento';
+
+      statusDot.classList.add('error');
+
+      errorBox.style.display =
+        'block';
+
+      errorDetail.textContent =
+        messaggio ||
+        'Errore caricamento API';
 
     }
 
 
     /*******************************************************
-     * DASHBOARD
+     * RICHIESTA JSONP ROBUSTA
+     *
+     * La richiesta viene ripetuta automaticamente in caso
+     * di errore o timeout.
      *******************************************************/
 
-    function caricaDashboard() {
+    function richiestaJSONP(
+      url,
+      tentativiMassimi
+    ) {
 
-      window.giokriDashboardCallback =
-        function(dati) {
-
-          console.log(
-            'DASHBOARD:',
-            dati
-          );
+      tentativiMassimi =
+        tentativiMassimi || 4;
 
 
-          if (
-            !dati ||
-            dati.success !== true ||
-            !dati.dashboard
-          ) {
+      return new Promise(
+        function(resolve, reject) {
 
-            document.getElementById(
-              'error'
-            ).style.display =
-              'block';
+          let tentativo = 0;
 
-            document.getElementById(
-              'errorDetail'
-            ).textContent =
-              'Dashboard: risposta non valida';
 
-            return;
+          function eseguiTentativo() {
+
+            tentativo++;
+
+
+            const callbackName =
+              'giokriCallback_' +
+              Date.now() +
+              '_' +
+              tentativo;
+
+
+            const script =
+              document.createElement('script');
+
+
+            let concluso = false;
+
+
+            const separatore =
+              url.indexOf('?') >= 0
+                ? '&'
+                : '?';
+
+
+            const urlCompleto =
+              url +
+              separatore +
+              'callback=' +
+              encodeURIComponent(
+                callbackName
+              );
+
+
+            let timeoutId;
+
+
+            /*************************************************
+             * PULIZIA
+             *************************************************/
+
+            function pulisci() {
+
+              clearTimeout(
+                timeoutId
+              );
+
+
+              if (script.parentNode) {
+
+                script.parentNode.removeChild(
+                  script
+                );
+
+              }
+
+
+              try {
+
+                delete window[callbackName];
+
+              } catch (e) {
+
+                window[callbackName] =
+                  undefined;
+
+              }
+
+            }
+
+
+            /*************************************************
+             * CALLBACK JSONP
+             *************************************************/
+
+            window[callbackName] =
+              function(dati) {
+
+                if (concluso) {
+                  return;
+                }
+
+                concluso = true;
+
+                pulisci();
+
+                resolve(dati);
+
+              };
+
+
+            /*************************************************
+             * ERRORE SCRIPT
+             *************************************************/
+
+            script.onerror =
+              function() {
+
+                if (concluso) {
+                  return;
+                }
+
+                concluso = true;
+
+                pulisci();
+
+
+                if (
+                  tentativo <
+                  tentativiMassimi
+                ) {
+
+                  setTimeout(
+                    eseguiTentativo,
+                    1500
+                  );
+
+                } else {
+
+                  reject(
+                    new Error(
+                      'Impossibile collegarsi al Web App dopo ' +
+                      tentativiMassimi +
+                      ' tentativi.'
+                    )
+                  );
+
+                }
+
+              };
+
+
+            /*************************************************
+             * TIMEOUT
+             *************************************************/
+
+            timeoutId =
+              setTimeout(
+                function() {
+
+                  if (concluso) {
+                    return;
+                  }
+
+                  concluso = true;
+
+                  pulisci();
+
+
+                  if (
+                    tentativo <
+                    tentativiMassimi
+                  ) {
+
+                    setTimeout(
+                      eseguiTentativo,
+                      1500
+                    );
+
+                  } else {
+
+                    reject(
+                      new Error(
+                        'Timeout del collegamento al Web App.'
+                      )
+                    );
+
+                  }
+
+                },
+                8000
+              );
+
+
+            /*************************************************
+             * INVIO
+             *************************************************/
+
+            script.src =
+              urlCompleto;
+
+
+            document.head.appendChild(
+              script
+            );
 
           }
 
 
-          const dashboard =
-            dati.dashboard;
+          eseguiTentativo();
 
-
-          document.getElementById(
-            'negozi'
-          ).textContent =
-            dashboard.negozi ?? 0;
-
-
-          document.getElementById(
-            'card'
-          ).textContent =
-            dashboard.card ?? 0;
-
-
-          document.getElementById(
-            'clienti'
-          ).textContent =
-            dashboard.clienti ?? 0;
-
-
-          document.getElementById(
-            'utilizzi'
-          ).textContent =
-            dashboard.utilizzi ?? 0;
-
-
-          document.getElementById(
-            'punti'
-          ).textContent =
-            dashboard.punti ?? 0;
-
-
-          document.getElementById(
-            'offerte'
-          ).textContent =
-            dashboard.offerte ?? 0;
-
-
-          document.getElementById(
-            'statusText'
-          ).textContent =
-            'Collegamento attivo';
-
-
-          document.getElementById(
-            'statusDot'
-          ).classList.remove(
-            'error'
-          );
-
-        };
-
-
-      richiestaJSONP(
-        API_URL + '?azione=dashboard',
-        'giokriDashboardCallback'
+        }
       );
 
     }
 
 
     /*******************************************************
-     * NEGOZI
+     * CARICA DASHBOARD
      *******************************************************/
 
-    function caricaNegozi() {
+    async function caricaDashboard() {
 
-      const loading =
-        document.getElementById(
-          'loading'
+      try {
+
+        const dati =
+          await richiestaJSONP(
+            API_URL + '?azione=dashboard',
+            4
+          );
+
+
+        console.log(
+          'DASHBOARD:',
+          dati
         );
 
-      const tableContainer =
+
+        if (
+          !dati ||
+          dati.success !== true ||
+          !dati.dashboard
+        ) {
+
+          throw new Error(
+            'Risposta dashboard non valida.'
+          );
+
+        }
+
+
+        const dashboard =
+          dati.dashboard;
+
+
         document.getElementById(
-          'tableContainer'
+          'negozi'
+        ).textContent =
+          dashboard.negozi ?? 0;
+
+
+        document.getElementById(
+          'card'
+        ).textContent =
+          dashboard.card ?? 0;
+
+
+        document.getElementById(
+          'clienti'
+        ).textContent =
+          dashboard.clienti ?? 0;
+
+
+        document.getElementById(
+          'utilizzi'
+        ).textContent =
+          dashboard.utilizzi ?? 0;
+
+
+        document.getElementById(
+          'punti'
+        ).textContent =
+          dashboard.punti ?? 0;
+
+
+        document.getElementById(
+          'offerte'
+        ).textContent =
+          dashboard.offerte ?? 0;
+
+
+        return true;
+
+      } catch (errore) {
+
+        console.error(
+          'Errore dashboard:',
+          errore
         );
 
-      const empty =
-        document.getElementById(
-          'empty'
+        mostraErrore(
+          'Dashboard: ' +
+          errore.message
         );
 
-      const tbody =
-        document.getElementById(
-          'negoziBody'
-        );
+        return false;
 
+      }
+
+    }
+
+
+    /*******************************************************
+     * CARICA NEGOZI
+     *******************************************************/
+
+    async function caricaNegozi() {
 
       loading.style.display =
         'block';
@@ -703,204 +890,262 @@
         'none';
 
 
-      window.giokriNegoziCallback =
-        function(dati) {
+      try {
 
-          console.log(
-            'NEGOZI:',
-            dati
+        const dati =
+          await richiestaJSONP(
+            API_URL,
+            4
           );
 
 
-          loading.style.display =
-            'none';
+        console.log(
+          'NEGOZI:',
+          dati
+        );
 
 
-          if (
-            !dati ||
-            dati.success !== true
-          ) {
+        if (
+          !dati ||
+          dati.success !== true
+        ) {
 
-            empty.textContent =
-              'Errore nella risposta del database.';
-
-            empty.style.display =
-              'block';
-
-            return;
-
-          }
-
-
-          const negozi =
-            Array.isArray(dati.negozi)
-              ? dati.negozi
-              : [];
-
-
-          if (
-            negozi.length === 0
-          ) {
-
-            empty.textContent =
-              'Nessun negozio attivo trovato.';
-
-            empty.style.display =
-              'block';
-
-            return;
-
-          }
-
-
-          tbody.innerHTML =
-            '';
-
-
-          negozi.forEach(
-            function(negozio) {
-
-              const tr =
-                document.createElement(
-                  'tr'
-                );
-
-
-              const valori = [
-
-                negozio.ID ?? '',
-
-                negozio.NEGOZIO ?? '',
-
-                negozio.SETTORE ?? '',
-
-                negozio.ATTIVO ?? '',
-
-                negozio['VANTAGGIO CARD'] ?? '',
-
-                negozio.TELEFONO ?? '',
-
-                negozio.INDIRIZZO ?? '',
-
-                negozio.NOTE ?? ''
-
-              ];
-
-
-              valori.forEach(
-                function(valore, indice) {
-
-                  const td =
-                    document.createElement(
-                      'td'
-                    );
-
-
-                  if (
-                    indice === 1
-                  ) {
-
-                    const strong =
-                      document.createElement(
-                        'strong'
-                      );
-
-                    strong.textContent =
-                      valore;
-
-                    td.appendChild(
-                      strong
-                    );
-
-                  }
-
-                  else if (
-                    indice === 3
-                  ) {
-
-                    const badge =
-                      document.createElement(
-                        'span'
-                      );
-
-                    badge.className =
-                      'badge badge-active';
-
-                    badge.textContent =
-                      valore;
-
-                    td.appendChild(
-                      badge
-                    );
-
-                  }
-
-                  else {
-
-                    td.textContent =
-                      valore;
-
-                  }
-
-
-                  tr.appendChild(
-                    td
-                  );
-
-                }
-              );
-
-
-              tbody.appendChild(
-                tr
-              );
-
-            }
+          throw new Error(
+            'Risposta negozi non valida.'
           );
 
+        }
 
-          tableContainer.style.display =
-            'block';
 
+        const negozi =
+          Array.isArray(
+            dati.negozi
+          )
+            ? dati.negozi
+            : [];
+
+
+        loading.style.display =
+          'none';
+
+
+        if (
+          negozi.length === 0
+        ) {
+
+          empty.textContent =
+            'Nessun negozio attivo trovato.';
 
           empty.style.display =
-            'none';
+            'block';
+
+          return;
+
+        }
 
 
-          document.getElementById(
-            'statusText'
-          ).textContent =
-            'Collegamento attivo';
+        tbody.innerHTML =
+          '';
 
 
-          document.getElementById(
-            'statusDot'
-          ).classList.remove(
-            'error'
-          );
+        negozi.forEach(
+          function(negozio) {
 
-        };
+            const tr =
+              document.createElement(
+                'tr'
+              );
 
 
-      richiestaJSONP(
-        API_URL,
-        'giokriNegoziCallback'
-      );
+            const valori = [
+
+              negozio.ID ?? '',
+
+              negozio.NEGOZIO ?? '',
+
+              negozio.SETTORE ?? '',
+
+              negozio.ATTIVO ?? '',
+
+              negozio['VANTAGGIO CARD'] ?? '',
+
+              negozio.TELEFONO ?? '',
+
+              negozio.INDIRIZZO ?? '',
+
+              negozio.NOTE ?? ''
+
+            ];
+
+
+            valori.forEach(
+              function(
+                valore,
+                indice
+              ) {
+
+                const td =
+                  document.createElement(
+                    'td'
+                  );
+
+
+                if (
+                  indice === 1
+                ) {
+
+                  const strong =
+                    document.createElement(
+                      'strong'
+                    );
+
+
+                  strong.textContent =
+                    valore;
+
+
+                  td.appendChild(
+                    strong
+                  );
+
+
+                }
+
+                else if (
+                  indice === 3
+                ) {
+
+                  const badge =
+                    document.createElement(
+                      'span'
+                    );
+
+
+                  badge.className =
+                    'badge badge-active';
+
+
+                  badge.textContent =
+                    valore;
+
+
+                  td.appendChild(
+                    badge
+                  );
+
+
+                }
+
+                else {
+
+                  td.textContent =
+                    valore;
+
+                }
+
+
+                tr.appendChild(
+                  td
+                );
+
+              }
+            );
+
+
+            tbody.appendChild(
+              tr
+            );
+
+          }
+        );
+
+
+        tableContainer.style.display =
+          'block';
+
+
+        empty.style.display =
+          'none';
+
+
+      } catch (errore) {
+
+        loading.style.display =
+          'none';
+
+
+        console.error(
+          'Errore negozi:',
+          errore
+        );
+
+
+        empty.textContent =
+          'Errore nel caricamento dei negozi.';
+
+
+        empty.style.display =
+          'block';
+
+
+        mostraErrore(
+          'Negozi: ' +
+          errore.message
+        );
+
+      }
 
     }
 
 
     /*******************************************************
      * AVVIO
+     *
+     * Prima Dashboard.
+     * Poi Negozi.
+     *
+     * Le due richieste NON partono contemporaneamente.
      *******************************************************/
 
     document.addEventListener(
       'DOMContentLoaded',
-      function() {
+      async function() {
 
-        caricaDashboard();
+        statusText.textContent =
+          'Collegamento in corso...';
 
-        caricaNegozi();
+
+        const dashboardOK =
+          await caricaDashboard();
+
+
+        if (dashboardOK) {
+
+          statusText.textContent =
+            'Collegamento attivo';
+
+          statusDot.classList.remove(
+            'error'
+          );
+
+        }
+
+
+        await caricaNegozi();
+
+
+        if (
+          dashboardOK
+        ) {
+
+          statusText.textContent =
+            'Collegamento attivo';
+
+          statusDot.classList.remove(
+            'error'
+          );
+
+        }
 
       }
     );
@@ -910,4 +1155,3 @@
 </body>
 
 </html>
-```
