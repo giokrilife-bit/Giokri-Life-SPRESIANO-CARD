@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+
+<html lang="it">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Livelli e vantaggi | SPRESIANO CARD</title>
+
+<meta name="description"
+content="Scopri i livelli e i vantaggi della SPRESIANO CARD. Basic, Silver, Gold e Premium.">
+
+<style>
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f5f7f8;
+    color: #202428;
+    line-height: 1.5;
+}
+
+.container {
+    width: 92%;
+    max-width: 1050px;
+    margin: auto;
+}
+
+/* HEADER */
+
+header {
+    background: #ffffff;
+    border-bottom: 1px solid #e5e7e9;
+    padding: 18px 0;
+}
+
+.header-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: 800;
+    color: #1d5f8f;
+}
+
+.logo span {
+    display: block;
+    font-size: 12px;
+    font-weight: normal;
+    color: #6b7278;
+    margin-top: 2px;
+}
+
+/* HERO */
+
+.hero {
+    background: linear-gradient(135deg, #1d5f8f, #2588a9);
+    color: white;
+    padding: 50px 0 55px;
+}
+
+.hero-content {
+    text-align: center;
+    max-width: 760px;
+    margin: auto;
+}
+
+.badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.16);
+    border: 1px solid rgba(255,255,255,0.30);
+    padding: 7px 15px;
+    border-radius: 30px;
+    font-size: 13px;
+    margin-bottom: 18px;
+}
+
+.hero h1 {
+    font-size: 42px;
+    line-height: 1.15;
+    margin-bottom: 14px;
+}
+
+.hero p {
+    font-size: 17px;
+    opacity: 0.95;
+    max-width: 680px;
+    margin: auto;
+}
+
+/* INTRO */
+
+.intro {
+    padding: 45px 0 20px;
+    text-align: center;
+}
+
+.intro h2 {
+    color: #1d5f8f;
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+.intro p {
+    color: #687078;
+    max-width: 720px;
+    margin: auto;
+}
+
+/* LIVELLI */
+
+.levels-section {
+    padding: 25px 0 50px;
+}
+
+.levels {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+}
+
+.level {
+    background: white;
+    border-radius: 14px;
+    padding: 28px 20px;
+    text-align: center;
+    box-shadow: 0 3px 14px rgba(0,0,0,0.07);
+    border-top: 5px solid #cbd0d4;
+    display: flex;
+    flex-direction: column;
+}
+
+.level h3 {
+    font-size: 24px;
+    margin-bottom: 8px;
+}
+
+.level-description {
+    color: #687078;
+    font-size: 14px;
+    min-height: 63px;
+    margin-bottom: 20px;
+}
+
+.level-rule {
+    background: #f5f7f8;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 20px;
+    font-size: 13px;
+    color: #596168;
+}
+
+.level ul {
+    list-style: none;
+    text-align: left;
+    margin-top: auto;
+}
+
+.level li {
+    padding: 8px 0;
+    border-bottom: 1px solid #edf0f2;
+    font-size: 14px;
+}
+
+.level li:last-child {
+    border-bottom: none;
+}
+
+.level li::before {
+    content: "✓";
+    font-weight: bold;
+    margin-right: 8px;
+    color: #1d5f8f;
+}
+
+/* BASIC */
+
+.level-basic {
+    border-top-color: #8f969c;
+}
+
+.level-basic h3 {
+    color: #555c62;
+}
+
+/* SILVER */
+
+.level-silver {
+    border-top-color: #aeb5bb;
+}
+
+.level-silver h3 {
+    color: #707980;
+}
+
+/* GOLD */
+
+.level-gold {
+    border-top-color: #c5a23a;
+}
+
+.level-gold h3 {
+    color: #a27c0b;
+}
+
+/* PREMIUM */
+
+.level-premium {
+    border-top-color: #1d5f8f;
+}
+
+.level-premium h3 {
+    color: #1d5f8f;
+}
+
+/* PUNTI */
+
+.points-section {
+    background: #ffffff;
+    padding: 50px 0;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.section-title h2 {
+    color: #1d5f8f;
+    font-size: 30px;
+    margin-bottom: 8px;
+}
+
+.section-title p {
+    color: #687078;
+}
+
+.points-box {
+    max-width: 760px;
+    margin: auto;
+    background: #f5f7f8;
+    border-radius: 14px;
+    padding: 30px;
+    text-align: center;
+}
+
+.points-number {
+    color: #1d5f8f;
+    font-size: 40px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.points-box p {
+    color: #687078;
+}
+
+/* TARGET */
+
+.target-section {
+    padding: 50px 0;
+}
+
+.targets {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+}
+
+.target {
+    background: white;
+    border-radius: 12px;
+    padding: 24px 20px;
+    text-align: center;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+}
+
+.target h3 {
+    color: #1d5f8f;
+    margin-bottom: 8px;
+}
+
+.target p {
+    font-size: 14px;
+    color: #687078;
+}
+
+/* FUTURO */
+
+.future {
+    background: #eaf3f7;
+    padding: 50px 0;
+    text-align: center;
+}
+
+.future h2 {
+    color: #1d5f8f;
+    font-size: 30px;
+    margin-bottom: 12px;
+}
+
+.future p {
+    max-width: 720px;
+    margin: auto;
+    color: #5f676d;
+}
+
+.future-list {
+    max-width: 650px;
+    margin: 25px auto 0;
+    text-align: left;
+}
+
+.future-list div {
+    background: white;
+    padding: 13px 16px;
+    border-radius: 8px;
+    margin-bottom: 9px;
+    color: #4f575d;
+}
+
+/* CTA */
+
+.final-cta {
+    padding: 50px 0;
+    text-align: center;
+    background: white;
+}
+
+.final-cta h2 {
+    color: #1d5f8f;
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+.final-cta p {
+    color: #687078;
+    margin-bottom: 25px;
+}
+
+.cta {
+    display: inline-block;
+    background: #1d5f8f;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 16px;
+    padding: 14px 26px;
+    border-radius: 8px;
+}
+
+.cta:hover {
+    background: #174f77;
+}
+
+/* LINK HOME */
+
+.back {
+    text-align: center;
+    padding: 25px 0;
+    background: white;
+}
+
+.back a {
+    color: #1d5f8f;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+/* FOOTER */
+
+footer {
+    background: #202428;
+    color: white;
+    text-align: center;
+    padding: 25px 15px;
+    font-size: 13px;
+}
+
+footer .small {
+    color: #adb3b7;
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+/* MOBILE */
+
+@media (max-width: 850px) {
+
+    .levels {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .targets {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+@media (max-width: 600px) {
+
+    .hero {
+        padding: 40px 0 45px;
+    }
+
+    .hero h1 {
+        font-size: 34px;
+    }
+
+    .hero p {
+        font-size: 16px;
+    }
+
+    .levels {
+        grid-template-columns: 1fr;
+    }
+
+    .intro h2,
+    .section-title h2,
+    .future h2,
+    .final-cta h2 {
+        font-size: 26px;
+    }
+
+    .points-number {
+        font-size: 34px;
+    }
+
+    .points-box {
+        padding: 25px 18px;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+```
+<div class="container header-inner">
+
+    <div class="logo">
+        SPRESIANO CARD
+        <span>Promossa da GiOKri Life</span>
+    </div>
+
+</div>
+```
+
+</header>
+
+<main>
+
+<!-- HERO -->
+
+<section class="hero">
+
+```
+<div class="container hero-content">
+
+    <div class="badge">
+        LIVELLI E VANTAGGI
+    </div>
+
+    <h1>
+        Più partecipi, più opportunità
+    </h1>
+
+    <p>
+        La SPRESIANO CARD prevede diversi livelli di
+        partecipazione. Con il tempo, gli acquisti e le
+        iniziative potranno permetterti di accedere a
+        opportunità sempre più interessanti.
+    </p>
+
+</div>
+```
+
+</section>
+
+<!-- INTRO -->
+
+<section class="intro">
+
+```
+<div class="container">
+
+    <h2>
+        I livelli della SPRESIANO CARD
+    </h2>
+
+    <p>
+        La Card parte da un livello di ingresso e può
+        crescere nel tempo. Soglie, condizioni e vantaggi
+        potranno essere aggiornati in base alle iniziative
+        della rete dei negozi aderenti.
+    </p>
+
+</div>
+```
+
+</section>
+
+<!-- LIVELLI -->
+
+<section class="levels-section">
+
+```
+<div class="container">
+
+    <div class="levels">
+
+
+        <!-- BASIC -->
+
+        <div class="level level-basic">
+
+            <h3>BASIC</h3>
+
+            <div class="level-description">
+
+                Il livello di ingresso
+                della SPRESIANO CARD.
+
+            </div>
+
+            <div class="level-rule">
+
+                Accesso con la registrazione
+                alla Card.
+
+            </div>
+
+            <ul>
+
+                <li>
+                    Card gratuita
+                </li>
+
+                <li>
+                    Accesso alle iniziative
+                </li>
+
+                <li>
+                    Accumulo punti
+                </li>
+
+                <li>
+                    Informazioni sulle opportunità
+                </li>
+
+            </ul>
+
+        </div>
+
+
+        <!-- SILVER -->
+
+        <div class="level level-silver">
+
+            <h3>SILVER</h3>
+
+            <div class="level-description">
+
+                Un livello superiore per chi
+                partecipa con maggiore continuità.
+
+            </div>
+
+            <div class="level-rule">
+
+                Livello collegato
+                all'accumulo di punti.
+
+            </div>
+
+            <ul>
+
+                <li>
+                    Tutti i vantaggi BASIC
+                </li>
+
+                <li>
+                    Iniziative dedicate
+                </li>
+
+                <li>
+                    Possibili vantaggi presso
+                    i negozi aderenti
+                </li>
+
+                <li>
+                    Accesso a iniziative speciali
+                </li>
+
+            </ul>
+
+        </div>
+
+
+        <!-- GOLD -->
+
+        <div class="level level-gold">
+
+            <h3>GOLD</h3>
+
+            <div class="level-description">
+
+                Un livello dedicato ai clienti
+                più attivi nella community.
+
+            </div>
+
+            <div class="level-rule">
+
+                Livello collegato
+                a una soglia punti superiore.
+
+            </div>
+
+            <ul>
+
+                <li>
+                    Tutti i vantaggi SILVER
+                </li>
+
+                <li>
+                    Opportunità dedicate
+                </li>
+
+                <li>
+                    Promozioni selezionate
+                </li>
+
+                <li>
+                    Iniziative riservate
+                </li>
+
+            </ul>
+
+        </div>
+
+
+        <!-- PREMIUM -->
+
+        <div class="level level-premium">
+
+            <h3>PREMIUM</h3>
+
+            <div class="level-description">
+
+                Il livello più avanzato
+                della SPRESIANO CARD.
+
+            </div>
+
+            <div class="level-rule">
+
+                Livello collegato
+                alle soglie più alte.
+
+            </div>
+
+            <ul>
+
+                <li>
+                    Tutti i vantaggi GOLD
+                </li>
+
+                <li>
+                    Vantaggi speciali
+                </li>
+
+                <li>
+                    Iniziative esclusive
+                </li>
+
+                <li>
+                    Opportunità dedicate
+                </li>
+
+            </ul>
+
+        </div>
+
+
+    </div>
+
+</div>
+```
+
+</section>
+
+<!-- PUNTI -->
+
+<section class="points-section">
+
+```
+<div class="container">
+
+    <div class="section-title">
+
+        <h2>
+            Come funzionano i punti
+        </h2>
+
+        <p>
+            Gli acquisti verificati contribuiscono
+            alla crescita della tua Card.
+        </p>
+
+    </div>
+
+
+    <div class="points-box">
+
+        <div class="points-number">
+            1 € = 1 punto
+        </div>
+
+        <p>
+            I punti vengono attribuiti sugli acquisti
+            verificati secondo le regole della
+            SPRESIANO CARD.
+        </p>
+
+    </div>
+
+</div>
+```
+
+</section>
+
+<!-- TARGET -->
+
+<section class="target-section">
+
+```
+<div class="container">
+
+    <div class="section-title">
+
+        <h2>
+            Iniziative per diversi target
+        </h2>
+
+        <p>
+            La SPRESIANO CARD potrà sviluppare
+            iniziative dedicate a diverse esigenze.
+        </p>
+
+    </div>
+
+
+    <div class="targets">
+
+
+        <div class="target">
+
+            <h3>Famiglie</h3>
+
+            <p>
+                Iniziative e opportunità dedicate
+                agli acquisti e alle esigenze
+                della famiglia.
+            </p>
+
+        </div>
+
+
+        <div class="target">
+
+            <h3>Giovani</h3>
+
+            <p>
+                Proposte legate a sport, tempo libero,
+                formazione e attività locali.
+            </p>
+
+        </div>
+
+
+        <div class="target">
+
+            <h3>Community</h3>
+
+            <p>
+                Iniziative pensate per rafforzare
+                il rapporto tra cittadini,
+                negozi e territorio.
+            </p>
+
+        </div>
+
+
+    </div>
+
+</div>
+```
+
+</section>
+
+<!-- FUTURO -->
+
+<section class="future">
+
+```
+<div class="container">
+
+    <h2>
+        Una Card che può crescere
+    </h2>
+
+    <p>
+        La SPRESIANO CARD nasce con una struttura
+        semplice e può evolvere nel tempo insieme
+        ai negozi aderenti e alla comunità.
+    </p>
+
+
+    <div class="future-list">
+
+        <div>
+            ✓ Nuovi negozi aderenti
+        </div>
+
+        <div>
+            ✓ Nuove iniziative e campagne
+        </div>
+
+        <div>
+            ✓ Vantaggi dedicati ai diversi livelli
+        </div>
+
+        <div>
+            ✓ Target e progetti speciali
+        </div>
+
+        <div>
+            ✓ Nuove opportunità legate ai punti
+        </div>
+
+    </div>
+
+</div>
+```
+
+</section>
+
+<!-- CTA -->
+
+<section class="final-cta">
+
+```
+<div class="container">
+
+    <h2>
+        Vuoi entrare nella SPRESIANO CARD?
+    </h2>
+
+    <p>
+        La registrazione è gratuita.
+        Crea la tua Card e inizia a partecipare.
+    </p>
+
+    <a
+        href="iscrizione.html"
+        class="cta"
+    >
+        CREA LA TUA CARD
+    </a>
+
+</div>
+```
+
+</section>
+
+<!-- BACK -->
+
+<div class="back">
+
+```
+<a href="index.html">
+    ← Torna alla pagina principale
+</a>
+```
+
+</div>
+
+</main>
+
+<footer>
+
+```
+<strong>SPRESIANO CARD</strong>
+
+<div class="small">
+    Promossa da GiOKri Life · Spresiano
+</div>
+```
+
+</footer>
+
+</body>
+
+</html>
