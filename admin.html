@@ -12,11 +12,13 @@
 
   <title>Giokri Life · SPRESIANO CARD · Admin</title>
 
+
   <style>
 
     * {
       box-sizing: border-box;
     }
+
 
     body {
       margin: 0;
@@ -25,16 +27,19 @@
       color: #1f2937;
     }
 
+
     .header {
       background: #111827;
       color: white;
       padding: 28px 20px;
     }
 
+
     .header-inner {
       max-width: 1200px;
       margin: 0 auto;
     }
+
 
     .brand {
       font-size: 28px;
@@ -42,16 +47,19 @@
       margin-bottom: 6px;
     }
 
+
     .subtitle {
       font-size: 15px;
       opacity: 0.8;
     }
+
 
     .container {
       max-width: 1200px;
       margin: 0 auto;
       padding: 25px 20px 50px;
     }
+
 
     .status {
       background: white;
@@ -64,27 +72,37 @@
       gap: 10px;
     }
 
+
     .status-dot {
       width: 11px;
       height: 11px;
-      background: #22c55e;
+      background: #f59e0b;
       border-radius: 50%;
       display: inline-block;
       flex-shrink: 0;
     }
 
+
+    .status-dot.ok {
+      background: #22c55e;
+    }
+
+
     .status-dot.error {
       background: #ef4444;
     }
+
 
     .status-text {
       font-weight: 600;
     }
 
+
     .dashboard-title {
       font-size: 21px;
       margin: 0 0 15px;
     }
+
 
     .cards {
       display: grid;
@@ -93,6 +111,7 @@
       margin-bottom: 30px;
     }
 
+
     .card {
       background: white;
       border-radius: 14px;
@@ -100,10 +119,12 @@
       box-shadow: 0 3px 12px rgba(0,0,0,0.06);
     }
 
+
     .card-icon {
       font-size: 28px;
       margin-bottom: 10px;
     }
+
 
     .card-label {
       color: #6b7280;
@@ -111,10 +132,12 @@
       margin-bottom: 7px;
     }
 
+
     .card-value {
       font-size: 30px;
       font-weight: 700;
     }
+
 
     .section {
       background: white;
@@ -124,15 +147,18 @@
       margin-top: 25px;
     }
 
+
     .section-header {
       padding: 20px;
       border-bottom: 1px solid #e5e7eb;
     }
 
+
     .section-header h2 {
       margin: 0 0 5px;
       font-size: 21px;
     }
+
 
     .section-header p {
       margin: 0;
@@ -140,15 +166,18 @@
       font-size: 14px;
     }
 
+
     .table-wrapper {
       overflow-x: auto;
     }
+
 
     table {
       width: 100%;
       border-collapse: collapse;
       min-width: 850px;
     }
+
 
     th {
       background: #f9fafb;
@@ -160,6 +189,7 @@
       white-space: nowrap;
     }
 
+
     td {
       padding: 14px 15px;
       border-bottom: 1px solid #f0f0f0;
@@ -167,9 +197,11 @@
       vertical-align: top;
     }
 
+
     tr:last-child td {
       border-bottom: none;
     }
+
 
     .badge {
       display: inline-block;
@@ -179,10 +211,12 @@
       font-weight: 700;
     }
 
+
     .badge-active {
       background: #dcfce7;
       color: #166534;
     }
+
 
     .empty {
       padding: 30px;
@@ -190,11 +224,13 @@
       color: #6b7280;
     }
 
+
     .loading {
       padding: 30px;
       text-align: center;
       color: #6b7280;
     }
+
 
     .error {
       margin-top: 20px;
@@ -205,11 +241,13 @@
       display: none;
     }
 
+
     .error-detail {
       margin-top: 8px;
       font-size: 13px;
       white-space: pre-wrap;
     }
+
 
     .footer {
       text-align: center;
@@ -217,6 +255,7 @@
       font-size: 13px;
       padding: 30px 20px;
     }
+
 
     @media (max-width: 800px) {
 
@@ -226,23 +265,28 @@
 
     }
 
+
     @media (max-width: 520px) {
 
       .header {
         padding: 22px 16px;
       }
 
+
       .container {
         padding: 20px 14px 40px;
       }
+
 
       .brand {
         font-size: 24px;
       }
 
+
       .cards {
         grid-template-columns: 1fr;
       }
+
 
       .status {
         flex-wrap: wrap;
@@ -257,6 +301,7 @@
 
 <body>
 
+
   <header class="header">
 
     <div class="header-inner">
@@ -264,6 +309,7 @@
       <div class="brand">
         Giokri Life
       </div>
+
 
       <div class="subtitle">
         SPRESIANO CARD · Pannello Amministratore
@@ -276,6 +322,9 @@
 
   <main class="container">
 
+
+    <!-- STATO COLLEGAMENTO -->
+
     <div class="status">
 
       <span
@@ -283,9 +332,11 @@
         class="status-dot">
       </span>
 
+
       <span class="status-text">
         Stato collegamento
       </span>
+
 
       <span id="statusText">
         Collegamento in corso...
@@ -294,6 +345,8 @@
     </div>
 
 
+    <!-- DASHBOARD -->
+
     <h1 class="dashboard-title">
       Dashboard
     </h1>
@@ -301,9 +354,12 @@
 
     <div class="cards">
 
+
       <div class="card">
 
-        <div class="card-icon">🏪</div>
+        <div class="card-icon">
+          🏪
+        </div>
 
         <div class="card-label">
           Negozi aderenti
@@ -312,7 +368,7 @@
         <div
           class="card-value"
           id="negozi">
-          -
+          0
         </div>
 
       </div>
@@ -320,7 +376,9 @@
 
       <div class="card">
 
-        <div class="card-icon">💳</div>
+        <div class="card-icon">
+          💳
+        </div>
 
         <div class="card-label">
           Card emesse
@@ -329,7 +387,7 @@
         <div
           class="card-value"
           id="card">
-          -
+          0
         </div>
 
       </div>
@@ -337,7 +395,9 @@
 
       <div class="card">
 
-        <div class="card-icon">👤</div>
+        <div class="card-icon">
+          👤
+        </div>
 
         <div class="card-label">
           Clienti registrati
@@ -346,7 +406,7 @@
         <div
           class="card-value"
           id="clienti">
-          -
+          0
         </div>
 
       </div>
@@ -354,7 +414,9 @@
 
       <div class="card">
 
-        <div class="card-icon">🧾</div>
+        <div class="card-icon">
+          🧾
+        </div>
 
         <div class="card-label">
           Utilizzi registrati
@@ -363,7 +425,7 @@
         <div
           class="card-value"
           id="utilizzi">
-          -
+          0
         </div>
 
       </div>
@@ -371,7 +433,9 @@
 
       <div class="card">
 
-        <div class="card-icon">⭐</div>
+        <div class="card-icon">
+          ⭐
+        </div>
 
         <div class="card-label">
           Punti totali
@@ -380,7 +444,7 @@
         <div
           class="card-value"
           id="punti">
-          -
+          0
         </div>
 
       </div>
@@ -388,7 +452,9 @@
 
       <div class="card">
 
-        <div class="card-icon">🎁</div>
+        <div class="card-icon">
+          🎁
+        </div>
 
         <div class="card-label">
           Offerte attive
@@ -397,21 +463,26 @@
         <div
           class="card-value"
           id="offerte">
-          -
+          0
         </div>
 
       </div>
 
+
     </div>
 
 
+    <!-- ELENCO NEGOZI -->
+
     <div class="section">
+
 
       <div class="section-header">
 
         <h2>
           🏪 Negozi aderenti
         </h2>
+
 
         <p>
           Elenco dei negozi attualmente attivi
@@ -425,7 +496,7 @@
         id="loading"
         class="loading">
 
-        Caricamento negozi...
+        Caricamento dati...
 
       </div>
 
@@ -442,19 +513,29 @@
             <tr>
 
               <th>ID</th>
+
               <th>Negozio</th>
+
               <th>Settore</th>
+
               <th>Stato</th>
+
               <th>Vantaggio Card</th>
+
               <th>Telefono</th>
+
               <th>Indirizzo</th>
+
               <th>Note</th>
 
             </tr>
 
           </thead>
 
-          <tbody id="negoziBody"></tbody>
+
+          <tbody
+            id="negoziBody">
+          </tbody>
 
         </table>
 
@@ -470,8 +551,11 @@
 
       </div>
 
+
     </div>
 
+
+    <!-- ERRORE -->
 
     <div
       id="error"
@@ -481,12 +565,14 @@
         Errore nel collegamento con il database.
       </strong>
 
+
       <div
         id="errorDetail"
         class="error-detail">
       </div>
 
     </div>
+
 
   </main>
 
@@ -500,10 +586,9 @@
 
   <script>
 
+
     /*******************************************************
-     * GIOKRI LIFE – SPRESIANO CARD
-     * PANNELLO AMMINISTRATORE
-     * VERSIONE JSONP ROBUSTA
+     * CONFIGURAZIONE API
      *******************************************************/
 
     const API_URL =
@@ -515,43 +600,78 @@
      *******************************************************/
 
     const statusText =
-      document.getElementById('statusText');
+      document.getElementById(
+        'statusText'
+      );
+
 
     const statusDot =
-      document.getElementById('statusDot');
+      document.getElementById(
+        'statusDot'
+      );
+
 
     const errorBox =
-      document.getElementById('error');
+      document.getElementById(
+        'error'
+      );
+
 
     const errorDetail =
-      document.getElementById('errorDetail');
+      document.getElementById(
+        'errorDetail'
+      );
+
 
     const loading =
-      document.getElementById('loading');
+      document.getElementById(
+        'loading'
+      );
+
 
     const tableContainer =
-      document.getElementById('tableContainer');
+      document.getElementById(
+        'tableContainer'
+      );
+
 
     const empty =
-      document.getElementById('empty');
+      document.getElementById(
+        'empty'
+      );
+
 
     const tbody =
-      document.getElementById('negoziBody');
+      document.getElementById(
+        'negoziBody'
+      );
 
 
     /*******************************************************
      * MOSTRA ERRORE
      *******************************************************/
 
-    function mostraErrore(messaggio) {
+    function mostraErrore(
+      messaggio
+    ) {
 
       statusText.textContent =
         'Errore collegamento';
 
-      statusDot.classList.add('error');
+
+      statusDot.classList.remove(
+        'ok'
+      );
+
+
+      statusDot.classList.add(
+        'error'
+      );
+
 
       errorBox.style.display =
         'block';
+
 
       errorDetail.textContent =
         messaggio ||
@@ -561,10 +681,9 @@
 
 
     /*******************************************************
-     * RICHIESTA JSONP ROBUSTA
+     * JSONP
      *
-     * La richiesta viene ripetuta automaticamente in caso
-     * di errore o timeout.
+     * UNICA RICHIESTA AL WEB APP
      *******************************************************/
 
     function richiestaJSONP(
@@ -588,17 +707,20 @@
 
 
             const callbackName =
-              'giokriCallback_' +
+              'giokriAdminCallback_' +
               Date.now() +
               '_' +
               tentativo;
 
 
             const script =
-              document.createElement('script');
+              document.createElement(
+                'script'
+              );
 
 
-            let concluso = false;
+            let concluso =
+              false;
 
 
             const separatore =
@@ -619,10 +741,6 @@
             let timeoutId;
 
 
-            /*************************************************
-             * PULIZIA
-             *************************************************/
-
             function pulisci() {
 
               clearTimeout(
@@ -630,7 +748,9 @@
               );
 
 
-              if (script.parentNode) {
+              if (
+                script.parentNode
+              ) {
 
                 script.parentNode.removeChild(
                   script
@@ -641,50 +761,64 @@
 
               try {
 
-                delete window[callbackName];
+                delete window[
+                  callbackName
+                ];
 
               } catch (e) {
 
-                window[callbackName] =
-                  undefined;
+                window[
+                  callbackName
+                ] = undefined;
 
               }
 
             }
 
 
-            /*************************************************
-             * CALLBACK JSONP
-             *************************************************/
-
-            window[callbackName] =
+            window[
+              callbackName
+            ] =
               function(dati) {
 
-                if (concluso) {
+                if (
+                  concluso
+                ) {
+
                   return;
+
                 }
 
-                concluso = true;
+
+                concluso =
+                  true;
+
 
                 pulisci();
 
-                resolve(dati);
+
+                resolve(
+                  dati
+                );
 
               };
 
 
-            /*************************************************
-             * ERRORE SCRIPT
-             *************************************************/
-
             script.onerror =
               function() {
 
-                if (concluso) {
+                if (
+                  concluso
+                ) {
+
                   return;
+
                 }
 
-                concluso = true;
+
+                concluso =
+                  true;
+
 
                 pulisci();
 
@@ -696,7 +830,7 @@
 
                   setTimeout(
                     eseguiTentativo,
-                    1500
+                    1200
                   );
 
                 } else {
@@ -714,19 +848,22 @@
               };
 
 
-            /*************************************************
-             * TIMEOUT
-             *************************************************/
-
             timeoutId =
               setTimeout(
                 function() {
 
-                  if (concluso) {
+                  if (
+                    concluso
+                  ) {
+
                     return;
+
                   }
 
-                  concluso = true;
+
+                  concluso =
+                    true;
+
 
                   pulisci();
 
@@ -738,7 +875,7 @@
 
                     setTimeout(
                       eseguiTentativo,
-                      1500
+                      1200
                     );
 
                   } else {
@@ -752,13 +889,9 @@
                   }
 
                 },
-                8000
+                10000
               );
 
-
-            /*************************************************
-             * INVIO
-             *************************************************/
 
             script.src =
               urlCompleto;
@@ -780,317 +913,408 @@
 
 
     /*******************************************************
-     * CARICA DASHBOARD
+     * VISUALIZZA DASHBOARD
      *******************************************************/
 
-    async function caricaDashboard() {
+    function visualizzaDashboard(
+      dashboard
+    ) {
 
-      try {
-
-        const dati =
-          await richiestaJSONP(
-            API_URL + '?azione=dashboard',
-            4
-          );
+      dashboard =
+        dashboard || {};
 
 
-        console.log(
-          'DASHBOARD:',
-          dati
+      document.getElementById(
+        'negozi'
+      ).textContent =
+        Number(
+          dashboard.negozi || 0
         );
 
 
-        if (
-          !dati ||
-          dati.success !== true ||
-          !dati.dashboard
-        ) {
-
-          throw new Error(
-            'Risposta dashboard non valida.'
-          );
-
-        }
-
-
-        const dashboard =
-          dati.dashboard;
-
-
-        document.getElementById(
-          'negozi'
-        ).textContent =
-          dashboard.negozi ?? 0;
-
-
-        document.getElementById(
-          'card'
-        ).textContent =
-          dashboard.card ?? 0;
-
-
-        document.getElementById(
-          'clienti'
-        ).textContent =
-          dashboard.clienti ?? 0;
-
-
-        document.getElementById(
-          'utilizzi'
-        ).textContent =
-          dashboard.utilizzi ?? 0;
-
-
-        document.getElementById(
-          'punti'
-        ).textContent =
-          dashboard.punti ?? 0;
-
-
-        document.getElementById(
-          'offerte'
-        ).textContent =
-          dashboard.offerte ?? 0;
-
-
-        return true;
-
-      } catch (errore) {
-
-        console.error(
-          'Errore dashboard:',
-          errore
+      document.getElementById(
+        'card'
+      ).textContent =
+        Number(
+          dashboard.card || 0
         );
 
-        mostraErrore(
-          'Dashboard: ' +
-          errore.message
+
+      document.getElementById(
+        'clienti'
+      ).textContent =
+        Number(
+          dashboard.clienti || 0
         );
 
-        return false;
 
-      }
+      document.getElementById(
+        'utilizzi'
+      ).textContent =
+        Number(
+          dashboard.utilizzi || 0
+        );
+
+
+      document.getElementById(
+        'punti'
+      ).textContent =
+        Number(
+          dashboard.punti || 0
+        );
+
+
+      document.getElementById(
+        'offerte'
+      ).textContent =
+        Number(
+          dashboard.offerte || 0
+        );
 
     }
 
 
     /*******************************************************
-     * CARICA NEGOZI
+     * VISUALIZZA NEGOZI
      *******************************************************/
 
-    async function caricaNegozi() {
+    function visualizzaNegozi(
+      negozi
+    ) {
 
       loading.style.display =
-        'block';
+        'none';
+
 
       tableContainer.style.display =
         'none';
 
+
       empty.style.display =
         'none';
+
+
+      tbody.innerHTML =
+        '';
+
+
+      if (
+        !Array.isArray(negozi) ||
+        negozi.length === 0
+      ) {
+
+        empty.textContent =
+          'Nessun negozio attivo trovato.';
+
+
+        empty.style.display =
+          'block';
+
+
+        return;
+
+      }
+
+
+      negozi.forEach(
+        function(negozio) {
+
+          const tr =
+            document.createElement(
+              'tr'
+            );
+
+
+          const valori = [
+
+            negozio.ID ?? '',
+
+            negozio.NEGOZIO ?? '',
+
+            negozio.SETTORE ?? '',
+
+            negozio.ATTIVO ?? '',
+
+            negozio['VANTAGGIO CARD'] ?? '',
+
+            negozio.TELEFONO ?? '',
+
+            negozio.INDIRIZZO ?? '',
+
+            negozio.NOTE ?? ''
+
+          ];
+
+
+          valori.forEach(
+            function(
+              valore,
+              indice
+            ) {
+
+              const td =
+                document.createElement(
+                  'td'
+                );
+
+
+              if (
+                indice === 1
+              ) {
+
+                const strong =
+                  document.createElement(
+                    'strong'
+                  );
+
+
+                strong.textContent =
+                  valore;
+
+
+                td.appendChild(
+                  strong
+                );
+
+              }
+
+
+              else if (
+                indice === 3
+              ) {
+
+                const badge =
+                  document.createElement(
+                    'span'
+                  );
+
+
+                badge.className =
+                  'badge badge-active';
+
+
+                badge.textContent =
+                  valore || 'SI';
+
+
+                td.appendChild(
+                  badge
+                );
+
+              }
+
+
+              else {
+
+                td.textContent =
+                  valore;
+
+              }
+
+
+              tr.appendChild(
+                td
+              );
+
+            }
+          );
+
+
+          tbody.appendChild(
+            tr
+          );
+
+        }
+      );
+
+
+      tableContainer.style.display =
+        'block';
+
+    }
+
+
+    /*******************************************************
+     * CARICAMENTO COMPLETO
+     *
+     * UNA SOLA CHIAMATA:
+     *
+     * ?azione=dashboard
+     *
+     *******************************************************/
+
+    async function caricaTutto() {
+
+      loading.style.display =
+        'block';
+
+
+      tableContainer.style.display =
+        'none';
+
+
+      empty.style.display =
+        'none';
+
+
+      errorBox.style.display =
+        'none';
+
+
+      statusText.textContent =
+        'Collegamento in corso...';
+
+
+      statusDot.classList.remove(
+        'ok',
+        'error'
+      );
 
 
       try {
 
         const dati =
           await richiestaJSONP(
-            API_URL,
+            API_URL +
+            '?azione=dashboard',
             4
           );
 
 
         console.log(
-          'NEGOZI:',
+          'RISPOSTA WEB APP:',
           dati
         );
 
 
+        /***************************************************
+         * CONTROLLO RISPOSTA
+         ***************************************************/
+
         if (
-          !dati ||
-          dati.success !== true
+          !dati
         ) {
 
           throw new Error(
-            'Risposta negozi non valida.'
+            'Il Web App non ha restituito dati.'
           );
 
         }
 
 
-        const negozi =
-          Array.isArray(
-            dati.negozi
-          )
-            ? dati.negozi
-            : [];
-
-
-        loading.style.display =
-          'none';
-
-
         if (
-          negozi.length === 0
+          dati.success !== true
         ) {
 
-          empty.textContent =
-            'Nessun negozio attivo trovato.';
-
-          empty.style.display =
-            'block';
-
-          return;
+          throw new Error(
+            dati.errore ||
+            'Il Web App ha restituito una risposta non valida.'
+          );
 
         }
 
 
-        tbody.innerHTML =
-          '';
+        if (
+          !dati.dashboard
+        ) {
+
+          throw new Error(
+            'La risposta non contiene i dati della dashboard.'
+          );
+
+        }
 
 
-        negozi.forEach(
-          function(negozio) {
+        /***************************************************
+         * DASHBOARD
+         ***************************************************/
 
-            const tr =
-              document.createElement(
-                'tr'
-              );
-
-
-            const valori = [
-
-              negozio.ID ?? '',
-
-              negozio.NEGOZIO ?? '',
-
-              negozio.SETTORE ?? '',
-
-              negozio.ATTIVO ?? '',
-
-              negozio['VANTAGGIO CARD'] ?? '',
-
-              negozio.TELEFONO ?? '',
-
-              negozio.INDIRIZZO ?? '',
-
-              negozio.NOTE ?? ''
-
-            ];
-
-
-            valori.forEach(
-              function(
-                valore,
-                indice
-              ) {
-
-                const td =
-                  document.createElement(
-                    'td'
-                  );
-
-
-                if (
-                  indice === 1
-                ) {
-
-                  const strong =
-                    document.createElement(
-                      'strong'
-                    );
-
-
-                  strong.textContent =
-                    valore;
-
-
-                  td.appendChild(
-                    strong
-                  );
-
-
-                }
-
-                else if (
-                  indice === 3
-                ) {
-
-                  const badge =
-                    document.createElement(
-                      'span'
-                    );
-
-
-                  badge.className =
-                    'badge badge-active';
-
-
-                  badge.textContent =
-                    valore;
-
-
-                  td.appendChild(
-                    badge
-                  );
-
-
-                }
-
-                else {
-
-                  td.textContent =
-                    valore;
-
-                }
-
-
-                tr.appendChild(
-                  td
-                );
-
-              }
-            );
-
-
-            tbody.appendChild(
-              tr
-            );
-
-          }
+        visualizzaDashboard(
+          dati.dashboard
         );
 
 
-        tableContainer.style.display =
-          'block';
+        /***************************************************
+         * NEGOZI
+         ***************************************************/
+
+        visualizzaNegozi(
+          dati.negozi
+        );
 
 
-        empty.style.display =
-          'none';
+        /***************************************************
+         * COLLEGAMENTO OK
+         ***************************************************/
+
+        statusText.textContent =
+          'Collegamento attivo';
+
+
+        statusDot.classList.remove(
+          'error'
+        );
+
+
+        statusDot.classList.add(
+          'ok'
+        );
+
+
+        console.log(
+          'SPRESIANO CARD: collegamento OK'
+        );
+
+
+        console.log(
+          'Negozi ricevuti:',
+          Array.isArray(dati.negozi)
+            ? dati.negozi.length
+            : 0
+        );
 
 
       } catch (errore) {
+
+        console.error(
+          'ERRORE WEB APP:',
+          errore
+        );
+
+
+        /*************************************************
+         * IN CASO DI ERRORE
+         *
+         * I valori restano a 0.
+         *************************************************/
+
+        visualizzaDashboard({
+          negozi: 0,
+          card: 0,
+          clienti: 0,
+          utilizzi: 0,
+          punti: 0,
+          offerte: 0
+        });
+
 
         loading.style.display =
           'none';
 
 
-        console.error(
-          'Errore negozi:',
-          errore
-        );
-
-
-        empty.textContent =
-          'Errore nel caricamento dei negozi.';
+        tableContainer.style.display =
+          'none';
 
 
         empty.style.display =
-          'block';
+          'none';
 
 
         mostraErrore(
-          'Negozi: ' +
+          errore &&
           errore.message
+            ? errore.message
+            : String(errore)
         );
 
       }
@@ -1100,57 +1324,20 @@
 
     /*******************************************************
      * AVVIO
-     *
-     * Prima Dashboard.
-     * Poi Negozi.
-     *
-     * Le due richieste NON partono contemporaneamente.
      *******************************************************/
 
     document.addEventListener(
       'DOMContentLoaded',
-      async function() {
+      function() {
 
-        statusText.textContent =
-          'Collegamento in corso...';
-
-
-        const dashboardOK =
-          await caricaDashboard();
-
-
-        if (dashboardOK) {
-
-          statusText.textContent =
-            'Collegamento attivo';
-
-          statusDot.classList.remove(
-            'error'
-          );
-
-        }
-
-
-        await caricaNegozi();
-
-
-        if (
-          dashboardOK
-        ) {
-
-          statusText.textContent =
-            'Collegamento attivo';
-
-          statusDot.classList.remove(
-            'error'
-          );
-
-        }
+        caricaTutto();
 
       }
     );
 
+
   </script>
+
 
 </body>
 
