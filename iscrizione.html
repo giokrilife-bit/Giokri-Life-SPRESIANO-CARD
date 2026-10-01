@@ -2,470 +2,253 @@
 
 <html lang="it">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Iscriviti | SPRESIANO CARD</title>
-
-<meta name="description"
-content="Crea gratuitamente la tua SPRESIANO CARD.">
+<title>Crea la tua SPRESIANO CARD</title>
 
 <style>
-
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-    font-family: Arial, Helvetica, sans-serif;
-    background: #f5f7f8;
-    color: #202428;
-    line-height: 1.5;
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f5f7fa;
+  color: #1f2937;
 }
 
 .container {
-    width: 92%;
-    max-width: 650px;
-    margin: auto;
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 24px 18px 50px;
 }
 
-/* HEADER */
-
-header {
-    background: white;
-    border-bottom: 1px solid #e5e7e9;
-    padding: 18px 0;
+.header {
+  text-align: center;
+  margin-bottom: 28px;
 }
 
 .logo {
-    text-align: center;
-    font-size: 23px;
-    font-weight: 800;
-    color: #1d5f8f;
+  font-size: 30px;
+  font-weight: 800;
+  color: #111827;
+  letter-spacing: 1px;
 }
 
-.logo span {
-    display: block;
-    font-size: 12px;
-    font-weight: normal;
-    color: #6b7278;
-    margin-top: 2px;
+.subtitle {
+  margin-top: 8px;
+  font-size: 15px;
+  color: #6b7280;
 }
 
-/* PAGINA */
+.card {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 28px 24px;
+  box-shadow: 0 8px 28px rgba(0,0,0,0.08);
+}
 
-.page {
-    padding: 42px 0 55px;
+h1 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  text-align: center;
+  font-size: 26px;
 }
 
 .intro {
-    text-align: center;
-    margin-bottom: 28px;
-}
-
-.intro h1 {
-    color: #1d5f8f;
-    font-size: 32px;
-    margin-bottom: 10px;
-}
-
-.intro p {
-    color: #687078;
-}
-
-/* FORM */
-
-.form-box {
-    background: white;
-    border-radius: 14px;
-    padding: 30px;
-    box-shadow: 0 3px 14px rgba(0,0,0,0.07);
-}
-
-.form-group {
-    margin-bottom: 18px;
+  text-align: center;
+  color: #6b7280;
+  line-height: 1.5;
+  margin-bottom: 25px;
 }
 
 label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 7px;
-    font-size: 14px;
+  display: block;
+  font-weight: 700;
+  font-size: 14px;
+  margin-bottom: 7px;
 }
 
 input[type="text"],
 input[type="tel"],
 input[type="email"] {
-    width: 100%;
-    padding: 13px 14px;
-    border: 1px solid #ccd2d6;
-    border-radius: 7px;
-    font-size: 16px;
-    background: #fff;
+  width: 100%;
+  padding: 13px 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  font-size: 16px;
+  margin-bottom: 17px;
+  outline: none;
 }
 
 input:focus {
-    outline: none;
-    border-color: #1d5f8f;
-    box-shadow: 0 0 0 2px rgba(29,95,143,0.10);
+  border-color: #2563eb;
 }
-
-/* CONSENSO */
 
 .consent {
-    background: #f5f7f8;
-    border-radius: 8px;
-    padding: 15px;
-    margin-top: 8px;
-    margin-bottom: 22px;
-}
-
-.consent label {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    font-weight: normal;
-    font-size: 13px;
-    color: #555d63;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 5px 0 22px;
+  font-size: 13px;
+  line-height: 1.45;
+  color: #4b5563;
 }
 
 .consent input {
-    margin-top: 4px;
-    flex-shrink: 0;
+  margin-top: 3px;
+  flex-shrink: 0;
 }
 
-/* PULSANTE */
-
 button {
-    width: 100%;
-    border: none;
-    background: #1d5f8f;
-    color: white;
-    padding: 15px;
-    border-radius: 8px;
-    font-size: 17px;
-    font-weight: bold;
-    cursor: pointer;
+  width: 100%;
+  border: none;
+  border-radius: 12px;
+  padding: 15px;
+  font-size: 16px;
+  font-weight: 800;
+  color: white;
+  background: #111827;
+  cursor: pointer;
 }
 
 button:hover {
-    background: #174f77;
+  background: #000000;
 }
 
-button:disabled {
-    opacity: 0.6;
-    cursor: wait;
+.info {
+  margin-top: 20px;
+  padding: 14px;
+  border-radius: 10px;
+  background: #f3f4f6;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #4b5563;
+  text-align: center;
 }
-
-/* NOTE */
-
-.note {
-    text-align: center;
-    font-size: 12px;
-    color: #737b81;
-    margin-top: 18px;
-}
-
-/* MESSAGGIO */
-
-.message {
-    display: none;
-    margin-top: 20px;
-    padding: 16px;
-    border-radius: 8px;
-    text-align: center;
-    font-size: 14px;
-}
-
-.message.success {
-    display: block;
-    background: #e8f5ec;
-    color: #27633a;
-}
-
-.message.error {
-    display: block;
-    background: #fbeaea;
-    color: #8a3030;
-}
-
-/* LINK */
 
 .back {
-    text-align: center;
-    margin-top: 24px;
+  display: block;
+  text-align: center;
+  margin-top: 22px;
+  color: #2563eb;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
 }
 
-.back a {
-    color: #1d5f8f;
-    text-decoration: none;
-    font-size: 14px;
+.footer {
+  text-align: center;
+  margin-top: 25px;
+  font-size: 12px;
+  color: #9ca3af;
 }
-
-/* FOOTER */
-
-footer {
-    background: #202428;
-    color: white;
-    text-align: center;
-    padding: 24px 15px;
-    font-size: 13px;
-}
-
-footer .small {
-    color: #adb3b7;
-    font-size: 12px;
-    margin-top: 4px;
-}
-
-/* MOBILE */
-
-@media (max-width: 600px) {
-
-    .page {
-        padding: 30px 0 45px;
-    }
-
-    .intro h1 {
-        font-size: 28px;
-    }
-
-    .form-box {
-        padding: 22px 18px;
-    }
-
-}
-
 </style>
 
 </head>
 
 <body>
 
-<header>
-
-```
 <div class="container">
 
-    <div class="logo">
-        SPRESIANO CARD
-        <span>Promossa da GiOKri Life</span>
-    </div>
+  <div class="header">
+    <div class="logo">SPRESIANO CARD</div>
+    <div class="subtitle">Promossa da GiOKri Life</div>
+  </div>
 
+  <div class="card">
+
+```
+<h1>Crea la tua Card</h1>
+
+<div class="intro">
+  Registrati gratuitamente e inizia a partecipare
+  alle iniziative della SPRESIANO CARD.
+</div>
+
+<form
+  method="POST"
+  action="https://script.google.com/macros/s/AKfycbxHaUH-tBV6IjSEB6nwGXCwe-C2BZ5iw5qXO2lABAQibULYh2c2b7z--dUcHMqQpksS/exec"
+>
+
+  <label for="nome">Nome</label>
+  <input
+    type="text"
+    id="nome"
+    name="nome"
+    required
+    autocomplete="given-name"
+  >
+
+  <label for="cognome">Cognome</label>
+  <input
+    type="text"
+    id="cognome"
+    name="cognome"
+    required
+    autocomplete="family-name"
+  >
+
+  <label for="telefono">Telefono</label>
+  <input
+    type="tel"
+    id="telefono"
+    name="telefono"
+    required
+    autocomplete="tel"
+    inputmode="tel"
+  >
+
+  <label for="email">Email</label>
+  <input
+    type="email"
+    id="email"
+    name="email"
+    required
+    autocomplete="email"
+  >
+
+  <div class="consent">
+    <input
+      type="checkbox"
+      id="consenso"
+      name="consenso"
+      value="SI"
+      required
+    >
+
+    <label for="consenso">
+      Acconsento al trattamento dei dati personali per
+      la gestione della mia SPRESIANO CARD.
+    </label>
+  </div>
+
+  <button type="submit">
+    CREA LA MIA CARD
+  </button>
+
+</form>
+
+<div class="info">
+  La registrazione è gratuita.<br>
+  Dopo la registrazione riceverai il tuo numero di Card
+  e partirai dal livello BASIC.
 </div>
 ```
 
-</header>
+  </div>
 
-<main class="page">
+  <a class="back" href="index.html">
+    ← Torna alla SPRESIANO CARD
+  </a>
 
-```
-<div class="container">
-
-
-    <div class="intro">
-
-        <h1>Crea la tua SPRESIANO CARD</h1>
-
-        <p>
-            La registrazione è gratuita.
-            Inserisci i tuoi dati per entrare
-            nella community della SPRESIANO CARD.
-        </p>
-
-    </div>
-
-
-    <div class="form-box">
-
-
-        <form id="registrationForm">
-
-
-            <div class="form-group">
-
-                <label for="nome">
-                    Nome
-                </label>
-
-                <input
-                    type="text"
-                    id="nome"
-                    name="nome"
-                    autocomplete="given-name"
-                    required
-                >
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label for="cognome">
-                    Cognome
-                </label>
-
-                <input
-                    type="text"
-                    id="cognome"
-                    name="cognome"
-                    autocomplete="family-name"
-                    required
-                >
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label for="telefono">
-                    Telefono
-                </label>
-
-                <input
-                    type="tel"
-                    id="telefono"
-                    name="telefono"
-                    inputmode="tel"
-                    autocomplete="tel"
-                    required
-                >
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label for="email">
-                    Email
-                </label>
-
-                <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    autocomplete="email"
-                    required
-                >
-
-            </div>
-
-
-            <div class="consent">
-
-                <label>
-
-                    <input
-                        type="checkbox"
-                        id="consenso"
-                        name="consenso"
-                        required
-                    >
-
-                    <span>
-                        Dichiaro di aver letto l'informativa
-                        sul trattamento dei dati e acconsento
-                        alla registrazione alla SPRESIANO CARD
-                        e alla gestione dei dati necessari
-                        per il servizio.
-                    </span>
-
-                </label>
-
-            </div>
-
-
-            <button
-                type="submit"
-                id="submitButton"
-            >
-                CREA LA MIA CARD
-            </button>
-
-
-        </form>
-
-
-        <div
-            id="message"
-            class="message"
-        ></div>
-
-
-        <div class="note">
-
-            I dati saranno utilizzati esclusivamente
-            per la gestione della SPRESIANO CARD
-            e delle relative iniziative.
-
-        </div>
-
-
-    </div>
-
-
-    <div class="back">
-
-        <a href="index.html">
-            ← Torna alla pagina principale
-        </a>
-
-    </div>
-
+  <div class="footer">
+    SPRESIANO CARD · Promossa da GiOKri Life
+  </div>
 
 </div>
-```
-
-</main>
-
-<footer>
-
-```
-<strong>SPRESIANO CARD</strong>
-
-<div class="small">
-    Promossa da GiOKri Life · Spresiano
-</div>
-```
-
-</footer>
-
-<script>
-
-/*
- * PER ORA IL MODULO È SOLO GRAFICO.
- *
- * Il collegamento con Google Apps Script
- * verrà aggiunto nel prossimo passaggio.
- */
-
-const form =
-    document.getElementById("registrationForm");
-
-const button =
-    document.getElementById("submitButton");
-
-const message =
-    document.getElementById("message");
-
-
-form.addEventListener("submit", function(event) {
-
-    event.preventDefault();
-
-    message.className = "message success";
-
-    message.textContent =
-        "Modulo pronto. Il collegamento per creare la tua Card verrà attivato nel prossimo passaggio.";
-
-    button.disabled = true;
-
-});
-
-</script>
 
 </body>
 </html>
