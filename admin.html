@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="it">
 <head>
 <meta charset="UTF-8">
@@ -178,6 +179,7 @@ td {
   }
 }
 </style>
+
 </head>
 
 <body>
@@ -186,130 +188,127 @@ td {
 
   <div class="header">
 
-    <div class="logo">
-      Giokri Life
-    </div>
+```
+<div class="logo">
+  Giokri Life
+</div>
 
-    <div class="subtitle">
-      SPRESIANO CARD · Pannello Amministratore
-    </div>
+<div class="subtitle">
+  SPRESIANO CARD · Pannello Amministratore
+</div>
 
-    <div id="status" class="status">
-      Collegamento in corso...
-    </div>
+<div id="status" class="status">
+  Collegamento in corso...
+</div>
+```
 
   </div>
-
 
   <div class="section">
 
-    <h1>Dashboard</h1>
+```
+<h1>Dashboard</h1>
 
-    <div class="dashboard">
+<div class="dashboard">
 
-      <div class="card">
-        <div class="card-icon">🏪</div>
-        <div class="card-title">Negozi aderenti</div>
-        <div id="negozi" class="card-value">-</div>
-      </div>
+  <div class="card">
+    <div class="card-icon">🏪</div>
+    <div class="card-title">Negozi aderenti</div>
+    <div id="negozi" class="card-value">-</div>
+  </div>
 
-      <div class="card">
-        <div class="card-icon">💳</div>
-        <div class="card-title">Card emesse</div>
-        <div id="card" class="card-value">-</div>
-      </div>
+  <div class="card">
+    <div class="card-icon">💳</div>
+    <div class="card-title">Card emesse</div>
+    <div id="card" class="card-value">-</div>
+  </div>
 
-      <div class="card">
-        <div class="card-icon">👤</div>
-        <div class="card-title">Clienti registrati</div>
-        <div id="clienti" class="card-value">-</div>
-      </div>
+  <div class="card">
+    <div class="card-icon">👤</div>
+    <div class="card-title">Clienti registrati</div>
+    <div id="clienti" class="card-value">-</div>
+  </div>
 
-      <div class="card">
-        <div class="card-icon">🔄</div>
-        <div class="card-title">Utilizzi registrati</div>
-        <div id="utilizzi" class="card-value">-</div>
-      </div>
+  <div class="card">
+    <div class="card-icon">🔄</div>
+    <div class="card-title">Utilizzi registrati</div>
+    <div id="utilizzi" class="card-value">-</div>
+  </div>
 
-      <div class="card">
-        <div class="card-icon">⭐</div>
-        <div class="card-title">Punti totali</div>
-        <div id="punti" class="card-value">-</div>
-      </div>
+  <div class="card">
+    <div class="card-icon">⭐</div>
+    <div class="card-title">Punti totali</div>
+    <div id="punti" class="card-value">-</div>
+  </div>
 
-      <div class="card">
-        <div class="card-icon">🎁</div>
-        <div class="card-title">Offerte attive</div>
-        <div id="offerte" class="card-value">-</div>
-      </div>
+  <div class="card">
+    <div class="card-icon">🎁</div>
+    <div class="card-title">Offerte attive</div>
+    <div id="offerte" class="card-value">-</div>
+  </div>
 
-    </div>
+</div>
+```
 
   </div>
 
-
   <div id="errorBox" class="error-box"></div>
-
 
   <div class="section" style="margin-top:30px;">
 
-    <h2>Negozi aderenti</h2>
+```
+<h2>Negozi aderenti</h2>
 
-    <div id="loading" class="loading">
-      Caricamento negozi...
-    </div>
+<div id="loading" class="loading">
+  Caricamento negozi...
+</div>
 
-    <div class="table-wrapper">
+<div class="table-wrapper">
 
-      <table id="negoziTable" style="display:none;">
+  <table id="negoziTable" style="display:none;">
 
-        <thead>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Negozio</th>
+        <th>Settore</th>
+        <th>Stato</th>
+        <th>Vantaggio Card</th>
+        <th>Telefono</th>
+        <th>Indirizzo</th>
+        <th>Note</th>
+      </tr>
+    </thead>
 
-          <tr>
-            <th>ID</th>
-            <th>Negozio</th>
-            <th>Settore</th>
-            <th>Stato</th>
-            <th>Vantaggio Card</th>
-            <th>Telefono</th>
-            <th>Indirizzo</th>
-            <th>Note</th>
-          </tr>
+    <tbody id="negoziBody"></tbody>
 
-        </thead>
+  </table>
 
-        <tbody id="negoziBody"></tbody>
-
-      </table>
-
-    </div>
+</div>
+```
 
   </div>
 
 </div>
 
-
 <script>
 
-/*
-====================================================
-GIOKRI LIFE – SPRESIANO CARD
-PANNELLO AMMINISTRATORE
-====================================================
-*/
+/* =====================================================
+   GIOKRI LIFE – SPRESIANO CARD
+   PANNELLO AMMINISTRATORE
+   ===================================================== */
 
 const API_URL =
   "https://script.google.com/macros/s/AKfycbxHaUH-tBV6IjSEB6nwGXCwe-C2BZ5iw5qXO2lABAQibULYh2c2b7z--dUcHMqQpksS/exec";
 
 
-const callbackName =
-  "giokriAdminCallback_" + Date.now();
-
+/* =====================================================
+   ERRORE
+   ===================================================== */
 
 function mostraErrore(messaggio) {
 
-  const box =
-    document.getElementById("errorBox");
+  const box = document.getElementById("errorBox");
 
   box.style.display = "block";
 
@@ -317,19 +316,45 @@ function mostraErrore(messaggio) {
     "<strong>Errore collegamento</strong><br>" +
     messaggio;
 
-  document
-    .getElementById("status")
-    .textContent =
+  const status =
+    document.getElementById("status");
+
+  status.textContent =
     "Errore collegamento";
 
-  document
-    .getElementById("status")
-    .classList
-    .add("error");
+  status.classList.add("error");
 }
 
 
+/* =====================================================
+   STATO OK
+   ===================================================== */
+
+function collegamentoOK() {
+
+  const status =
+    document.getElementById("status");
+
+  status.textContent =
+    "Collegamento attivo";
+
+  status.classList.remove("error");
+
+  document
+    .getElementById("errorBox")
+    .style.display = "none";
+}
+
+
+/* =====================================================
+   DASHBOARD
+   ===================================================== */
+
 function aggiornaDashboard(dashboard) {
+
+  if (!dashboard) {
+    dashboard = {};
+  }
 
   document.getElementById("negozi").textContent =
     dashboard.negozi ?? 0;
@@ -351,6 +376,10 @@ function aggiornaDashboard(dashboard) {
 }
 
 
+/* =====================================================
+   NEGOZI
+   ===================================================== */
+
 function mostraNegozi(negozi) {
 
   const tbody =
@@ -358,10 +387,12 @@ function mostraNegozi(negozi) {
 
   tbody.innerHTML = "";
 
-  if (!negozi || negozi.length === 0) {
+  if (!Array.isArray(negozi) || negozi.length === 0) {
 
     tbody.innerHTML =
-      '<tr><td colspan="8">Nessun negozio trovato.</td></tr>';
+      '<tr>' +
+      '<td colspan="8">Nessun negozio trovato.</td>' +
+      '</tr>';
 
   } else {
 
@@ -410,58 +441,176 @@ function mostraNegozi(negozi) {
 
   }
 
-  document
-    .getElementById("loading")
+  document.getElementById("loading")
     .style.display = "none";
 
-  document
-    .getElementById("negoziTable")
+  document.getElementById("negoziTable")
     .style.display = "table";
 }
 
 
-function caricaDashboard() {
+/* =====================================================
+   JSONP GENERICO
+   ===================================================== */
+
+function richiestaJSONP(url, callback) {
 
   const script =
     document.createElement("script");
 
-  const callback =
-    callbackName;
+  const nomeCallback =
+    "giokriAdmin_" +
+    Date.now() +
+    "_" +
+    Math.floor(Math.random() * 100000);
 
-  window[callback] =
+  let conclusa = false;
+
+  const timer =
+    setTimeout(function() {
+
+      if (conclusa) {
+        return;
+      }
+
+      conclusa = true;
+
+      try {
+        delete window[nomeCallback];
+      } catch (e) {}
+
+      if (script.parentNode) {
+        script.parentNode.removeChild(script);
+      }
+
+      callback(
+        null,
+        "Tempo scaduto nella risposta della Web App."
+      );
+
+    }, 15000);
+
+
+  window[nomeCallback] =
     function(data) {
+
+      if (conclusa) {
+        return;
+      }
+
+      conclusa = true;
+
+      clearTimeout(timer);
+
+      try {
+        delete window[nomeCallback];
+      } catch (e) {}
+
+      if (script.parentNode) {
+        script.parentNode.removeChild(script);
+      }
+
+      callback(data, null);
+    };
+
+
+  script.onerror =
+    function() {
+
+      if (conclusa) {
+        return;
+      }
+
+      conclusa = true;
+
+      clearTimeout(timer);
+
+      try {
+        delete window[nomeCallback];
+      } catch (e) {}
+
+      if (script.parentNode) {
+        script.parentNode.removeChild(script);
+      }
+
+      callback(
+        null,
+        "Impossibile raggiungere la Web App."
+      );
+
+    };
+
+
+  const separatore =
+    url.indexOf("?") >= 0 ? "&" : "?";
+
+
+  script.src =
+    url +
+    separatore +
+    "callback=" +
+    encodeURIComponent(nomeCallback) +
+    "&t=" +
+    Date.now();
+
+
+  document.head.appendChild(script);
+}
+
+
+/* =====================================================
+   CARICA DASHBOARD
+   ===================================================== */
+
+function caricaDashboard() {
+
+  richiestaJSONP(
+    API_URL + "?azione=dashboard",
+    function(data, errore) {
+
+      if (errore) {
+
+        mostraErrore(errore);
+
+        return;
+      }
 
       try {
 
         if (!data) {
           throw new Error(
-            "Risposta vuota dal server."
+            "La Web App ha restituito una risposta vuota."
           );
         }
 
-        if (data.success !== true) {
+
+        if (data.success === false) {
           throw new Error(
-            "Il server ha restituito una risposta non valida."
+            data.message ||
+            "La Web App ha restituito un errore."
           );
         }
 
-        aggiornaDashboard(
-          data.dashboard || {}
-        );
 
-        mostraNegozi(
-          data.negozi || []
-        );
+        /*
+         * Compatibilità con entrambe
+         * le possibili strutture:
+         *
+         * data.dashboard
+         *
+         * oppure direttamente data
+         */
 
-        document
-          .getElementById("status")
-          .textContent =
-          "Collegamento attivo";
+        const dashboard =
+          data.dashboard ||
+          data;
 
-        document
-          .getElementById("errorBox")
-          .style.display =
-          "none";
+
+        aggiornaDashboard(dashboard);
+
+        collegamentoOK();
+
+        caricaNegozi();
 
       }
 
@@ -469,60 +618,111 @@ function caricaDashboard() {
 
         mostraErrore(
           errore.message ||
-          "Risposta non valida."
+          "Risposta dashboard non valida."
         );
 
       }
 
-      finally {
-
-        try {
-          delete window[callback];
-        } catch(e) {}
-
-        if (script.parentNode) {
-          script.parentNode.removeChild(script);
-        }
-
-      }
-
-    };
-
-
-  script.onerror =
-    function() {
-
-      mostraErrore(
-        "Impossibile raggiungere la Web App di Google Apps Script."
-      );
-
-      if (script.parentNode) {
-        script.parentNode.removeChild(script);
-      }
-
-      try {
-        delete window[callback];
-      } catch(e) {}
-
-    };
-
-
-  script.src =
-    API_URL +
-    "?azione=dashboard&callback=" +
-    encodeURIComponent(callback) +
-    "&t=" +
-    Date.now();
-
-
-  document
-    .head
-    .appendChild(script);
+    }
+  );
 
 }
 
 
-caricaDashboard();
+/* =====================================================
+   CARICA NEGOZI
+   ===================================================== */
+
+function caricaNegozi() {
+
+  richiestaJSONP(
+    API_URL,
+    function(data, errore) {
+
+      if (errore) {
+
+        mostraErrore(errore);
+
+        return;
+      }
+
+      try {
+
+        if (!data) {
+          throw new Error(
+            "La Web App ha restituito una risposta vuota."
+          );
+        }
+
+
+        if (data.success === false) {
+          throw new Error(
+            data.message ||
+            "Errore nella lettura dei negozi."
+          );
+        }
+
+
+        /*
+         * Compatibilità con diverse strutture
+         * della risposta Apps Script.
+         */
+
+        let negozi = [];
+
+
+        if (Array.isArray(data)) {
+
+          negozi = data;
+
+        }
+
+        else if (Array.isArray(data.negozi)) {
+
+          negozi = data.negozi;
+
+        }
+
+        else if (Array.isArray(data.data)) {
+
+          negozi = data.data;
+
+        }
+
+
+        mostraNegozi(negozi);
+
+        collegamentoOK();
+
+      }
+
+      catch (errore) {
+
+        mostraErrore(
+          errore.message ||
+          "Risposta negozi non valida."
+        );
+
+      }
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+   AVVIO
+   ===================================================== */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  function() {
+
+    caricaDashboard();
+
+  }
+);
 
 </script>
 
