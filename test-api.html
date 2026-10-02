@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<title>Test API SPRESIANO CARD</title>
+</head>
+
+<body>
+
+<h1>Test Web App SPRESIANO CARD</h1>
+
+<div id="risultato">
+Caricamento...
+</div>
+
+<script>
+
+function provaGiokri(data) {
+
+  document.getElementById("risultato").innerHTML =
+    "<h2>COLLEGAMENTO OK</h2>" +
+    "<p>Negozi: " + data.negozi + "</p>" +
+    "<p>Card: " + data.card + "</p>" +
+    "<p>Card attive: " + data.cardAttive + "</p>" +
+    "<p>Clienti: " + data.clienti + "</p>" +
+    "<p>Utilizzi: " + data.utilizzi + "</p>" +
+    "<p>Punti: " + data.punti + "</p>" +
+    "<p>Offerte: " + data.offerte + "</p>";
+
+}
+
+</script>
+
+<script src="https://script.google.com/macros/s/AKfycbxHaUH-tBV6IjSEB6nwGXCwe-C2BZ5iw5qXO2lABAQibULYh2c2b7z--dUcHMqPksS/exec?azione=dashboard&callback=provaGiokri"></script>
+
+</body>
+</html>
