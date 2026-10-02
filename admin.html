@@ -268,6 +268,7 @@ td {
   <table id="negoziTable" style="display:none;">
 
     <thead>
+
       <tr>
         <th>ID</th>
         <th>Negozio</th>
@@ -278,6 +279,7 @@ td {
         <th>Indirizzo</th>
         <th>Note</th>
       </tr>
+
     </thead>
 
     <tbody id="negoziBody"></tbody>
@@ -299,16 +301,17 @@ td {
    ===================================================== */
 
 const API_URL =
-  "https://script.google.com/macros/s/AKfycbxHaUH-tBV6IjSEB6nwGXCwe-C2BZ5iw5qXO2lABAQibULYh2c2b7z--dUcHMqQpksS/exec";
+  "https://script.google.com/macros/s/AKfycbxHaUH-tBV6IjSEB6nwGXCwe-C2BZ5iw5qXO2lABAQibULYh2c2b7z--dUcHMqPksS/exec";
 
 
 /* =====================================================
-   ERRORE
+   MOSTRA ERRORE
    ===================================================== */
 
 function mostraErrore(messaggio) {
 
-  const box = document.getElementById("errorBox");
+  const box =
+    document.getElementById("errorBox");
 
   box.style.display = "block";
 
@@ -327,7 +330,7 @@ function mostraErrore(messaggio) {
 
 
 /* =====================================================
-   STATO OK
+   COLLEGAMENTO OK
    ===================================================== */
 
 function collegamentoOK() {
@@ -347,37 +350,33 @@ function collegamentoOK() {
 
 
 /* =====================================================
-   DASHBOARD
+   AGGIORNA DASHBOARD
    ===================================================== */
 
-function aggiornaDashboard(dashboard) {
-
-  if (!dashboard) {
-    dashboard = {};
-  }
+function aggiornaDashboard(data) {
 
   document.getElementById("negozi").textContent =
-    dashboard.negozi ?? 0;
+    data.negozi ?? 0;
 
   document.getElementById("card").textContent =
-    dashboard.card ?? 0;
+    data.card ?? 0;
 
   document.getElementById("clienti").textContent =
-    dashboard.clienti ?? 0;
+    data.clienti ?? 0;
 
   document.getElementById("utilizzi").textContent =
-    dashboard.utilizzi ?? 0;
+    data.utilizzi ?? 0;
 
   document.getElementById("punti").textContent =
-    dashboard.punti ?? 0;
+    data.punti ?? 0;
 
   document.getElementById("offerte").textContent =
-    dashboard.offerte ?? 0;
+    data.offerte ?? 0;
 }
 
 
 /* =====================================================
-   NEGOZI
+   MOSTRA NEGOZI
    ===================================================== */
 
 function mostraNegozi(negozi) {
@@ -387,11 +386,17 @@ function mostraNegozi(negozi) {
 
   tbody.innerHTML = "";
 
-  if (!Array.isArray(negozi) || negozi.length === 0) {
+
+  if (
+    !Array.isArray(negozi) ||
+    negozi.length === 0
+  ) {
 
     tbody.innerHTML =
       '<tr>' +
-      '<td colspan="8">Nessun negozio trovato.</td>' +
+      '<td colspan="8">' +
+      'Nessun negozio trovato.' +
+      '</td>' +
       '</tr>';
 
   } else {
@@ -400,6 +405,7 @@ function mostraNegozi(negozi) {
 
       const tr =
         document.createElement("tr");
+
 
       tr.innerHTML =
 
@@ -435,22 +441,27 @@ function mostraNegozi(negozi) {
         (negozio.NOTE ?? "") +
         "</td>";
 
+
       tbody.appendChild(tr);
 
     });
 
   }
 
-  document.getElementById("loading")
+
+  document
+    .getElementById("loading")
     .style.display = "none";
 
-  document.getElementById("negoziTable")
+
+  document
+    .getElementById("negoziTable")
     .style.display = "table";
 }
 
 
 /* =====================================================
-   JSONP GENERICO
+   RICHIESTA JSONP
    ===================================================== */
 
 function richiestaJSONP(url, callback) {
@@ -458,34 +469,43 @@ function richiestaJSONP(url, callback) {
   const script =
     document.createElement("script");
 
+
   const nomeCallback =
     "giokriAdmin_" +
     Date.now() +
     "_" +
-    Math.floor(Math.random() * 100000);
+    Math.floor(
+      Math.random() * 100000
+    );
 
-  let conclusa = false;
 
-  const timer =
+  let terminata = false;
+
+
+  const timeout =
     setTimeout(function() {
 
-      if (conclusa) {
+      if (terminata) {
         return;
       }
 
-      conclusa = true;
+
+      terminata = true;
+
 
       try {
         delete window[nomeCallback];
       } catch (e) {}
 
+
       if (script.parentNode) {
         script.parentNode.removeChild(script);
       }
 
+
       callback(
         null,
-        "Tempo scaduto nella risposta della Web App."
+        "Timeout nella risposta della Web App."
       );
 
     }, 15000);
@@ -494,44 +514,58 @@ function richiestaJSONP(url, callback) {
   window[nomeCallback] =
     function(data) {
 
-      if (conclusa) {
+      if (terminata) {
         return;
       }
 
-      conclusa = true;
 
-      clearTimeout(timer);
+      terminata = true;
+
+
+      clearTimeout(timeout);
+
 
       try {
         delete window[nomeCallback];
       } catch (e) {}
 
+
       if (script.parentNode) {
         script.parentNode.removeChild(script);
       }
 
-      callback(data, null);
+
+      callback(
+        data,
+        null
+      );
+
     };
 
 
   script.onerror =
     function() {
 
-      if (conclusa) {
+      if (terminata) {
         return;
       }
 
-      conclusa = true;
 
-      clearTimeout(timer);
+      terminata = true;
+
+
+      clearTimeout(timeout);
+
 
       try {
         delete window[nomeCallback];
       } catch (e) {}
 
+
       if (script.parentNode) {
         script.parentNode.removeChild(script);
       }
+
 
       callback(
         null,
@@ -542,19 +576,25 @@ function richiestaJSONP(url, callback) {
 
 
   const separatore =
-    url.indexOf("?") >= 0 ? "&" : "?";
+    url.indexOf("?") >= 0
+      ? "&"
+      : "?";
 
 
   script.src =
     url +
     separatore +
     "callback=" +
-    encodeURIComponent(nomeCallback) +
+    encodeURIComponent(
+      nomeCallback
+    ) +
     "&t=" +
     Date.now();
 
 
-  document.head.appendChild(script);
+  document
+    .head
+    .appendChild(script);
 }
 
 
@@ -565,7 +605,10 @@ function richiestaJSONP(url, callback) {
 function caricaDashboard() {
 
   richiestaJSONP(
-    API_URL + "?azione=dashboard",
+
+    API_URL +
+    "?azione=dashboard",
+
     function(data, errore) {
 
       if (errore) {
@@ -575,57 +618,36 @@ function caricaDashboard() {
         return;
       }
 
-      try {
 
-        if (!data) {
-          throw new Error(
-            "La Web App ha restituito una risposta vuota."
-          );
-        }
-
-
-        if (data.success === false) {
-          throw new Error(
-            data.message ||
-            "La Web App ha restituito un errore."
-          );
-        }
-
-
-        /*
-         * Compatibilità con entrambe
-         * le possibili strutture:
-         *
-         * data.dashboard
-         *
-         * oppure direttamente data
-         */
-
-        const dashboard =
-          data.dashboard ||
-          data;
-
-
-        aggiornaDashboard(dashboard);
-
-        collegamentoOK();
-
-        caricaNegozi();
-
-      }
-
-      catch (errore) {
+      if (!data) {
 
         mostraErrore(
-          errore.message ||
-          "Risposta dashboard non valida."
+          "Risposta vuota dalla Web App."
         );
 
+        return;
       }
+
+
+      if (data.success === false) {
+
+        mostraErrore(
+          data.message ||
+          "Errore restituito dalla Web App."
+        );
+
+        return;
+      }
+
+
+      aggiornaDashboard(data);
+
+      collegamentoOK();
+
+      caricaNegozi();
 
     }
   );
-
 }
 
 
@@ -636,7 +658,9 @@ function caricaDashboard() {
 function caricaNegozi() {
 
   richiestaJSONP(
+
     API_URL,
+
     function(data, errore) {
 
       if (errore) {
@@ -646,68 +670,76 @@ function caricaNegozi() {
         return;
       }
 
-      try {
 
-        if (!data) {
-          throw new Error(
-            "La Web App ha restituito una risposta vuota."
-          );
-        }
-
-
-        if (data.success === false) {
-          throw new Error(
-            data.message ||
-            "Errore nella lettura dei negozi."
-          );
-        }
-
-
-        /*
-         * Compatibilità con diverse strutture
-         * della risposta Apps Script.
-         */
-
-        let negozi = [];
-
-
-        if (Array.isArray(data)) {
-
-          negozi = data;
-
-        }
-
-        else if (Array.isArray(data.negozi)) {
-
-          negozi = data.negozi;
-
-        }
-
-        else if (Array.isArray(data.data)) {
-
-          negozi = data.data;
-
-        }
-
-
-        mostraNegozi(negozi);
-
-        collegamentoOK();
-
-      }
-
-      catch (errore) {
+      if (!data) {
 
         mostraErrore(
-          errore.message ||
-          "Risposta negozi non valida."
+          "Risposta vuota durante il caricamento dei negozi."
         );
 
+        return;
       }
+
+
+      if (data.success === false) {
+
+        mostraErrore(
+          data.message ||
+          "Errore nella lettura dei negozi."
+        );
+
+        return;
+      }
+
+
+      let negozi = [];
+
+
+      /*
+       * La funzione getNegozi()
+       * restituisce normalmente:
+       *
+       * {
+       *   success: true,
+       *   negozi: [...]
+       * }
+       *
+       */
+
+      if (
+        Array.isArray(data.negozi)
+      ) {
+
+        negozi =
+          data.negozi;
+
+      }
+
+
+      /*
+       * Compatibilità nel caso
+       * la risposta sia direttamente
+       * un array.
+       */
+
+      else if (
+        Array.isArray(data)
+      ) {
+
+        negozi =
+          data;
+
+      }
+
+
+      mostraNegozi(
+        negozi
+      );
+
+      collegamentoOK();
 
     }
   );
-
 }
 
 
