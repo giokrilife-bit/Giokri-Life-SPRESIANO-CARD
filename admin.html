@@ -6,12 +6,9 @@
 
   <meta charset="UTF-8">
 
-<meta name="viewport"
-     content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>
-    Giokri Life · SPRESIANO CARD · Amministratore
-  </title>
+  <title>Giokri Life · SPRESIANO CARD · Amministratore</title>
 
   <style>
 
@@ -29,7 +26,7 @@
     header {
       background: #ffffff;
       padding: 25px 20px 20px;
-      border-bottom: 1px solid #ddd;
+      border-bottom: 1px solid #dddddd;
     }
 
     .header-inner {
@@ -45,7 +42,7 @@
 
     .title {
       font-size: 18px;
-      color: #555;
+      color: #555555;
     }
 
     .status {
@@ -54,7 +51,7 @@
       padding: 8px 14px;
       border-radius: 20px;
       background: #eeeeee;
-      color: #555;
+      color: #555555;
       font-size: 14px;
     }
 
@@ -71,19 +68,17 @@
     main {
       max-width: 1100px;
       margin: 30px auto;
-      padding: 0 20px 40px;
+      padding: 0 20px 50px;
     }
 
-    h1 {
+    .page-title {
       font-size: 26px;
       margin: 0 0 20px;
     }
 
     .cards {
       display: grid;
-      grid-template-columns:
-        repeat(auto-fit, minmax(200px, 1fr));
-
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 16px;
     }
 
@@ -91,8 +86,7 @@
       background: #ffffff;
       border-radius: 14px;
       padding: 22px;
-      box-shadow:
-        0 2px 10px rgba(0,0,0,0.06);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
     }
 
     .icon {
@@ -101,7 +95,7 @@
     }
 
     .label {
-      color: #666;
+      color: #666666;
       font-size: 14px;
       margin-bottom: 6px;
     }
@@ -112,20 +106,19 @@
     }
 
     .section {
-      margin-top: 35px;
+      margin-top: 38px;
     }
 
-    .section h2 {
+    .section-title {
       font-size: 22px;
-      margin-bottom: 15px;
+      margin: 0 0 15px;
     }
 
     .table-wrapper {
       background: #ffffff;
       border-radius: 14px;
       overflow-x: auto;
-      box-shadow:
-        0 2px 10px rgba(0,0,0,0.06);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
     }
 
     table {
@@ -149,10 +142,14 @@
       font-size: 14px;
     }
 
+    tbody tr:last-child td {
+      border-bottom: none;
+    }
+
     .empty {
       padding: 25px;
       text-align: center;
-      color: #777;
+      color: #777777;
     }
 
     .error-box {
@@ -164,6 +161,13 @@
       border-radius: 10px;
       display: none;
       white-space: pre-wrap;
+    }
+
+    footer {
+      text-align: center;
+      color: #888888;
+      font-size: 13px;
+      padding: 10px 20px 30px;
     }
 
     @media (max-width: 600px) {
@@ -182,6 +186,11 @@
 
       .number {
         font-size: 28px;
+      }
+
+      th,
+      td {
+        padding: 12px;
       }
 
     }
@@ -205,8 +214,7 @@
   SPRESIANO CARD · Pannello Amministratore
 </div>
 
-<div id="stato"
-     class="status">
+<div id="stato" class="status">
   Collegamento in corso...
 </div>
 ```
@@ -217,7 +225,7 @@
 
 <main>
 
-  <h1>
+  <h1 class="page-title">
     Dashboard
   </h1>
 
@@ -225,101 +233,118 @@
 
 ```
 <div class="card">
-  <div class="icon">🏪</div>
+
+  <div class="icon">
+    🏪
+  </div>
 
   <div class="label">
     Negozi aderenti
   </div>
 
-  <div id="negozi"
-       class="number">
+  <div id="negozi" class="number">
     -
   </div>
+
 </div>
 
 
 <div class="card">
-  <div class="icon">💳</div>
+
+  <div class="icon">
+    💳
+  </div>
 
   <div class="label">
     Card emesse
   </div>
 
-  <div id="card"
-       class="number">
+  <div id="card" class="number">
     -
   </div>
+
 </div>
 
 
 <div class="card">
-  <div class="icon">👤</div>
+
+  <div class="icon">
+    👤
+  </div>
 
   <div class="label">
     Clienti registrati
   </div>
 
-  <div id="clienti"
-       class="number">
+  <div id="clienti" class="number">
     -
   </div>
+
 </div>
 
 
 <div class="card">
-  <div class="icon">🛒</div>
+
+  <div class="icon">
+    🛒
+  </div>
 
   <div class="label">
     Acquisti registrati
   </div>
 
-  <div id="utilizzi"
-       class="number">
+  <div id="utilizzi" class="number">
     -
   </div>
+
 </div>
 
 
 <div class="card">
-  <div class="icon">⭐</div>
+
+  <div class="icon">
+    ⭐
+  </div>
 
   <div class="label">
     Punti totali
   </div>
 
-  <div id="punti"
-       class="number">
+  <div id="punti" class="number">
     -
   </div>
+
 </div>
 
 
 <div class="card">
-  <div class="icon">🎁</div>
+
+  <div class="icon">
+    🎁
+  </div>
 
   <div class="label">
     Offerte attive
   </div>
 
-  <div id="offerte"
-       class="number">
+  <div id="offerte" class="number">
     -
   </div>
+
 </div>
 ```
 
   </div>
 
-  <div id="errore"
-       class="error-box">
-  </div>
+  <div id="errore" class="error-box"></div>
 
   <div class="section">
 
 ```
-<h2>
+<h2 class="section-title">
   Negozi aderenti
 </h2>
+
 
 <div class="table-wrapper">
 
@@ -328,20 +353,32 @@
     <thead>
 
       <tr>
-        <th>Negozio</th>
-        <th>Settore</th>
-        <th>Stato</th>
+
+        <th>
+          Negozio
+        </th>
+
+        <th>
+          Settore
+        </th>
+
+        <th>
+          Stato
+        </th>
+
       </tr>
 
     </thead>
 
+
     <tbody id="listaNegozi">
 
       <tr>
-        <td colspan="3"
-            class="empty">
+
+        <td colspan="3" class="empty">
           Caricamento...
         </td>
+
       </tr>
 
     </tbody>
@@ -355,10 +392,15 @@
 
 </main>
 
+<footer>
+  Giokri Life · SPRESIANO CARD
+</footer>
+
 <script>
 
+
 /* =====================================================
-   CONFIGURAZIONE
+   URL WEB APP
    ===================================================== */
 
 const API_URL =
@@ -366,12 +408,13 @@ const API_URL =
 
 
 /* =====================================================
-   CALLBACK DASHBOARD
+   DASHBOARD
    ===================================================== */
 
 function giokriAdminDashboard(data) {
 
   console.log("RISPOSTA DASHBOARD:", data);
+
 
   if (!data) {
 
@@ -380,23 +423,29 @@ function giokriAdminDashboard(data) {
     );
 
     return;
+
   }
 
 
   document.getElementById("negozi").textContent =
     data.negozi ?? 0;
 
+
   document.getElementById("card").textContent =
     data.card ?? 0;
+
 
   document.getElementById("clienti").textContent =
     data.clienti ?? 0;
 
+
   document.getElementById("utilizzi").textContent =
     data.utilizzi ?? 0;
 
+
   document.getElementById("punti").textContent =
     data.punti ?? 0;
+
 
   document.getElementById("offerte").textContent =
     data.offerte ?? 0;
@@ -404,6 +453,7 @@ function giokriAdminDashboard(data) {
 
   document.getElementById("stato").textContent =
     "Collegamento attivo";
+
 
   document.getElementById("stato").className =
     "status ok";
@@ -415,12 +465,13 @@ function giokriAdminDashboard(data) {
 
 
 /* =====================================================
-   CALLBACK NEGOZI
+   NEGOZI
    ===================================================== */
 
 function giokriAdminNegozi(data) {
 
   console.log("RISPOSTA NEGOZI:", data);
+
 
   const tbody =
     document.getElementById("listaNegozi");
@@ -432,17 +483,12 @@ function giokriAdminNegozi(data) {
   let negozi = [];
 
 
-  /*
-   * getNegozi() può restituire direttamente
-   * l'array oppure un oggetto contenente
-   * l'array.
-   */
-
   if (Array.isArray(data)) {
 
     negozi = data;
 
   }
+
 
   else if (
     data &&
@@ -452,6 +498,7 @@ function giokriAdminNegozi(data) {
     negozi = data.negozi;
 
   }
+
 
   else if (
     data &&
@@ -486,17 +533,14 @@ function giokriAdminNegozi(data) {
     const tdNome =
       document.createElement("td");
 
+
     const tdSettore =
       document.createElement("td");
+
 
     const tdStato =
       document.createElement("td");
 
-
-    /*
-     * Supportiamo sia oggetti con proprietà
-     * sia eventuali array.
-     */
 
     if (
       negozio &&
@@ -510,35 +554,43 @@ function giokriAdminNegozi(data) {
         negozio.negozio ||
         "-";
 
+
       tdSettore.textContent =
         negozio.settore ||
         negozio.SETTORE ||
         "-";
 
+
       tdStato.textContent =
         negozio.attivo ||
         negozio.ATTIVO ||
-        "ATTIVO";
+        "SI";
 
     }
+
 
     else if (Array.isArray(negozio)) {
 
       tdNome.textContent =
         negozio[1] || "-";
 
+
       tdSettore.textContent =
         negozio[2] || "-";
 
+
       tdStato.textContent =
-        negozio[3] || "ATTIVO";
+        negozio[3] || "SI";
 
     }
 
 
     tr.appendChild(tdNome);
+
     tr.appendChild(tdSettore);
+
     tr.appendChild(tdStato);
+
 
     tbody.appendChild(tr);
 
@@ -556,8 +608,10 @@ function mostraErrore(messaggio) {
   const box =
     document.getElementById("errore");
 
+
   box.textContent =
     messaggio;
+
 
   box.style.display =
     "block";
@@ -565,6 +619,7 @@ function mostraErrore(messaggio) {
 
   document.getElementById("stato").textContent =
     "Errore collegamento";
+
 
   document.getElementById("stato").className =
     "status error";
@@ -603,15 +658,9 @@ function caricaNegozi() {
 }
 
 
-/* =====================================================
-   AVVIO DASHBOARD
-   ===================================================== */
-
 </script>
 
-<script
-  src="https://script.google.com/macros/s/AKfycbxHaUH-tBV6IjSEB6nwGXCwe-C2BZ5iw5qXO2lABAQibULYh2c2b7z--dUcHMqQpksS/exec?azione=dashboard&callback=giokriAdminDashboard">
-</script>
+<script src="https://script.google.com/macros/s/AKfycbxHaUH-tBV6IjSEB6nwGXCwe-C2BZ5iw5qXO2lABAQibULYh2c2b7z--dUcHMqQpksS/exec?azione=dashboard&callback=giokriAdminDashboard"></script>
 
 </body>
 
