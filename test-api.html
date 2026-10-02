@@ -2,37 +2,82 @@
 
 <html lang="it">
 <head>
-<meta charset="UTF-8">
-<title>Test API SPRESIANO CARD</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test Web App SPRESIANO CARD</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 30px;
+      background: #f5f5f5;
+    }
+
+    .box {
+      max-width: 700px;
+      margin: auto;
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    }
+
+    h1 {
+      margin-top: 0;
+    }
+
+    #risultato {
+      margin-top: 20px;
+      padding: 15px;
+      background: #f0f0f0;
+      border-radius: 8px;
+      white-space: pre-wrap;
+    }
+  </style>
+
 </head>
 
 <body>
 
-<h1>Test Web App SPRESIANO CARD</h1>
+<div class="box">
 
-<div id="risultato">
-Caricamento...
+  <h1>Test Web App SPRESIANO CARD</h1>
+
+  <div id="risultato">
+    Caricamento...
+  </div>
+
 </div>
 
 <script>
 
-function provaGiokri(data) {
+const API_URL =
+  "https://script.google.com/macros/s/AKfycbxHaUH-tBV6IjSEB6nwGXCwe-C2BZ5iw5qXO2lABAQibULYh2c2b7z--dUcHMqPksS/exec";
 
-  document.getElementById("risultato").innerHTML =
-    "<h2>COLLEGAMENTO OK</h2>" +
-    "<p>Negozi: " + data.negozi + "</p>" +
-    "<p>Card: " + data.card + "</p>" +
-    "<p>Card attive: " + data.cardAttive + "</p>" +
-    "<p>Clienti: " + data.clienti + "</p>" +
-    "<p>Utilizzi: " + data.utilizzi + "</p>" +
-    "<p>Punti: " + data.punti + "</p>" +
-    "<p>Offerte: " + data.offerte + "</p>";
+fetch(API_URL + "?azione=dashboard")
+  .then(function(response) {
 
-}
+    if (!response.ok) {
+      throw new Error("HTTP " + response.status);
+    }
+
+    return response.text();
+
+  })
+  .then(function(testo) {
+
+    document.getElementById("risultato").textContent =
+      testo;
+
+  })
+  .catch(function(errore) {
+
+    document.getElementById("risultato").textContent =
+      "ERRORE:\n" + errore.message;
+
+  });
 
 </script>
-
-<script src="https://script.google.com/macros/s/AKfycbxHaUH-tBV6IjSEB6nwGXCwe-C2BZ5iw5qXO2lABAQibULYh2c2b7z--dUcHMqPksS/exec?azione=dashboard&callback=provaGiokri"></script>
 
 </body>
 </html>
