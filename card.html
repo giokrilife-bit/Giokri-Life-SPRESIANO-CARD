@@ -115,6 +115,11 @@ content="width=device-width, initial-scale=1.0"
       opacity: 0.92;
     }
 
+    button:disabled {
+      opacity: 0.65;
+      cursor: wait;
+    }
+
     .message {
       display: none;
       margin-top: 15px;
@@ -201,6 +206,7 @@ content="width=device-width, initial-scale=1.0"
 
     .next-level {
       background: #f9fafb;
+      color: #1f2937;
       border-radius: 14px;
       padding: 18px;
       margin-top: 15px;
@@ -337,6 +343,7 @@ content="width=device-width, initial-scale=1.0"
     Numero Card
   </label>
 
+
   <input
     type="text"
     id="idCard"
@@ -348,7 +355,6 @@ content="width=device-width, initial-scale=1.0"
   <button
     type="button"
     id="cercaButton"
-    onclick="cercaCard()"
   >
     VISUALIZZA LA MIA CARD
   </button>
@@ -381,12 +387,14 @@ content="width=device-width, initial-scale=1.0"
       SPRESIANO CARD
     </div>
 
+
     <div
       id="numeroCard"
       class="card-number"
     >
       -
     </div>
+
 
     <div
       id="nomeCliente"
@@ -406,12 +414,14 @@ content="width=device-width, initial-scale=1.0"
         </div>
 
         <div>
+
           <span
             id="livello"
             class="level"
           >
             -
           </span>
+
         </div>
 
       </div>
@@ -602,12 +612,13 @@ Giokri Life · SPRESIANO CARD
 
   <script>
 
+
     /***************************************************
      * API APPS SCRIPT
      ***************************************************/
 
-   const API_URL = "https://script.google.com/macros/s/AKfycbxHaUH-tBV6IjSEB6nwGXCwe-C2BZ5iw5qXO2lABAQibULYh2c2b7z--dUcHMqPksS/exec";
-
+    const API_URL =
+      "https://script.google.com/macros/s/AKfycbxHaUH-tBV6IjSEB6nwGXCwe-C2BZ5iw5qXO2lABAQibULYh2c2b7z--dUcHMqQpksS/exec";
 
 
     /***************************************************
@@ -615,36 +626,33 @@ Giokri Life · SPRESIANO CARD
      ***************************************************/
 
     const inputCard =
-      document.getElementById('idCard');
+      document.getElementById("idCard");
 
     const button =
-      document.getElementById('cercaButton');
+      document.getElementById("cercaButton");
 
     const loading =
-      document.getElementById('loading');
+      document.getElementById("loading");
 
     const message =
-      document.getElementById('message');
+      document.getElementById("message");
 
     const cardArea =
-      document.getElementById('cardArea');
+      document.getElementById("cardArea");
 
 
     /***************************************************
-     * MESSAGGIO
+     * MESSAGGI
      ***************************************************/
 
-    function mostraMessaggio(
-      testo,
-      tipo
-    ) {
+    function mostraMessaggio(testo, tipo) {
 
       message.textContent =
-        testo || '';
+        testo || "";
 
       message.className =
-        'message ' +
-        (tipo || 'info');
+        "message " +
+        (tipo || "info");
 
     }
 
@@ -652,162 +660,154 @@ Giokri Life · SPRESIANO CARD
     function nascondiMessaggio() {
 
       message.textContent =
-        '';
+        "";
 
       message.className =
-        'message';
+        "message";
 
     }
 
 
     /***************************************************
-     * JSONP
+     * RICHIESTA JSONP
      ***************************************************/
 
-    function richiestaJSONP(
-      url
-    ) {
+    function richiestaJSONP(url) {
 
-      return new Promise(
-        function(resolve, reject) {
+      return new Promise(function(resolve, reject) {
 
-          const nomeCallback =
-            'giokriCardCallback_' +
-            Date.now() +
-            '_' +
-            Math.floor(
-              Math.random() * 100000
-            );
+        const callbackName =
+          "giokriCard_" +
+          Date.now() +
+          "_" +
+          Math.floor(Math.random() * 100000);
 
 
-          const script =
-            document.createElement(
-              'script'
-            );
+        let script =
+          document.createElement("script");
 
 
-          let conclusa =
-            false;
+        let terminata = false;
 
 
-          const timeout =
-            setTimeout(
-              function() {
+        function pulisci() {
 
-                if (conclusa) {
-                  return;
-                }
+          if (script) {
 
-                conclusa = true;
-
-                pulisci();
-
-                reject(
-                  new Error(
-                    'Timeout collegamento API'
-                  )
-                );
-
-              },
-              10000
-            );
-
-
-          window[nomeCallback] =
-            function(dati) {
-
-              if (conclusa) {
-                return;
-              }
-
-              conclusa = true;
-
-              clearTimeout(
-                timeout
-              );
-
-              pulisci();
-
-              resolve(dati);
-
-            };
-
-
-          function pulisci() {
-
-            if (
-              script &&
-              script.parentNode
-            ) {
-
-              script.parentNode.removeChild(
-                script
-              );
-
-            }
-
-            try {
-
-              delete window[
-                nomeCallback
-              ];
-
-            } catch (errore) {
-
-              window[
-                nomeCallback
-              ] = undefined;
-
-            }
+            script.onload = null;
+            script.onerror = null;
 
           }
 
 
-          script.onerror =
-            function() {
+          if (
+            script &&
+            script.parentNode
+          ) {
 
-              if (conclusa) {
-                return;
-              }
-
-              conclusa = true;
-
-              clearTimeout(
-                timeout
-              );
-
-              pulisci();
-
-              reject(
-                new Error(
-                  'Errore collegamento API'
-                )
-              );
-
-            };
-
-
-          const separatore =
-            url.indexOf('?') >= 0
-              ? '&'
-              : '?';
-
-
-          script.src =
-            url +
-            separatore +
-            'callback=' +
-            encodeURIComponent(
-              nomeCallback
+            script.parentNode.removeChild(
+              script
             );
 
+          }
 
-          document.head.appendChild(
-            script
-          );
+
+          try {
+
+            delete window[callbackName];
+
+          } catch (errore) {
+
+            window[callbackName] =
+              undefined;
+
+          }
+
+          script = null;
 
         }
-      );
+
+
+        const timer =
+          setTimeout(function() {
+
+            if (terminata) {
+              return;
+            }
+
+            terminata = true;
+
+            pulisci();
+
+            reject(
+              new Error(
+                "Timeout collegamento API."
+              )
+            );
+
+          }, 15000);
+
+
+        window[callbackName] =
+          function(dati) {
+
+            if (terminata) {
+              return;
+            }
+
+            terminata = true;
+
+            clearTimeout(timer);
+
+            pulisci();
+
+            resolve(dati);
+
+          };
+
+
+        script.onerror =
+          function() {
+
+            if (terminata) {
+              return;
+            }
+
+            terminata = true;
+
+            clearTimeout(timer);
+
+            pulisci();
+
+            reject(
+              new Error(
+                "Errore collegamento API."
+              )
+            );
+
+          };
+
+
+        const separatore =
+          url.indexOf("?") !== -1
+            ? "&"
+            : "?";
+
+
+        script.src =
+          url +
+          separatore +
+          "callback=" +
+          encodeURIComponent(
+            callbackName
+          );
+
+
+        document.body.appendChild(
+          script
+        );
+
+      });
 
     }
 
@@ -825,7 +825,8 @@ Giokri Life · SPRESIANO CARD
 
 
       cardArea.style.display =
-        'none';
+        "none";
+
 
       nascondiMessaggio();
 
@@ -833,8 +834,8 @@ Giokri Life · SPRESIANO CARD
       if (!idCard) {
 
         mostraMessaggio(
-          'Inserisci il numero della tua Card.',
-          'error'
+          "Inserisci il numero della tua Card.",
+          "error"
         );
 
         return;
@@ -846,27 +847,24 @@ Giokri Life · SPRESIANO CARD
         true;
 
       button.textContent =
-        'RICERCA IN CORSO...';
+        "RICERCA IN CORSO...";
+
 
       loading.style.display =
-        'block';
+        "block";
 
 
       try {
 
         const url =
           API_URL +
-          '?azione=cercaCard' +
-          '&idCard=' +
-          encodeURIComponent(
-            idCard
-          );
+          "?azione=cercaCard" +
+          "&idCard=" +
+          encodeURIComponent(idCard);
 
 
         const risultato =
-          await richiestaJSONP(
-            url
-          );
+          await richiestaJSONP(url);
 
 
         if (
@@ -878,35 +876,42 @@ Giokri Life · SPRESIANO CARD
             risultato &&
             risultato.message
               ? risultato.message
-              : 'Card non trovata.'
+              : "Card non trovata."
           );
 
         }
 
 
-        mostraCard(
-          risultato
-        );
+        mostraCard(risultato);
 
 
       } catch (errore) {
 
+        console.error(
+          "Errore ricerca Card:",
+          errore
+        );
+
+
         mostraMessaggio(
           errore.message ||
-          'Impossibile recuperare la Card.',
-          'error'
+          "Impossibile recuperare la Card.",
+          "error"
         );
+
 
       } finally {
 
         loading.style.display =
-          'none';
+          "none";
+
 
         button.disabled =
           false;
 
+
         button.textContent =
-          'VISUALIZZA LA MIA CARD';
+          "VISUALIZZA LA MIA CARD";
 
       }
 
@@ -917,54 +922,56 @@ Giokri Life · SPRESIANO CARD
      * MOSTRA CARD
      ***************************************************/
 
-    function mostraCard(
-      dati
-    ) {
+    function mostraCard(dati) {
 
       document.getElementById(
-        'numeroCard'
+        "numeroCard"
       ).textContent =
-        dati.idCard || '-';
+        dati.idCard || "-";
 
 
-      document.getElementById(
-        'nomeCliente'
-      ).textContent =
+      const nomeCompleto =
         (
-          dati.nome || ''
+          dadosSeguro(dati.nome)
         ) +
-        ' ' +
+        " " +
         (
-          dati.cognome || ''
+          dadosSeguro(dati.cognome)
         );
 
 
       document.getElementById(
-        'livello'
+        "nomeCliente"
       ).textContent =
-        dati.livello || 'BASIC';
+        nomeCompleto.trim() || "-";
 
 
       document.getElementById(
-        'punti'
+        "livello"
+      ).textContent =
+        dati.livello || "BASIC";
+
+
+      document.getElementById(
+        "punti"
       ).textContent =
         dati.punti !== undefined
           ? dati.punti
-          : '0';
+          : "0";
 
 
       document.getElementById(
-        'stato'
+        "stato"
       ).textContent =
-        dati.stato || '-';
+        dati.stato || "-";
 
 
       document.getElementById(
-        'prossimoLivello'
+        "prossimoLivello"
       ).textContent =
         dati.prossimoLivello
           ? dati.prossimoLivello
-          : 'Livello massimo raggiunto';
+          : "Livello massimo raggiunto";
 
 
       const puntiMancanti =
@@ -973,56 +980,71 @@ Giokri Life · SPRESIANO CARD
         );
 
 
-      const prossimo =
-        dati.prossimoLivello;
-
-
       if (
-        prossimo &&
+        dati.prossimoLivello &&
         puntiMancanti > 0
       ) {
 
         document.getElementById(
-          'puntiMancanti'
+          "puntiMancanti"
         ).textContent =
-          'Ti mancano ' +
+          "Ti mancano " +
           puntiMancanti +
-          ' punti per raggiungere ' +
-          prossimo +
-          '.';
+          " punti per raggiungere " +
+          dati.prossimoLivello +
+          ".";
 
       } else {
 
         document.getElementById(
-          'puntiMancanti'
+          "puntiMancanti"
         ).textContent =
-          '';
+          "";
 
       }
 
 
       cardArea.style.display =
-        'block';
+        "block";
 
 
       cardArea.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start'
+        behavior: "smooth",
+        block: "start"
       });
 
     }
 
 
     /***************************************************
-     * INVIO CON ENTER
+     * SICUREZZA TESTO
      ***************************************************/
 
+    function dadosSeguro(valore) {
+
+      return String(
+        valore || ""
+      ).trim();
+
+    }
+
+
+    /***************************************************
+     * EVENTI
+     ***************************************************/
+
+    button.addEventListener(
+      "click",
+      cercaCard
+    );
+
+
     inputCard.addEventListener(
-      'keydown',
+      "keydown",
       function(event) {
 
         if (
-          event.key === 'Enter'
+          event.key === "Enter"
         ) {
 
           event.preventDefault();
@@ -1033,6 +1055,7 @@ Giokri Life · SPRESIANO CARD
 
       }
     );
+
 
   </script>
 
