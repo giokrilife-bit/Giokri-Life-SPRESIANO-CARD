@@ -1,311 +1,545 @@
 <!DOCTYPE html>
-
 <html lang="it">
-
 <head>
 
-<meta charset="UTF-8">
+  <meta charset="UTF-8">
 
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
-<title>La mia SPRESIANO CARD</title>
+  <title>La mia SPRESIANO CARD</title>
 
-<style>
+  <style>
 
-* {
-  box-sizing: border-box;
-}
+    * {
+      box-sizing: border-box;
+    }
 
-body {
-  margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
-  background: #f5f7f8;
-  color: #202428;
-}
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f4f6f8;
+      color: #1f2933;
+    }
 
-.container {
-  max-width: 560px;
-  margin: 0 auto;
-  padding: 25px 18px 50px;
-}
+    header {
+      background: #111827;
+      color: white;
+      padding: 24px 18px;
+      text-align: center;
+    }
 
-.header {
-  text-align: center;
-  margin-bottom: 25px;
-}
+    header .brand {
+      font-size: 15px;
+      font-weight: bold;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
 
-.logo {
-  font-size: 29px;
-  font-weight: 800;
-  letter-spacing: 1px;
-  color: #202428;
-}
+    header h1 {
+      margin: 0;
+      font-size: 28px;
+    }
 
-.subtitle {
-  margin-top: 7px;
-  color: #687078;
-  font-size: 14px;
-}
+    header p {
+      margin: 8px 0 0;
+      font-size: 14px;
+      opacity: 0.9;
+    }
 
-.card-box {
-  background: #ffffff;
-  border-radius: 18px;
-  padding: 28px 24px;
-  box-shadow: 0 4px 18px rgba(0,0,0,0.08);
-}
+    .container {
+      width: 100%;
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 22px 16px 40px;
+    }
 
-h1 {
-  text-align: center;
-  margin: 0 0 10px;
-  font-size: 25px;
-}
+    .card-box {
+      background: white;
+      border-radius: 18px;
+      padding: 24px;
+      margin-bottom: 18px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+    }
 
-.intro {
-  text-align: center;
-  color: #687078;
-  line-height: 1.5;
-  margin-bottom: 25px;
-}
+    .card-box h2 {
+      margin-top: 0;
+      font-size: 21px;
+    }
 
-label {
-  display: block;
-  font-size: 14px;
-  font-weight: bold;
-  margin-bottom: 8px;
-}
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
 
-input[type="text"] {
-  width: 100%;
-  padding: 14px;
-  border: 1px solid #d1d5db;
-  border-radius: 10px;
-  font-size: 17px;
-  text-align: center;
-  letter-spacing: 1px;
-  outline: none;
-  margin-bottom: 18px;
-}
+    input {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #ccd3da;
+      border-radius: 10px;
+      font-size: 16px;
+      margin-bottom: 12px;
+    }
 
-input[type="text"]:focus {
-  border-color: #1d5f8f;
-}
+    button {
+      width: 100%;
+      padding: 14px;
+      border: 0;
+      border-radius: 10px;
+      background: #111827;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
 
-button {
-  width: 100%;
-  border: 0;
-  border-radius: 11px;
-  padding: 15px;
-  background: #1d5f8f;
-  color: #ffffff;
-  font-size: 16px;
-  font-weight: 800;
-  cursor: pointer;
-}
+    button:hover {
+      opacity: 0.92;
+    }
 
-button:hover {
-  background: #164b70;
-}
+    .info {
+      font-size: 14px;
+      line-height: 1.6;
+      color: #5b6570;
+    }
 
-.info {
-  margin-top: 22px;
-  background: #f5f7f8;
-  border-radius: 10px;
-  padding: 15px;
-  text-align: center;
-  color: #687078;
-  font-size: 13px;
-  line-height: 1.5;
-}
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 16px;
+    }
 
-.features {
-  margin-top: 22px;
-  display: grid;
-  gap: 10px;
-}
+    .feature {
+      background: #f8fafc;
+      border-radius: 12px;
+      padding: 16px;
+      text-align: center;
+    }
 
-.feature {
-  background: #ffffff;
-  border-radius: 12px;
-  padding: 14px;
-  box-shadow: 0 2px 9px rgba(0,0,0,0.05);
-}
+    .feature strong {
+      display: block;
+      font-size: 17px;
+      margin-bottom: 6px;
+    }
 
-.feature-title {
-  font-weight: bold;
-  margin-bottom: 4px;
-}
+    .feature span {
+      font-size: 13px;
+      color: #66717d;
+      line-height: 1.4;
+    }
 
-.feature-text {
-  font-size: 13px;
-  color: #687078;
-}
+    .future-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 16px;
+    }
 
-.back {
-  display: block;
-  text-align: center;
-  margin-top: 22px;
-  color: #1d5f8f;
-  text-decoration: none;
-  font-size: 14px;
-  font-weight: bold;
-}
+    .future-item {
+      background: #f8fafc;
+      border-radius: 12px;
+      padding: 16px;
+    }
 
-.footer {
-  text-align: center;
-  margin-top: 25px;
-  font-size: 12px;
-  color: #8a9197;
-}
+    .future-item strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 16px;
+    }
 
-</style>
+    .future-item span {
+      font-size: 13px;
+      color: #66717d;
+      line-height: 1.4;
+    }
+
+    .button-secondary {
+      display: block;
+      text-align: center;
+      text-decoration: none;
+      margin-top: 12px;
+      padding: 13px;
+      border-radius: 10px;
+      border: 1px solid #111827;
+      color: #111827;
+      font-weight: bold;
+      background: white;
+    }
+
+    footer {
+      text-align: center;
+      color: #6b7280;
+      font-size: 13px;
+      padding: 10px 20px 30px;
+    }
+
+    @media (max-width: 600px) {
+
+      header h1 {
+        font-size: 24px;
+      }
+
+      .feature-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .future-grid {
+        grid-template-columns: 1fr;
+      }
+
+    }
+
+  </style>
 
 </head>
 
 <body>
 
-<div class="container">
+  <header>
 
-  <div class="header">
+    <div class="brand">
+      GiOKri Life
+    </div>
 
-```
-<div class="logo">
-  SPRESIANO CARD
-</div>
+    <h1>
+      La mia SPRESIANO CARD
+    </h1>
 
-<div class="subtitle">
-  La tua area personale
-</div>
-```
+    <p>
+      Acquista · Accumula · Scopri
+    </p>
 
-  </div>
-
-  <div class="card-box">
-
-```
-<h1>
-  Visualizza la tua Card
-</h1>
-
-<div class="intro">
-  Inserisci il numero della tua SPRESIANO CARD
-  per visualizzare i tuoi dati.
-</div>
+  </header>
 
 
-<form
-  method="POST"
-  action="https://script.google.com/macros/s/AKfycbxHaUH-tBV6IjSEB6nwGXCwe-C2BZ5iw5qXO2lABAQibULYh2c2b7z--dUcHMqQpksS/exec"
->
-
-  <input
-    type="hidden"
-    name="azione"
-    value="cercaCard"
-  >
+  <main class="container">
 
 
-  <label for="idCard">
-    Numero Card
-  </label>
+    <!-- ==========================================
+         ACCESSO CARD
+         ========================================== -->
+
+    <section class="card-box">
+
+      <h2>
+        Consulta la tua Card
+      </h2>
+
+      <form
+        method="POST"
+        action="https://script.google.com/macros/s/AKfycbxHaUH-tBV6IjSEB6nwGXCwe-C2BZ5iw5qXO2lABAQibULYh2c2b7z--dUcHMqQpksS/exec"
+      >
+
+        <input
+          type="hidden"
+          name="azione"
+          value="cercaCard"
+        >
+
+        <label for="idCard">
+          Numero Card
+        </label>
+
+        <input
+          type="text"
+          id="idCard"
+          name="idCard"
+          placeholder="CARD-000001"
+          required
+        >
+
+        <button type="submit">
+          VISUALIZZA LA MIA CARD
+        </button>
+
+      </form>
+
+      <p class="info">
+        Inserisci il numero della tua SPRESIANO CARD
+        per visualizzare punti, livello e stato della Card.
+      </p>
+
+    </section>
 
 
-  <input
-    type="text"
-    id="idCard"
-    name="idCard"
-    placeholder="CARD-000001"
-    required
-    autocomplete="off"
-  >
+    <!-- ==========================================
+         PUNTI E LIVELLI
+         ========================================== -->
+
+    <section class="card-box">
+
+      <h2>
+        Come funziona
+      </h2>
+
+      <div class="feature-grid">
+
+        <div class="feature">
+
+          <strong>
+            1 € = 1 punto
+          </strong>
+
+          <span>
+            Gli acquisti possono generare punti
+            secondo le regole della SPRESIANO CARD.
+          </span>
+
+        </div>
 
 
-  <button type="submit">
-    VISUALIZZA LA MIA CARD
-  </button>
+        <div class="feature">
 
-</form>
+          <strong>
+            Più partecipi
+          </strong>
 
+          <span>
+            I punti contribuiscono alla crescita
+            del tuo livello.
+          </span>
 
-<div class="info">
-
-  Il numero della Card ti viene comunicato
-  al termine della registrazione.
-
-  <br><br>
-
-  Se non hai ancora una Card,
-  puoi crearla gratuitamente.
-
-</div>
-```
-
-  </div>
-
-  <div class="features">
-
-```
-<div class="feature">
-
-  <div class="feature-title">
-    ⭐ I tuoi punti
-  </div>
-
-  <div class="feature-text">
-    Controlla i punti accumulati con i tuoi acquisti.
-  </div>
-
-</div>
+        </div>
 
 
-<div class="feature">
+        <div class="feature">
 
-  <div class="feature-title">
-    🏆 Il tuo livello
-  </div>
+          <strong>
+            Più opportunità
+          </strong>
 
-  <div class="feature-text">
-    Scopri il tuo livello e segui la tua crescita
-    nella SPRESIANO CARD.
-  </div>
+          <span>
+            I livelli possono dare accesso
+            a iniziative e vantaggi dedicati.
+          </span>
 
-</div>
+        </div>
+
+      </div>
+
+    </section>
 
 
-<div class="feature">
+    <!-- ==========================================
+         VANTAGGI
+         ========================================== -->
 
-  <div class="feature-title">
-    🎁 I tuoi vantaggi
-  </div>
+    <section class="card-box">
 
-  <div class="feature-text">
-    In futuro potrai visualizzare qui
-    iniziative e vantaggi dedicati.
-  </div>
+      <h2>
+        I tuoi vantaggi
+      </h2>
 
-</div>
-```
+      <p class="info">
+        La SPRESIANO CARD prevede diversi livelli
+        di partecipazione. I vantaggi possono essere
+        collegati al livello raggiunto e alle iniziative
+        attive presso i negozi aderenti.
+      </p>
 
-  </div>
+      <a
+        class="button-secondary"
+        href="vantaggi.html"
+      >
+        SCOPRI LIVELLI E VANTAGGI
+      </a>
 
-<a
-class="back"
-href="index.html"
+    </section>
 
->
 
-```
-← Torna alla SPRESIANO CARD
-```
+    <!-- ==========================================
+         FEDELTA' NEGOZIO
+         ========================================== -->
 
-  </a>
+    <section class="card-box">
 
-  <div class="footer">
-    SPRESIANO CARD · Promossa da GiOKri Life · Spresiano
-  </div>
+      <h2>
+        La tua fedeltà
+      </h2>
 
-</div>
+      <p class="info">
+        La SPRESIANO CARD potrà valorizzare non solo
+        quanto acquisti, ma anche la tua continuità
+        presso i negozi aderenti.
+      </p>
+
+      <div class="feature-grid">
+
+        <div class="feature">
+
+          <strong>
+            Acquista
+          </strong>
+
+          <span>
+            Partecipa alle iniziative
+            dei negozi aderenti.
+          </span>
+
+        </div>
+
+
+        <div class="feature">
+
+          <strong>
+            Torna
+          </strong>
+
+          <span>
+            La frequenza di acquisto potrà
+            generare vantaggi dedicati.
+          </span>
+
+        </div>
+
+
+        <div class="feature">
+
+          <strong>
+            Fidelizzati
+          </strong>
+
+          <span>
+            In futuro potranno essere previsti
+            premi legati alla continuità.
+          </span>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ==========================================
+         PERCORSI TEMATICI
+         ========================================== -->
+
+    <section class="card-box">
+
+      <h2>
+        Percorsi e iniziative
+      </h2>
+
+      <p class="info">
+        In futuro la SPRESIANO CARD potrà proporre
+        percorsi che coinvolgono più attività e negozi
+        del territorio.
+      </p>
+
+      <div class="future-grid">
+
+        <div class="future-item">
+
+          <strong>
+            Sport
+          </strong>
+
+          <span>
+            Attività, acquisti e iniziative
+            legate allo sport.
+          </span>
+
+        </div>
+
+
+        <div class="future-item">
+
+          <strong>
+            Benessere
+          </strong>
+
+          <span>
+            Un percorso dedicato al benessere
+            e alla cura della persona.
+          </span>
+
+        </div>
+
+
+        <div class="future-item">
+
+          <strong>
+            Famiglia
+          </strong>
+
+          <span>
+            Iniziative pensate per famiglie
+            e vita quotidiana.
+          </span>
+
+        </div>
+
+
+        <div class="future-item">
+
+          <strong>
+            Studio
+          </strong>
+
+          <span>
+            Opportunità dedicate a scuola,
+            studio e figli.
+          </span>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ==========================================
+         COME ACCUMULARE
+         ========================================== -->
+
+    <section class="card-box">
+
+      <h2>
+        Come accumulare punti
+      </h2>
+
+      <p class="info">
+
+        1. Acquista presso un negozio aderente.<br>
+        2. Conserva lo scontrino.<br>
+        3. Richiedi l'accredito secondo le modalità previste.<br>
+        4. I punti approvati vengono aggiunti alla tua Card.<br>
+        5. Il tuo livello viene aggiornato automaticamente.
+
+      </p>
+
+    </section>
+
+
+    <!-- ==========================================
+         TORNA ALLA HOME
+         ========================================== -->
+
+    <section class="card-box">
+
+      <a
+        class="button-secondary"
+        href="index.html"
+      >
+        TORNA ALLA SPRESIANO CARD
+      </a>
+
+    </section>
+
+
+  </main>
+
+
+  <footer>
+
+    SPRESIANO CARD · Promossa da GiOKri Life
+
+  </footer>
 
 </body>
-
 </html>
