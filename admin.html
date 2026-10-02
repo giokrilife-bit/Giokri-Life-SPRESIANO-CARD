@@ -1,288 +1,350 @@
 <!DOCTYPE html>
 
 <html lang="it">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Giokri Life - SPRESIANO CARD</title>
+  <meta charset="UTF-8">
 
-<style>
-* {
-  box-sizing: border-box;
-}
+<meta name="viewport"
+     content="width=device-width, initial-scale=1.0">
 
-body {
-  margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
-  background: #f4f6f8;
-  color: #222;
-}
+  <title>
+    Giokri Life · SPRESIANO CARD · Amministratore
+  </title>
 
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 25px;
-}
+  <style>
 
-.header {
-  background: #ffffff;
-  border-radius: 14px;
-  padding: 25px;
-  margin-bottom: 20px;
-  box-shadow: 0 3px 12px rgba(0,0,0,0.08);
-}
+    * {
+      box-sizing: border-box;
+    }
 
-.logo {
-  font-size: 28px;
-  font-weight: bold;
-  margin-bottom: 5px;
-}
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f5f6f8;
+      color: #222;
+    }
 
-.subtitle {
-  font-size: 20px;
-  font-weight: 600;
-  margin-bottom: 15px;
-}
+    header {
+      background: #ffffff;
+      padding: 25px 20px 20px;
+      border-bottom: 1px solid #ddd;
+    }
 
-.status {
-  display: inline-block;
-  padding: 8px 14px;
-  border-radius: 20px;
-  background: #e8f7ed;
-  color: #18733a;
-  font-weight: bold;
-  font-size: 14px;
-}
+    .header-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
 
-.status.error {
-  background: #fdeaea;
-  color: #b42318;
-}
+    .brand {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
 
-h1 {
-  margin-top: 0;
-  font-size: 25px;
-}
+    .title {
+      font-size: 18px;
+      color: #555;
+    }
 
-.dashboard {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 15px;
-  margin-bottom: 30px;
-}
+    .status {
+      display: inline-block;
+      margin-top: 14px;
+      padding: 8px 14px;
+      border-radius: 20px;
+      background: #eeeeee;
+      color: #555;
+      font-size: 14px;
+    }
 
-.card {
-  background: #ffffff;
-  border-radius: 14px;
-  padding: 22px;
-  box-shadow: 0 3px 12px rgba(0,0,0,0.07);
-}
+    .status.ok {
+      background: #e5f6e9;
+      color: #18743b;
+    }
 
-.card-icon {
-  font-size: 28px;
-  margin-bottom: 10px;
-}
+    .status.error {
+      background: #fdeaea;
+      color: #a52222;
+    }
 
-.card-title {
-  font-size: 14px;
-  color: #666;
-  margin-bottom: 8px;
-}
+    main {
+      max-width: 1100px;
+      margin: 30px auto;
+      padding: 0 20px 40px;
+    }
 
-.card-value {
-  font-size: 32px;
-  font-weight: bold;
-}
+    h1 {
+      font-size: 26px;
+      margin: 0 0 20px;
+    }
 
-.section {
-  background: #ffffff;
-  border-radius: 14px;
-  padding: 25px;
-  box-shadow: 0 3px 12px rgba(0,0,0,0.07);
-}
+    .cards {
+      display: grid;
+      grid-template-columns:
+        repeat(auto-fit, minmax(200px, 1fr));
 
-.section h2 {
-  margin-top: 0;
-  font-size: 22px;
-}
+      gap: 16px;
+    }
 
-.table-wrapper {
-  overflow-x: auto;
-}
+    .card {
+      background: #ffffff;
+      border-radius: 14px;
+      padding: 22px;
+      box-shadow:
+        0 2px 10px rgba(0,0,0,0.06);
+    }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 15px;
-}
+    .icon {
+      font-size: 28px;
+      margin-bottom: 12px;
+    }
 
-th {
-  background: #f0f2f4;
-  text-align: left;
-  padding: 12px;
-  font-size: 14px;
-}
+    .label {
+      color: #666;
+      font-size: 14px;
+      margin-bottom: 6px;
+    }
 
-td {
-  padding: 12px;
-  border-bottom: 1px solid #e5e5e5;
-  font-size: 14px;
-}
+    .number {
+      font-size: 32px;
+      font-weight: 700;
+    }
 
-.badge {
-  display: inline-block;
-  padding: 5px 9px;
-  border-radius: 12px;
-  background: #e8f7ed;
-  color: #18733a;
-  font-size: 12px;
-  font-weight: bold;
-}
+    .section {
+      margin-top: 35px;
+    }
 
-.loading {
-  padding: 20px;
-  text-align: center;
-  color: #666;
-}
+    .section h2 {
+      font-size: 22px;
+      margin-bottom: 15px;
+    }
 
-.error-box {
-  display: none;
-  margin-top: 20px;
-  padding: 15px;
-  border-radius: 10px;
-  background: #fdeaea;
-  color: #b42318;
-}
+    .table-wrapper {
+      background: #ffffff;
+      border-radius: 14px;
+      overflow-x: auto;
+      box-shadow:
+        0 2px 10px rgba(0,0,0,0.06);
+    }
 
-@media (max-width: 800px) {
-  .dashboard {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
 
-@media (max-width: 550px) {
-  .container {
-    padding: 12px;
-  }
+    th,
+    td {
+      padding: 14px 16px;
+      text-align: left;
+      border-bottom: 1px solid #eeeeee;
+    }
 
-  .dashboard {
-    grid-template-columns: 1fr;
-  }
+    th {
+      background: #fafafa;
+      font-size: 14px;
+    }
 
-  .logo {
-    font-size: 24px;
-  }
+    td {
+      font-size: 14px;
+    }
 
-  .subtitle {
-    font-size: 17px;
-  }
-}
-</style>
+    .empty {
+      padding: 25px;
+      text-align: center;
+      color: #777;
+    }
+
+    .error-box {
+      margin-top: 20px;
+      background: #fff0f0;
+      border: 1px solid #f0b8b8;
+      color: #8b1e1e;
+      padding: 15px;
+      border-radius: 10px;
+      display: none;
+      white-space: pre-wrap;
+    }
+
+    @media (max-width: 600px) {
+
+      .brand {
+        font-size: 24px;
+      }
+
+      .title {
+        font-size: 16px;
+      }
+
+      main {
+        margin-top: 20px;
+      }
+
+      .number {
+        font-size: 28px;
+      }
+
+    }
+
+  </style>
 
 </head>
 
 <body>
 
-<div class="container">
+<header>
 
-  <div class="header">
+  <div class="header-inner">
 
 ```
-<div class="logo">
+<div class="brand">
   Giokri Life
 </div>
 
-<div class="subtitle">
+<div class="title">
   SPRESIANO CARD · Pannello Amministratore
 </div>
 
-<div id="status" class="status">
+<div id="stato"
+     class="status">
   Collegamento in corso...
 </div>
 ```
 
   </div>
 
+</header>
+
+<main>
+
+  <h1>
+    Dashboard
+  </h1>
+
+  <div class="cards">
+
+```
+<div class="card">
+  <div class="icon">🏪</div>
+
+  <div class="label">
+    Negozi aderenti
+  </div>
+
+  <div id="negozi"
+       class="number">
+    -
+  </div>
+</div>
+
+
+<div class="card">
+  <div class="icon">💳</div>
+
+  <div class="label">
+    Card emesse
+  </div>
+
+  <div id="card"
+       class="number">
+    -
+  </div>
+</div>
+
+
+<div class="card">
+  <div class="icon">👤</div>
+
+  <div class="label">
+    Clienti registrati
+  </div>
+
+  <div id="clienti"
+       class="number">
+    -
+  </div>
+</div>
+
+
+<div class="card">
+  <div class="icon">🛒</div>
+
+  <div class="label">
+    Acquisti registrati
+  </div>
+
+  <div id="utilizzi"
+       class="number">
+    -
+  </div>
+</div>
+
+
+<div class="card">
+  <div class="icon">⭐</div>
+
+  <div class="label">
+    Punti totali
+  </div>
+
+  <div id="punti"
+       class="number">
+    -
+  </div>
+</div>
+
+
+<div class="card">
+  <div class="icon">🎁</div>
+
+  <div class="label">
+    Offerte attive
+  </div>
+
+  <div id="offerte"
+       class="number">
+    -
+  </div>
+</div>
+```
+
+  </div>
+
+  <div id="errore"
+       class="error-box">
+  </div>
+
   <div class="section">
 
 ```
-<h1>Dashboard</h1>
-
-<div class="dashboard">
-
-  <div class="card">
-    <div class="card-icon">🏪</div>
-    <div class="card-title">Negozi aderenti</div>
-    <div id="negozi" class="card-value">-</div>
-  </div>
-
-  <div class="card">
-    <div class="card-icon">💳</div>
-    <div class="card-title">Card emesse</div>
-    <div id="card" class="card-value">-</div>
-  </div>
-
-  <div class="card">
-    <div class="card-icon">👤</div>
-    <div class="card-title">Clienti registrati</div>
-    <div id="clienti" class="card-value">-</div>
-  </div>
-
-  <div class="card">
-    <div class="card-icon">🔄</div>
-    <div class="card-title">Utilizzi registrati</div>
-    <div id="utilizzi" class="card-value">-</div>
-  </div>
-
-  <div class="card">
-    <div class="card-icon">⭐</div>
-    <div class="card-title">Punti totali</div>
-    <div id="punti" class="card-value">-</div>
-  </div>
-
-  <div class="card">
-    <div class="card-icon">🎁</div>
-    <div class="card-title">Offerte attive</div>
-    <div id="offerte" class="card-value">-</div>
-  </div>
-
-</div>
-```
-
-  </div>
-
-  <div id="errorBox" class="error-box"></div>
-
-  <div class="section" style="margin-top:30px;">
-
-```
-<h2>Negozi aderenti</h2>
-
-<div id="loading" class="loading">
-  Caricamento negozi...
-</div>
+<h2>
+  Negozi aderenti
+</h2>
 
 <div class="table-wrapper">
 
-  <table id="negoziTable" style="display:none;">
+  <table>
 
     <thead>
 
       <tr>
-        <th>ID</th>
         <th>Negozio</th>
         <th>Settore</th>
         <th>Stato</th>
-        <th>Vantaggio Card</th>
-        <th>Telefono</th>
-        <th>Indirizzo</th>
-        <th>Note</th>
       </tr>
 
     </thead>
 
-    <tbody id="negoziBody"></tbody>
+    <tbody id="listaNegozi">
+
+      <tr>
+        <td colspan="3"
+            class="empty">
+          Caricamento...
+        </td>
+      </tr>
+
+    </tbody>
 
   </table>
 
@@ -291,69 +353,35 @@ td {
 
   </div>
 
-</div>
+</main>
 
 <script>
 
 /* =====================================================
-   GIOKRI LIFE – SPRESIANO CARD
-   PANNELLO AMMINISTRATORE
+   CONFIGURAZIONE
    ===================================================== */
 
 const API_URL =
-  "https://script.google.com/macros/s/AKfycbxHaUH-tBV6IjSEB6nwGXCwe-C2BZ5iw5qXO2lABAQibULYh2c2b7z--dUcHMqPksS/exec";
+  "https://script.google.com/macros/s/AKfycbxHaUH-tBV6IjSEB6nwGXCwe-C2BZ5iw5qXO2lABAQibULYh2c2b7z--dUcHMqQpksS/exec";
 
 
 /* =====================================================
-   MOSTRA ERRORE
+   CALLBACK DASHBOARD
    ===================================================== */
 
-function mostraErrore(messaggio) {
+function giokriAdminDashboard(data) {
 
-  const box =
-    document.getElementById("errorBox");
+  console.log("RISPOSTA DASHBOARD:", data);
 
-  box.style.display = "block";
+  if (!data) {
 
-  box.innerHTML =
-    "<strong>Errore collegamento</strong><br>" +
-    messaggio;
+    mostraErrore(
+      "La Web App ha restituito una risposta vuota."
+    );
 
-  const status =
-    document.getElementById("status");
+    return;
+  }
 
-  status.textContent =
-    "Errore collegamento";
-
-  status.classList.add("error");
-}
-
-
-/* =====================================================
-   COLLEGAMENTO OK
-   ===================================================== */
-
-function collegamentoOK() {
-
-  const status =
-    document.getElementById("status");
-
-  status.textContent =
-    "Collegamento attivo";
-
-  status.classList.remove("error");
-
-  document
-    .getElementById("errorBox")
-    .style.display = "none";
-}
-
-
-/* =====================================================
-   AGGIORNA DASHBOARD
-   ===================================================== */
-
-function aggiornaDashboard(data) {
 
   document.getElementById("negozi").textContent =
     data.negozi ?? 0;
@@ -372,391 +400,219 @@ function aggiornaDashboard(data) {
 
   document.getElementById("offerte").textContent =
     data.offerte ?? 0;
+
+
+  document.getElementById("stato").textContent =
+    "Collegamento attivo";
+
+  document.getElementById("stato").className =
+    "status ok";
+
+
+  caricaNegozi();
+
 }
 
 
 /* =====================================================
-   MOSTRA NEGOZI
+   CALLBACK NEGOZI
    ===================================================== */
 
-function mostraNegozi(negozi) {
+function giokriAdminNegozi(data) {
+
+  console.log("RISPOSTA NEGOZI:", data);
 
   const tbody =
-    document.getElementById("negoziBody");
+    document.getElementById("listaNegozi");
+
 
   tbody.innerHTML = "";
 
 
-  if (
-    !Array.isArray(negozi) ||
-    negozi.length === 0
+  let negozi = [];
+
+
+  /*
+   * getNegozi() può restituire direttamente
+   * l'array oppure un oggetto contenente
+   * l'array.
+   */
+
+  if (Array.isArray(data)) {
+
+    negozi = data;
+
+  }
+
+  else if (
+    data &&
+    Array.isArray(data.negozi)
   ) {
 
-    tbody.innerHTML =
-      '<tr>' +
-      '<td colspan="8">' +
-      'Nessun negozio trovato.' +
-      '</td>' +
-      '</tr>';
+    negozi = data.negozi;
 
-  } else {
+  }
 
-    negozi.forEach(function(negozio) {
+  else if (
+    data &&
+    Array.isArray(data.data)
+  ) {
 
-      const tr =
-        document.createElement("tr");
-
-
-      tr.innerHTML =
-
-        "<td>" +
-        (negozio.ID ?? "") +
-        "</td>" +
-
-        "<td><strong>" +
-        (negozio.NEGOZIO ?? "") +
-        "</strong></td>" +
-
-        "<td>" +
-        (negozio.SETTORE ?? "") +
-        "</td>" +
-
-        '<td><span class="badge">' +
-        (negozio.ATTIVO ?? "") +
-        "</span></td>" +
-
-        "<td>" +
-        (negozio["VANTAGGIO CARD"] ?? "") +
-        "</td>" +
-
-        "<td>" +
-        (negozio.TELEFONO ?? "") +
-        "</td>" +
-
-        "<td>" +
-        (negozio.INDIRIZZO ?? "") +
-        "</td>" +
-
-        "<td>" +
-        (negozio.NOTE ?? "") +
-        "</td>";
-
-
-      tbody.appendChild(tr);
-
-    });
+    negozi = data.data;
 
   }
 
 
-  document
-    .getElementById("loading")
-    .style.display = "none";
+  if (negozi.length === 0) {
+
+    tbody.innerHTML =
+      '<tr>' +
+      '<td colspan="3" class="empty">' +
+      'Nessun negozio trovato.' +
+      '</td>' +
+      '</tr>';
+
+    return;
+
+  }
 
 
-  document
-    .getElementById("negoziTable")
-    .style.display = "table";
+  negozi.forEach(function(negozio) {
+
+    const tr =
+      document.createElement("tr");
+
+
+    const tdNome =
+      document.createElement("td");
+
+    const tdSettore =
+      document.createElement("td");
+
+    const tdStato =
+      document.createElement("td");
+
+
+    /*
+     * Supportiamo sia oggetti con proprietà
+     * sia eventuali array.
+     */
+
+    if (
+      negozio &&
+      typeof negozio === "object" &&
+      !Array.isArray(negozio)
+    ) {
+
+      tdNome.textContent =
+        negozio.nome ||
+        negozio.NEGOZIO ||
+        negozio.negozio ||
+        "-";
+
+      tdSettore.textContent =
+        negozio.settore ||
+        negozio.SETTORE ||
+        "-";
+
+      tdStato.textContent =
+        negozio.attivo ||
+        negozio.ATTIVO ||
+        "ATTIVO";
+
+    }
+
+    else if (Array.isArray(negozio)) {
+
+      tdNome.textContent =
+        negozio[1] || "-";
+
+      tdSettore.textContent =
+        negozio[2] || "-";
+
+      tdStato.textContent =
+        negozio[3] || "ATTIVO";
+
+    }
+
+
+    tr.appendChild(tdNome);
+    tr.appendChild(tdSettore);
+    tr.appendChild(tdStato);
+
+    tbody.appendChild(tr);
+
+  });
+
 }
 
 
 /* =====================================================
-   RICHIESTA JSONP
+   ERRORE
    ===================================================== */
 
-function richiestaJSONP(url, callback) {
+function mostraErrore(messaggio) {
+
+  const box =
+    document.getElementById("errore");
+
+  box.textContent =
+    messaggio;
+
+  box.style.display =
+    "block";
+
+
+  document.getElementById("stato").textContent =
+    "Errore collegamento";
+
+  document.getElementById("stato").className =
+    "status error";
+
+}
+
+
+/* =====================================================
+   CARICAMENTO NEGOZI
+   ===================================================== */
+
+function caricaNegozi() {
 
   const script =
     document.createElement("script");
 
 
-  const nomeCallback =
-    "giokriAdmin_" +
-    Date.now() +
-    "_" +
-    Math.floor(
-      Math.random() * 100000
-    );
-
-
-  let terminata = false;
-
-
-  const timeout =
-    setTimeout(function() {
-
-      if (terminata) {
-        return;
-      }
-
-
-      terminata = true;
-
-
-      try {
-        delete window[nomeCallback];
-      } catch (e) {}
-
-
-      if (script.parentNode) {
-        script.parentNode.removeChild(script);
-      }
-
-
-      callback(
-        null,
-        "Timeout nella risposta della Web App."
-      );
-
-    }, 15000);
-
-
-  window[nomeCallback] =
-    function(data) {
-
-      if (terminata) {
-        return;
-      }
-
-
-      terminata = true;
-
-
-      clearTimeout(timeout);
-
-
-      try {
-        delete window[nomeCallback];
-      } catch (e) {}
-
-
-      if (script.parentNode) {
-        script.parentNode.removeChild(script);
-      }
-
-
-      callback(
-        data,
-        null
-      );
-
-    };
+  script.src =
+    API_URL +
+    "?callback=giokriAdminNegozi&_=" +
+    Date.now();
 
 
   script.onerror =
     function() {
 
-      if (terminata) {
-        return;
-      }
-
-
-      terminata = true;
-
-
-      clearTimeout(timeout);
-
-
-      try {
-        delete window[nomeCallback];
-      } catch (e) {}
-
-
-      if (script.parentNode) {
-        script.parentNode.removeChild(script);
-      }
-
-
-      callback(
-        null,
-        "Impossibile raggiungere la Web App."
+      mostraErrore(
+        "Impossibile caricare l'elenco dei negozi."
       );
 
     };
 
 
-  const separatore =
-    url.indexOf("?") >= 0
-      ? "&"
-      : "?";
+  document.body.appendChild(script);
 
-
-  script.src =
-    url +
-    separatore +
-    "callback=" +
-    encodeURIComponent(
-      nomeCallback
-    ) +
-    "&t=" +
-    Date.now();
-
-
-  document
-    .head
-    .appendChild(script);
 }
 
 
 /* =====================================================
-   CARICA DASHBOARD
+   AVVIO DASHBOARD
    ===================================================== */
-
-function caricaDashboard() {
-
-  richiestaJSONP(
-
-    API_URL +
-    "?azione=dashboard",
-
-    function(data, errore) {
-
-      if (errore) {
-
-        mostraErrore(errore);
-
-        return;
-      }
-
-
-      if (!data) {
-
-        mostraErrore(
-          "Risposta vuota dalla Web App."
-        );
-
-        return;
-      }
-
-
-      if (data.success === false) {
-
-        mostraErrore(
-          data.message ||
-          "Errore restituito dalla Web App."
-        );
-
-        return;
-      }
-
-
-      aggiornaDashboard(data);
-
-      collegamentoOK();
-
-      caricaNegozi();
-
-    }
-  );
-}
-
-
-/* =====================================================
-   CARICA NEGOZI
-   ===================================================== */
-
-function caricaNegozi() {
-
-  richiestaJSONP(
-
-    API_URL,
-
-    function(data, errore) {
-
-      if (errore) {
-
-        mostraErrore(errore);
-
-        return;
-      }
-
-
-      if (!data) {
-
-        mostraErrore(
-          "Risposta vuota durante il caricamento dei negozi."
-        );
-
-        return;
-      }
-
-
-      if (data.success === false) {
-
-        mostraErrore(
-          data.message ||
-          "Errore nella lettura dei negozi."
-        );
-
-        return;
-      }
-
-
-      let negozi = [];
-
-
-      /*
-       * La funzione getNegozi()
-       * restituisce normalmente:
-       *
-       * {
-       *   success: true,
-       *   negozi: [...]
-       * }
-       *
-       */
-
-      if (
-        Array.isArray(data.negozi)
-      ) {
-
-        negozi =
-          data.negozi;
-
-      }
-
-
-      /*
-       * Compatibilità nel caso
-       * la risposta sia direttamente
-       * un array.
-       */
-
-      else if (
-        Array.isArray(data)
-      ) {
-
-        negozi =
-          data;
-
-      }
-
-
-      mostraNegozi(
-        negozi
-      );
-
-      collegamentoOK();
-
-    }
-  );
-}
-
-
-/* =====================================================
-   AVVIO
-   ===================================================== */
-
-document.addEventListener(
-  "DOMContentLoaded",
-  function() {
-
-    caricaDashboard();
-
-  }
-);
 
 </script>
 
+<script
+  src="https://script.google.com/macros/s/AKfycbxHaUH-tBV6IjSEB6nwGXCwe-C2BZ5iw5qXO2lABAQibULYh2c2b7z--dUcHMqQpksS/exec?azione=dashboard&callback=giokriAdminDashboard">
+</script>
+
 </body>
+
 </html>
