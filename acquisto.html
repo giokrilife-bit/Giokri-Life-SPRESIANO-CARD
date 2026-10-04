@@ -120,15 +120,6 @@ button:disabled {
     cursor: not-allowed;
 }
 
-.secondary-button {
-    background: #687078;
-    margin-top: 8px;
-}
-
-.secondary-button:hover {
-    background: #50575c;
-}
-
 .card-info {
     display: none;
     background: #eef6fa;
@@ -226,6 +217,7 @@ footer {
 }
 
 @media (max-width: 600px) {
+
     .card {
         padding: 21px;
     }
@@ -237,6 +229,7 @@ footer {
     .photos {
         grid-template-columns: 1fr;
     }
+
 }
 </style>
 
@@ -254,6 +247,7 @@ footer {
 </header>
 
 <main>
+
 <div class="container">
 
 <div class="card">
@@ -267,11 +261,13 @@ footer {
 
 <div id="statusBox" class="status"></div>
 
-<!-- RICERCA CARD -->
 <div id="cardSearchSection">
 
     <div class="field">
-        <label for="codiceCard">Numero / codice Card</label>
+
+        <label for="codiceCard">
+            Numero / codice Card
+        </label>
 
         <input
             type="text"
@@ -279,39 +275,48 @@ footer {
             placeholder="Inserisci il codice della tua Card"
             autocomplete="off"
         >
+
     </div>
 
-    <button type="button" id="btnCercaCard">
+    <button
+        type="button"
+        id="btnCercaCard">
         VERIFICA CARD
     </button>
 
 </div>
 
-<!-- INFORMAZIONI CARD -->
+
 <div id="cardInfo" class="card-info">
-    <div>
-        <strong>Card verificata</strong>
-    </div>
+
+    <strong>Card verificata</strong>
 
     <div id="cardInfoText"></div>
+
 </div>
 
-<!-- FORM ACQUISTO -->
+
 <div id="purchaseForm" class="hidden">
 
     <div class="field">
+
         <label for="negozio">
-            Negozio
+            Seleziona il negozio
         </label>
 
         <select id="negozio">
+
             <option value="">
                 Caricamento negozi...
             </option>
+
         </select>
+
     </div>
 
+
     <div class="field">
+
         <label for="importo">
             Importo dell'acquisto (€)
         </label>
@@ -323,7 +328,9 @@ footer {
             step="0.01"
             placeholder="Es. 45,50"
         >
+
     </div>
+
 
     <div class="field">
 
@@ -340,56 +347,82 @@ footer {
         <div class="photos">
 
             <div class="photo-box">
-                <label for="foto1">Foto 1 *</label>
+
+                <label for="foto1">
+                    Foto 1 *
+                </label>
+
                 <input
                     type="file"
                     id="foto1"
                     accept="image/*"
                     capture="environment"
                 >
+
             </div>
 
+
             <div class="photo-box">
-                <label for="foto2">Foto 2</label>
+
+                <label for="foto2">
+                    Foto 2
+                </label>
+
                 <input
                     type="file"
                     id="foto2"
                     accept="image/*"
                     capture="environment"
                 >
+
             </div>
 
+
             <div class="photo-box">
-                <label for="foto3">Foto 3</label>
+
+                <label for="foto3">
+                    Foto 3
+                </label>
+
                 <input
                     type="file"
                     id="foto3"
                     accept="image/*"
                     capture="environment"
                 >
+
             </div>
 
+
             <div class="photo-box">
-                <label for="foto4">Foto 4</label>
+
+                <label for="foto4">
+                    Foto 4
+                </label>
+
                 <input
                     type="file"
                     id="foto4"
                     accept="image/*"
                     capture="environment"
                 >
+
             </div>
 
         </div>
 
     </div>
 
-    <button type="button" id="btnRegistra">
+
+    <button
+        type="button"
+        id="btnRegistra">
         REGISTRA ACQUISTO
     </button>
 
 </div>
 
-<!-- RISULTATO -->
+
 <div id="resultBox">
 
     <h2>Acquisto registrato!</h2>
@@ -399,8 +432,7 @@ footer {
     </p>
 
     <p>
-        Lo scontrino sarà verificato prima dell'accredito
-        dei punti.
+        Lo scontrino sarà verificato prima dell'accredito dei punti.
     </p>
 
 </div>
@@ -409,6 +441,7 @@ footer {
 </div>
 
 </div>
+
 </main>
 
 <footer>
@@ -417,73 +450,80 @@ footer {
 
 <script>
 
-/*
-==========================================================
-CONFIGURAZIONE
-==========================================================
-*/
+/* ======================================================
+   URL REALE DELLA WEB APP APPS SCRIPT
+   ====================================================== */
 
 const API_URL =
-    "https://script.google.com/macros/s/AKfycbxREPLACE_CON_IL_TUO_ENDPOINT/exec";
+"https://script.google.com/macros/s/AKfycbxHaUH-tBV6IjSEB6nwGXCwe-C2BZ5iw5qXO2lABAQibULYh2c2b7z--dUcHMqQpksS/exec";
 
 
-/*
-==========================================================
-ELEMENTI PAGINA
-==========================================================
-*/
+/* ======================================================
+   ELEMENTI
+   ====================================================== */
 
-const codiceCardInput = document.getElementById("codiceCard");
-const btnCercaCard = document.getElementById("btnCercaCard");
+const codiceCardInput =
+    document.getElementById("codiceCard");
 
-const cardInfo = document.getElementById("cardInfo");
-const cardInfoText = document.getElementById("cardInfoText");
+const btnCercaCard =
+    document.getElementById("btnCercaCard");
 
-const purchaseForm = document.getElementById("purchaseForm");
+const cardInfo =
+    document.getElementById("cardInfo");
 
-const negozioSelect = document.getElementById("negozio");
-const importoInput = document.getElementById("importo");
+const cardInfoText =
+    document.getElementById("cardInfoText");
 
-const btnRegistra = document.getElementById("btnRegistra");
+const purchaseForm =
+    document.getElementById("purchaseForm");
 
-const statusBox = document.getElementById("statusBox");
-const resultBox = document.getElementById("resultBox");
+const negozioSelect =
+    document.getElementById("negozio");
+
+const importoInput =
+    document.getElementById("importo");
+
+const btnRegistra =
+    document.getElementById("btnRegistra");
+
+const statusBox =
+    document.getElementById("statusBox");
+
+const resultBox =
+    document.getElementById("resultBox");
 
 
 let cardData = null;
 
 
-/*
-==========================================================
-STATO
-==========================================================
-*/
+/* ======================================================
+   MESSAGGI
+   ====================================================== */
 
 function mostraStato(messaggio, tipo) {
 
-    statusBox.className = "status " + tipo;
-    statusBox.textContent = messaggio;
+    statusBox.className =
+        "status " + tipo;
 
+    statusBox.textContent =
+        messaggio;
 }
+
 
 function nascondiStato() {
 
-    statusBox.className = "status";
-    statusBox.textContent = "";
+    statusBox.className =
+        "status";
+
+    statusBox.textContent =
+        "";
 
 }
 
 
-/*
-==========================================================
-JSONP
-==========================================================
-
-Usiamo JSONP perché la pagina è pubblicata su GitHub Pages
-mentre Apps Script si trova su un dominio differente.
-
-==========================================================
-*/
+/* ======================================================
+   JSONP
+   ====================================================== */
 
 function jsonp(url) {
 
@@ -495,67 +535,87 @@ function jsonp(url) {
             "_" +
             Math.floor(Math.random() * 100000);
 
-        const script = document.createElement("script");
+        const script =
+            document.createElement("script");
 
         let timeout;
 
-        window[callbackName] = function(data) {
 
-            clearTimeout(timeout);
+        window[callbackName] =
+            function(data) {
 
-            try {
-                delete window[callbackName];
-            } catch (e) {}
+                clearTimeout(timeout);
 
-            if (script.parentNode) {
-                script.parentNode.removeChild(script);
-            }
+                try {
+                    delete window[callbackName];
+                } catch (e) {}
 
-            resolve(data);
-        };
+                if (script.parentNode) {
+                    script.parentNode.removeChild(script);
+                }
 
-        script.onerror = function() {
+                resolve(data);
 
-            clearTimeout(timeout);
+            };
 
-            try {
-                delete window[callbackName];
-            } catch (e) {}
 
-            if (script.parentNode) {
-                script.parentNode.removeChild(script);
-            }
+        script.onerror =
+            function() {
 
-            reject(
-                new Error("Errore di collegamento con Apps Script.")
+                clearTimeout(timeout);
+
+                try {
+                    delete window[callbackName];
+                } catch (e) {}
+
+                if (script.parentNode) {
+                    script.parentNode.removeChild(script);
+                }
+
+                reject(
+                    new Error(
+                        "Errore di collegamento con Apps Script."
+                    )
+                );
+
+            };
+
+
+        timeout =
+            setTimeout(
+                function() {
+
+                    try {
+                        delete window[callbackName];
+                    } catch (e) {}
+
+                    if (script.parentNode) {
+                        script.parentNode.removeChild(script);
+                    }
+
+                    reject(
+                        new Error(
+                            "Timeout collegamento Apps Script."
+                        )
+                    );
+
+                },
+                20000
             );
-        };
-
-        timeout = setTimeout(function() {
-
-            try {
-                delete window[callbackName];
-            } catch (e) {}
-
-            if (script.parentNode) {
-                script.parentNode.removeChild(script);
-            }
-
-            reject(
-                new Error("Timeout collegamento Apps Script.")
-            );
-
-        }, 20000);
 
 
         const separator =
-            url.indexOf("?") >= 0 ? "&" : "?";
+            url.indexOf("?") >= 0
+                ? "&"
+                : "?";
+
 
         script.src =
             url +
             separator +
             "callback=" +
             encodeURIComponent(callbackName);
+
 
         document.body.appendChild(script);
 
@@ -564,16 +624,9 @@ function jsonp(url) {
 }
 
 
-/*
-==========================================================
-NORMALIZZAZIONE
-==========================================================
-
-Permette di gestire le diverse denominazioni delle colonne
-presenti nella risposta Apps Script.
-
-==========================================================
-*/
+/* ======================================================
+   LETTURA CAMPI
+   ====================================================== */
 
 function getField(obj, names) {
 
@@ -581,240 +634,288 @@ function getField(obj, names) {
         return "";
     }
 
-    for (let i = 0; i < names.length; i++) {
 
-        const name = names[i];
+    for (
+        let i = 0;
+        i < names.length;
+        i++
+    ) {
+
+        const name =
+            names[i];
+
 
         if (
-            Object.prototype.hasOwnProperty.call(obj, name) &&
+            Object.prototype.hasOwnProperty.call(
+                obj,
+                name
+            ) &&
             obj[name] !== null &&
             obj[name] !== undefined &&
             String(obj[name]).trim() !== ""
         ) {
+
             return obj[name];
+
         }
 
     }
 
+
     return "";
+
 }
 
 
-/*
-==========================================================
-CARICAMENTO NEGOZI
-==========================================================
-*/
+/* ======================================================
+   CARICAMENTO NEGOZI
+   ====================================================== */
 
 async function caricaNegozi() {
 
     negozioSelect.innerHTML =
         '<option value="">Caricamento negozi...</option>';
 
-    negozioSelect.disabled = true;
+    negozioSelect.disabled =
+        true;
+
 
     try {
 
-        const url =
-            API_URL +
-            "?azione=getNegozi";
+        const risposta =
+            await jsonp(
+                API_URL +
+                "?azione=getNegozi"
+            );
 
-        const risposta = await jsonp(url);
 
-        console.log("RISPOSTA getNegozi:", risposta);
+        console.log(
+            "RISPOSTA getNegozi:",
+            risposta
+        );
+
 
         if (!risposta) {
+
             throw new Error(
                 "Apps Script non ha restituito dati."
             );
+
         }
 
-
-        /*
-        --------------------------------------------------
-        Individuiamo l'array dei negozi.
-        --------------------------------------------------
-        */
 
         let negozi = null;
 
+
         if (Array.isArray(risposta)) {
-            negozi = risposta;
+
+            negozi =
+                risposta;
+
         }
+
 
         if (
             !negozi &&
             Array.isArray(risposta.negozi)
         ) {
-            negozi = risposta.negozi;
+
+            negozi =
+                risposta.negozi;
+
         }
+
 
         if (
             !negozi &&
             Array.isArray(risposta.NEGOZI)
         ) {
-            negozi = risposta.NEGOZI;
+
+            negozi =
+                risposta.NEGOZI;
+
         }
+
 
         if (
             !negozi &&
             risposta.data &&
             Array.isArray(risposta.data)
         ) {
-            negozi = risposta.data;
+
+            negozi =
+                risposta.data;
+
         }
+
 
         if (
             !negozi &&
             risposta.result &&
             Array.isArray(risposta.result)
         ) {
-            negozi = risposta.result;
+
+            negozi =
+                risposta.result;
+
         }
+
 
         if (!negozi) {
+
             throw new Error(
-                "La risposta getNegozi non contiene un elenco di negozi."
+                "La risposta getNegozi non contiene l'elenco dei negozi."
             );
+
         }
 
 
-        /*
-        --------------------------------------------------
-        Pulizia menu
-        --------------------------------------------------
-        */
-
         negozioSelect.innerHTML = "";
+
 
         const primaOpzione =
             document.createElement("option");
 
-        primaOpzione.value = "";
+        primaOpzione.value =
+            "";
+
         primaOpzione.textContent =
             "Seleziona il negozio";
 
-        negozioSelect.appendChild(primaOpzione);
+        negozioSelect.appendChild(
+            primaOpzione
+        );
 
 
-        let numeroNegozi = 0;
+        let numeroNegozi =
+            0;
 
 
-        /*
-        --------------------------------------------------
-        Inserimento negozi
-        --------------------------------------------------
-        */
+        negozi.forEach(
+            function(negozio) {
 
-        negozi.forEach(function(negozio) {
+                if (
+                    !negozio ||
+                    typeof negozio !== "object"
+                ) {
+                    return;
+                }
 
-            if (
-                !negozio ||
-                typeof negozio !== "object"
-            ) {
-                return;
+
+                const id =
+                    String(
+                        getField(
+                            negozio,
+                            [
+                                "idNegozio",
+                                "ID_NEGOZIO",
+                                "id_negozio",
+                                "ID",
+                                "id",
+                                "Codice",
+                                "CODICE"
+                            ]
+                        )
+                    ).trim();
+
+
+                const nome =
+                    String(
+                        getField(
+                            negozio,
+                            [
+                                "negozio",
+                                "NEGOZIO",
+                                "nome",
+                                "NOME",
+                                "insegna",
+                                "INSEGNA",
+                                "ragioneSociale",
+                                "RAGIONE_SOCIALE"
+                            ]
+                        )
+                    ).trim();
+
+
+                const categoria =
+                    String(
+                        getField(
+                            negozio,
+                            [
+                                "categoria",
+                                "CATEGORIA",
+                                "tipo",
+                                "TIPO"
+                            ]
+                        )
+                    ).trim();
+
+
+                const attivo =
+                    String(
+                        getField(
+                            negozio,
+                            [
+                                "ATTIVO",
+                                "attivo",
+                                "Attivo",
+                                "stato",
+                                "STATO"
+                            ]
+                        )
+                    )
+                    .trim()
+                    .toUpperCase();
+
+
+                if (
+                    attivo &&
+                    attivo !== "SI" &&
+                    attivo !== "SÌ" &&
+                    attivo !== "TRUE" &&
+                    attivo !== "1"
+                ) {
+
+                    return;
+
+                }
+
+
+                if (!nome) {
+                    return;
+                }
+
+
+                const option =
+                    document.createElement("option");
+
+
+                option.value =
+                    id || nome;
+
+
+                option.dataset.idNegozio =
+                    id;
+
+
+                option.textContent =
+                    categoria
+                        ? nome +
+                          " – " +
+                          categoria
+                        : nome;
+
+
+                negozioSelect.appendChild(
+                    option
+                );
+
+
+                numeroNegozi++;
+
             }
+        );
 
-
-            const id = String(
-                getField(negozio, [
-                    "idNegozio",
-                    "ID_NEGOZIO",
-                    "id_negozio",
-                    "ID",
-                    "id",
-                    "Codice",
-                    "CODICE"
-                ])
-            ).trim();
-
-
-            const nome = String(
-                getField(negozio, [
-                    "negozio",
-                    "NEGOZIO",
-                    "nome",
-                    "NOME",
-                    "insegna",
-                    "INSEGNA",
-                    "ragioneSociale",
-                    "RAGIONE_SOCIALE"
-                ])
-            ).trim();
-
-
-            const categoria = String(
-                getField(negozio, [
-                    "categoria",
-                    "CATEGORIA",
-                    "tipo",
-                    "TIPO"
-                ])
-            ).trim();
-
-
-            const attivo = String(
-                getField(negozio, [
-                    "ATTIVO",
-                    "attivo",
-                    "Attivo",
-                    "stato",
-                    "STATO"
-                ])
-            ).trim().toUpperCase();
-
-
-            /*
-            Se ATTIVO non è presente consideriamo il negozio
-            valido, perché alcune risposte possono non avere
-            questo campo.
-            */
-
-            if (
-                attivo &&
-                attivo !== "SI" &&
-                attivo !== "SÌ" &&
-                attivo !== "TRUE" &&
-                attivo !== "1"
-            ) {
-                return;
-            }
-
-
-            if (!nome) {
-                return;
-            }
-
-
-            const option =
-                document.createElement("option");
-
-            /*
-            Se l'ID non arriva, usiamo comunque il nome come
-            valore per non lasciare il menu vuoto.
-            */
-
-            option.value = id || nome;
-
-            option.dataset.idNegozio = id;
-
-            option.textContent =
-                categoria
-                    ? nome + " – " + categoria
-                    : nome;
-
-            negozioSelect.appendChild(option);
-
-            numeroNegozi++;
-
-        });
-
-
-        /*
-        --------------------------------------------------
-        Controllo finale
-        --------------------------------------------------
-        */
 
         if (numeroNegozi === 0) {
 
@@ -822,34 +923,42 @@ async function caricaNegozi() {
                 '<option value="">Nessun negozio disponibile</option>';
 
             throw new Error(
-                "getNegozi ha restituito 0 negozi utilizzabili."
+                "Apps Script ha risposto, ma non ci sono negozi utilizzabili."
             );
 
         }
 
 
-        negozioSelect.disabled = false;
+        negozioSelect.disabled =
+            false;
+
 
         console.log(
             "Negozi caricati:",
             numeroNegozi
         );
 
-    } catch (errore) {
+    }
+
+    catch (errore) {
 
         console.error(
             "ERRORE CARICAMENTO NEGOZI:",
             errore
         );
 
+
         negozioSelect.innerHTML =
             '<option value="">Errore caricamento negozi</option>';
 
-        negozioSelect.disabled = true;
+
+        negozioSelect.disabled =
+            true;
+
 
         mostraStato(
-            "Non riesco a caricare l'elenco dei negozi. " +
-            "Verifica il collegamento con Apps Script.",
+            errore.message ||
+            "Non riesco a caricare l'elenco dei negozi.",
             "error"
         );
 
@@ -858,11 +967,9 @@ async function caricaNegozi() {
 }
 
 
-/*
-==========================================================
-RICERCA CARD
-==========================================================
-*/
+/* ======================================================
+   RICERCA CARD
+   ====================================================== */
 
 btnCercaCard.addEventListener(
     "click",
@@ -875,8 +982,11 @@ codiceCardInput.addEventListener(
     function(event) {
 
         if (event.key === "Enter") {
+
             event.preventDefault();
+
             cercaCard();
+
         }
 
     }
@@ -887,8 +997,10 @@ async function cercaCard() {
 
     nascondiStato();
 
+
     const codice =
         codiceCardInput.value.trim();
+
 
     if (!codice) {
 
@@ -900,25 +1012,26 @@ async function cercaCard() {
         codiceCardInput.focus();
 
         return;
+
     }
 
 
-    btnCercaCard.disabled = true;
+    btnCercaCard.disabled =
+        true;
+
     btnCercaCard.textContent =
         "VERIFICA IN CORSO...";
 
 
     try {
 
-        const url =
-            API_URL +
-            "?azione=cercaCard" +
-            "&codiceCard=" +
-            encodeURIComponent(codice);
-
-
         const risposta =
-            await jsonp(url);
+            await jsonp(
+                API_URL +
+                "?azione=cercaCard" +
+                "&codiceCard=" +
+                encodeURIComponent(codice)
+            );
 
 
         console.log(
@@ -933,7 +1046,8 @@ async function cercaCard() {
         ) {
 
             throw new Error(
-                risposta && risposta.messaggio
+                risposta &&
+                risposta.messaggio
                     ? risposta.messaggio
                     : "Card non trovata."
             );
@@ -941,28 +1055,33 @@ async function cercaCard() {
         }
 
 
-        cardData = risposta.card || risposta;
-
-
-        cardInfoText.innerHTML = "";
+        cardData =
+            risposta.card ||
+            risposta;
 
 
         const nome =
-            getField(cardData, [
-                "nome",
-                "NOME",
-                "nomeCliente",
-                "NOME_CLIENTE"
-            ]);
+            getField(
+                cardData,
+                [
+                    "nome",
+                    "NOME",
+                    "nomeCliente",
+                    "NOME_CLIENTE"
+                ]
+            );
 
 
         const codiceVisualizzato =
-            getField(cardData, [
-                "codiceCard",
-                "CODICE_CARD",
-                "idCard",
-                "ID_CARD"
-            ]);
+            getField(
+                cardData,
+                [
+                    "codiceCard",
+                    "CODICE_CARD",
+                    "idCard",
+                    "ID_CARD"
+                ]
+            );
 
 
         if (nome) {
@@ -970,12 +1089,15 @@ async function cercaCard() {
             cardInfoText.textContent =
                 "Titolare: " + nome;
 
-        } else if (codiceVisualizzato) {
+        }
+        else if (codiceVisualizzato) {
 
             cardInfoText.textContent =
-                "Card: " + codiceVisualizzato;
+                "Card: " +
+                codiceVisualizzato;
 
-        } else {
+        }
+        else {
 
             cardInfoText.textContent =
                 "La Card è stata verificata.";
@@ -983,9 +1105,14 @@ async function cercaCard() {
         }
 
 
-        cardInfo.style.display = "block";
+        cardInfo.style.display =
+            "block";
 
-        purchaseForm.classList.remove("hidden");
+
+        purchaseForm.classList.remove(
+            "hidden"
+        );
+
 
         mostraStato(
             "Card verificata. Ora inserisci i dati dell'acquisto.",
@@ -993,25 +1120,30 @@ async function cercaCard() {
         );
 
 
-        /*
-        Carichiamo i negozi soltanto dopo aver verificato
-        la Card.
-        */
-
         await caricaNegozi();
 
-    } catch (errore) {
+    }
+
+    catch (errore) {
 
         console.error(
             "ERRORE CERCA CARD:",
             errore
         );
 
-        cardData = null;
 
-        cardInfo.style.display = "none";
+        cardData =
+            null;
 
-        purchaseForm.classList.add("hidden");
+
+        cardInfo.style.display =
+            "none";
+
+
+        purchaseForm.classList.add(
+            "hidden"
+        );
+
 
         mostraStato(
             errore.message ||
@@ -1019,9 +1151,12 @@ async function cercaCard() {
             "error"
         );
 
-    } finally {
+    }
 
-        btnCercaCard.disabled = false;
+    finally {
+
+        btnCercaCard.disabled =
+            false;
 
         btnCercaCard.textContent =
             "VERIFICA CARD";
@@ -1031,139 +1166,167 @@ async function cercaCard() {
 }
 
 
-/*
-==========================================================
-COMPRESSIONE FOTO
-==========================================================
-*/
+/* ======================================================
+   COMPRESSIONE FOTO
+   ====================================================== */
 
 function comprimiFoto(file) {
 
-    return new Promise(function(resolve, reject) {
+    return new Promise(
+        function(resolve, reject) {
 
-        if (!file) {
-            resolve("");
-            return;
-        }
+            if (!file) {
 
+                resolve("");
 
-        const reader =
-            new FileReader();
+                return;
 
-
-        reader.onload = function(event) {
-
-            const img =
-                new Image();
+            }
 
 
-            img.onload = function() {
-
-                const maxWidth = 1400;
-                const maxHeight = 1400;
-
-                let width = img.width;
-                let height = img.height;
+            const reader =
+                new FileReader();
 
 
-                if (width > maxWidth) {
+            reader.onload =
+                function(event) {
 
-                    height =
-                        height *
-                        maxWidth /
-                        width;
-
-                    width = maxWidth;
-
-                }
+                    const img =
+                        new Image();
 
 
-                if (height > maxHeight) {
+                    img.onload =
+                        function() {
 
-                    width =
-                        width *
-                        maxHeight /
-                        height;
+                            const maxWidth =
+                                1400;
 
-                    height = maxHeight;
-
-                }
+                            const maxHeight =
+                                1400;
 
 
-                const canvas =
-                    document.createElement("canvas");
+                            let width =
+                                img.width;
 
-                canvas.width =
-                    Math.round(width);
-
-                canvas.height =
-                    Math.round(height);
+                            let height =
+                                img.height;
 
 
-                const ctx =
-                    canvas.getContext("2d");
+                            if (
+                                width >
+                                maxWidth
+                            ) {
 
-                ctx.drawImage(
-                    img,
-                    0,
-                    0,
-                    canvas.width,
-                    canvas.height
-                );
+                                height =
+                                    height *
+                                    maxWidth /
+                                    width;
+
+                                width =
+                                    maxWidth;
+
+                            }
 
 
-                const base64 =
-                    canvas.toDataURL(
-                        "image/jpeg",
-                        0.78
+                            if (
+                                height >
+                                maxHeight
+                            ) {
+
+                                width =
+                                    width *
+                                    maxHeight /
+                                    height;
+
+                                height =
+                                    maxHeight;
+
+                            }
+
+
+                            const canvas =
+                                document.createElement(
+                                    "canvas"
+                                );
+
+
+                            canvas.width =
+                                Math.round(
+                                    width
+                                );
+
+                            canvas.height =
+                                Math.round(
+                                    height
+                                );
+
+
+                            const ctx =
+                                canvas.getContext(
+                                    "2d"
+                                );
+
+
+                            ctx.drawImage(
+                                img,
+                                0,
+                                0,
+                                canvas.width,
+                                canvas.height
+                            );
+
+
+                            resolve(
+                                canvas.toDataURL(
+                                    "image/jpeg",
+                                    0.78
+                                )
+                            );
+
+                        };
+
+
+                    img.onerror =
+                        function() {
+
+                            reject(
+                                new Error(
+                                    "Impossibile leggere una delle immagini."
+                                )
+                            );
+
+                        };
+
+
+                    img.src =
+                        event.target.result;
+
+                };
+
+
+            reader.onerror =
+                function() {
+
+                    reject(
+                        new Error(
+                            "Errore nella lettura della foto."
+                        )
                     );
 
-
-                resolve(base64);
-
-            };
+                };
 
 
-            img.onerror = function() {
+            reader.readAsDataURL(file);
 
-                reject(
-                    new Error(
-                        "Impossibile leggere una delle immagini."
-                    )
-                );
-
-            };
-
-
-            img.src =
-                event.target.result;
-
-        };
-
-
-        reader.onerror = function() {
-
-            reject(
-                new Error(
-                    "Errore nella lettura della foto."
-                )
-            );
-
-        };
-
-
-        reader.readAsDataURL(file);
-
-    });
+        }
+    );
 
 }
 
 
-/*
-==========================================================
-REGISTRA ACQUISTO
-==========================================================
-*/
+/* ======================================================
+   REGISTRA ACQUISTO
+   ====================================================== */
 
 btnRegistra.addEventListener(
     "click",
@@ -1176,12 +1339,6 @@ async function registraAcquisto() {
     nascondiStato();
 
 
-    /*
-    --------------------------------------------------
-    Controllo Card
-    --------------------------------------------------
-    */
-
     if (!cardData) {
 
         mostraStato(
@@ -1193,12 +1350,6 @@ async function registraAcquisto() {
 
     }
 
-
-    /*
-    --------------------------------------------------
-    Negozio
-    --------------------------------------------------
-    */
 
     const negozioOption =
         negozioSelect.options[
@@ -1228,16 +1379,11 @@ async function registraAcquisto() {
         negozioSelect.value;
 
 
-    /*
-    --------------------------------------------------
-    Importo
-    --------------------------------------------------
-    */
-
     const importo =
         parseFloat(
-            String(importoInput.value)
-                .replace(",", ".")
+            String(
+                importoInput.value
+            ).replace(",", ".")
         );
 
 
@@ -1258,23 +1404,28 @@ async function registraAcquisto() {
     }
 
 
-    /*
-    --------------------------------------------------
-    Almeno una foto
-    --------------------------------------------------
-    */
-
     const file1 =
-        document.getElementById("foto1").files[0];
+        document.getElementById(
+            "foto1"
+        ).files[0];
+
 
     const file2 =
-        document.getElementById("foto2").files[0];
+        document.getElementById(
+            "foto2"
+        ).files[0];
+
 
     const file3 =
-        document.getElementById("foto3").files[0];
+        document.getElementById(
+            "foto3"
+        ).files[0];
+
 
     const file4 =
-        document.getElementById("foto4").files[0];
+        document.getElementById(
+            "foto4"
+        ).files[0];
 
 
     if (!file1) {
@@ -1289,7 +1440,8 @@ async function registraAcquisto() {
     }
 
 
-    btnRegistra.disabled = true;
+    btnRegistra.disabled =
+        true;
 
     btnRegistra.textContent =
         "INVIO IN CORSO...";
@@ -1302,12 +1454,6 @@ async function registraAcquisto() {
             "info"
         );
 
-
-        /*
-        --------------------------------------------------
-        Compressione foto
-        --------------------------------------------------
-        */
 
         const foto1 =
             await comprimiFoto(file1);
@@ -1322,79 +1468,68 @@ async function registraAcquisto() {
             await comprimiFoto(file4);
 
 
-        /*
-        --------------------------------------------------
-        ID CARD / CLIENTE
-        --------------------------------------------------
-        */
-
         const idCard =
-            getField(cardData, [
-                "idCard",
-                "ID_CARD",
-                "id_card",
-                "codiceCard",
-                "CODICE_CARD"
-            ]) ||
+            getField(
+                cardData,
+                [
+                    "idCard",
+                    "ID_CARD",
+                    "id_card",
+                    "codiceCard",
+                    "CODICE_CARD"
+                ]
+            ) ||
             codiceCardInput.value.trim();
 
 
         const idCliente =
-            getField(cardData, [
-                "idCliente",
-                "ID_CLIENTE",
-                "id_cliente"
-            ]);
+            getField(
+                cardData,
+                [
+                    "idCliente",
+                    "ID_CLIENTE",
+                    "id_cliente"
+                ]
+            );
 
-
-        /*
-        --------------------------------------------------
-        Payload
-        --------------------------------------------------
-        */
 
         const payload = {
 
-            azione: "registraAcquisto",
+            azione:
+                "registraAcquisto",
 
-            idCard: idCard,
+            idCard:
+                idCard,
 
-            idCliente: idCliente,
+            idCliente:
+                idCliente,
 
-            idNegozio: idNegozio,
+            idNegozio:
+                idNegozio,
 
-            importo: importo,
+            importo:
+                importo,
 
-            modalita: "SCONTRINO",
+            modalita:
+                "SCONTRINO",
 
-            foto1: foto1,
+            foto1:
+                foto1,
 
-            foto2: foto2,
+            foto2:
+                foto2,
 
-            foto3: foto3,
+            foto3:
+                foto3,
 
-            foto4: foto4,
+            foto4:
+                foto4,
 
-            note: ""
+            note:
+                ""
 
         };
 
-
-        console.log(
-            "DATI ACQUISTO:",
-            payload
-        );
-
-
-        /*
-        --------------------------------------------------
-        INVIO A APPS SCRIPT
-        --------------------------------------------------
-
-        Usiamo POST tramite fetch con modalità no-cors.
-
-        --------------------------------------------------
-        */
 
         const formData =
             new URLSearchParams();
@@ -1408,7 +1543,9 @@ async function registraAcquisto() {
                     payload[key] === null ||
                     payload[key] === undefined
                         ? ""
-                        : String(payload[key])
+                        : String(
+                            payload[key]
+                        )
                 );
 
             }
@@ -1431,28 +1568,21 @@ async function registraAcquisto() {
         );
 
 
-        /*
-        --------------------------------------------------
-        RISULTATO
-        --------------------------------------------------
-
-        Apps Script riceve la richiesta e registra
-        l'acquisto con stato DA_VERIFICARE.
-
-        --------------------------------------------------
-        */
-
         document.getElementById(
             "cardSearchSection"
-        ).classList.add("hidden");
+        ).classList.add(
+            "hidden"
+        );
 
 
         cardInfo.style.display =
             "none";
 
+
         purchaseForm.classList.add(
             "hidden"
         );
+
 
         statusBox.className =
             "status";
@@ -1461,13 +1591,15 @@ async function registraAcquisto() {
         resultBox.style.display =
             "block";
 
+    }
 
-    } catch (errore) {
+    catch (errore) {
 
         console.error(
             "ERRORE REGISTRAZIONE:",
             errore
         );
+
 
         mostraStato(
             errore.message ||
@@ -1475,9 +1607,12 @@ async function registraAcquisto() {
             "error"
         );
 
-    } finally {
+    }
 
-        btnRegistra.disabled = false;
+    finally {
+
+        btnRegistra.disabled =
+            false;
 
         btnRegistra.textContent =
             "REGISTRA ACQUISTO";
@@ -1485,13 +1620,6 @@ async function registraAcquisto() {
     }
 
 }
-
-
-/*
-==========================================================
-FINE
-==========================================================
-*/
 
 </script>
 
