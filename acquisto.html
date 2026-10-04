@@ -1026,12 +1026,12 @@ async function cercaCard() {
     try {
 
         const risposta =
-            await jsonp(
-                API_URL +
-                "?azione=cercaCard" +
-                "&codiceCard=" +
-                encodeURIComponent(codice)
-            );
+    await jsonp(
+        API_URL +
+        "?azione=cercaCard" +
+        "&idCard=" +
+        encodeURIComponent(codice)
+    );
 
 
         console.log(
