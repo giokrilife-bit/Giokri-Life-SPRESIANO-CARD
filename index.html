@@ -1,13 +1,19 @@
 <!DOCTYPE html>
-
 <html lang="it">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>SPRESIANO CARD | GiOKri Life</title>
 
-<meta name="description" content="SPRESIANO CARD: la Card dei negozi di Spresiano. Acquista, accumula punti e scopri le iniziative dedicate alla comunità locale.">
+<meta name="description" content="SPRESIANO CARD: la Card dei negozi di Spresiano. Registrati gratuitamente, accumula punti e scopri le iniziative dedicate alla comunità locale.">
+
+<meta name="theme-color" content="#111827">
+
+<link rel="manifest" href="./manifest.json">
+
+<link rel="apple-touch-icon" href="./icon-192.png">
 
 <style>
 
@@ -120,6 +126,22 @@ header {
     transform: translateY(-1px);
 }
 
+.secondary-cta {
+    display: inline-block;
+    margin-top: 15px;
+    color: white;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: bold;
+    border: 1px solid rgba(255,255,255,0.55);
+    padding: 11px 20px;
+    border-radius: 8px;
+}
+
+.secondary-cta:hover {
+    background: rgba(255,255,255,0.1);
+}
+
 /* SECTIONS */
 
 section {
@@ -141,7 +163,7 @@ section {
     color: #687078;
 }
 
-/* COME FUNZIONA */
+/* PERCORSO */
 
 .steps {
     display: grid;
@@ -202,6 +224,44 @@ section {
 
 .points-box p {
     color: #687078;
+}
+
+/* CARD BOX */
+
+.card-box {
+    max-width: 720px;
+    margin: auto;
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 32px;
+    text-align: center;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+}
+
+.card-box h3 {
+    color: #1d5f8f;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.card-box p {
+    color: #687078;
+    margin-bottom: 5px;
+}
+
+.card-button {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 13px 24px;
+    background: #1d5f8f;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.card-button:hover {
+    background: #174d74;
 }
 
 /* NEGOZI */
@@ -306,6 +366,10 @@ footer .small {
     .points-number {
         font-size: 36px;
     }
+
+    .card-box {
+        padding: 25px 20px;
+    }
 }
 
 </style>
@@ -316,22 +380,19 @@ footer .small {
 
 <header>
 
-```
-<div class="container header-inner">
+    <div class="container header-inner">
 
-    <div class="logo">
-        SPRESIANO CARD
-        <span>Promossa da GiOKri Life</span>
+        <div class="logo">
+            SPRESIANO CARD
+            <span>Promossa da GiOKri Life</span>
+        </div>
+
     </div>
-
-</div>
-```
 
 </header>
 
 <main>
 
-```
 <!-- HERO -->
 
 <section class="hero">
@@ -347,13 +408,19 @@ footer .small {
         <h2>Acquista · Accumula · Scopri</h2>
 
         <p>
-            La nuova Card pensata per valorizzare gli acquisti
+            La Card pensata per valorizzare gli acquisti
             nei negozi aderenti e creare nuove opportunità
             per la comunità locale.
         </p>
 
         <a class="cta" href="iscrizione.html">
             CREA LA TUA CARD
+        </a>
+
+        <br>
+
+        <a class="secondary-cta" href="card.html">
+            HO GIÀ LA SPRESIANO CARD
         </a>
 
     </div>
@@ -377,7 +444,6 @@ footer .small {
 
         </div>
 
-
         <div class="steps">
 
             <div class="step">
@@ -393,20 +459,18 @@ footer .small {
 
             </div>
 
-
             <div class="step">
 
                 <div class="step-number">2</div>
 
-                <h3>Acquista</h3>
+                <h3>Ricevi la Card</h3>
 
                 <p>
-                    Fai i tuoi acquisti nei negozi aderenti
-                    all'iniziativa.
+                    Dopo la registrazione potrai accedere
+                    alla tua Card personale.
                 </p>
 
             </div>
-
 
             <div class="step">
 
@@ -415,12 +479,11 @@ footer .small {
                 <h3>Accumula</h3>
 
                 <p>
-                    Gli acquisti verificati permettono di
-                    accumulare punti sulla tua Card.
+                    Fai acquisti nei negozi aderenti
+                    e accumula punti sugli acquisti verificati.
                 </p>
 
             </div>
-
 
             <div class="step">
 
@@ -429,11 +492,53 @@ footer .small {
                 <h3>Scopri</h3>
 
                 <p>
-                    Scopri le iniziative e le opportunità
-                    riservate alla community.
+                    Consulta la tua Card, controlla i punti
+                    e scopri le iniziative della community.
                 </p>
 
             </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- CARD DIGITALE -->
+
+<section>
+
+    <div class="container">
+
+        <div class="section-title">
+
+            <h2>La tua Card sempre con te</h2>
+
+            <p>
+                Puoi consultare la tua SPRESIANO CARD
+                direttamente dallo smartphone.
+            </p>
+
+        </div>
+
+        <div class="card-box">
+
+            <h3>SPRESIANO CARD digitale</h3>
+
+            <p>
+                Una volta registrato, puoi aprire la tua Card
+                dal telefono e conservarla direttamente
+                nella schermata principale.
+            </p>
+
+            <p>
+                Non serve ricordare ogni volta il numero della Card.
+            </p>
+
+            <a class="card-button" href="card.html">
+                CONSULTA LA TUA CARD
+            </a>
 
         </div>
 
@@ -457,7 +562,6 @@ footer .small {
             </p>
 
         </div>
-
 
         <div class="points-box">
 
@@ -492,7 +596,6 @@ footer .small {
             </p>
 
         </div>
-
 
         <div class="stores">
 
@@ -579,27 +682,54 @@ footer .small {
     </div>
 
 </section>
-```
 
 </main>
 
+
 <footer>
 
-```
-<p>
-    <strong>SPRESIANO CARD</strong>
-</p>
+    <p>
+        <strong>SPRESIANO CARD</strong>
+    </p>
 
-<p>
-    Promossa da GiOKri Life · Spresiano
-</p>
+    <p>
+        Promossa da GiOKri Life · Spresiano
+    </p>
 
-<p class="small">
-    Progetto locale dedicato ai negozi e alla comunità di Spresiano.
-</p>
-```
+    <p class="small">
+        Progetto locale dedicato ai negozi e alla comunità di Spresiano.
+    </p>
 
 </footer>
+
+
+<script>
+
+/*
+   REGISTRAZIONE SERVICE WORKER
+   Necessaria per il funzionamento PWA.
+*/
+
+if ("serviceWorker" in navigator) {
+
+    window.addEventListener("load", function() {
+
+        navigator.serviceWorker
+            .register("./service-worker.js")
+            .catch(function(error) {
+
+                console.log(
+                    "Service Worker non registrato:",
+                    error
+                );
+
+            });
+
+    });
+
+}
+
+</script>
 
 </body>
 </html>
