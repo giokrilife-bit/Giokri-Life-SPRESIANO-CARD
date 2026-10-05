@@ -114,6 +114,12 @@
       margin: 0 0 15px;
     }
 
+    .section-subtitle {
+      color: #777777;
+      font-size: 14px;
+      margin: -7px 0 15px;
+    }
+
     .table-wrapper {
       background: #ffffff;
       border-radius: 14px;
@@ -136,6 +142,7 @@
     th {
       background: #fafafa;
       font-size: 14px;
+      white-space: nowrap;
     }
 
     td {
@@ -161,6 +168,115 @@
       border-radius: 10px;
       display: none;
       white-space: pre-wrap;
+    }
+
+    .success-box {
+      margin-top: 20px;
+      background: #eef9f1;
+      border: 1px solid #b9dfc2;
+      color: #176b31;
+      padding: 15px;
+      border-radius: 10px;
+      display: none;
+    }
+
+    .pending-box {
+      background: #fffaf0;
+      border: 1px solid #ead8a7;
+      border-radius: 14px;
+      padding: 18px;
+      margin-bottom: 15px;
+    }
+
+    .pending-title {
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 5px;
+    }
+
+    .pending-info {
+      color: #666666;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 5px 9px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 700;
+      background: #fff0c7;
+      color: #805d00;
+    }
+
+    .actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    .btn {
+      border: none;
+      border-radius: 8px;
+      padding: 9px 14px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .btn-approve {
+      background: #18743b;
+      color: #ffffff;
+    }
+
+    .btn-approve:hover {
+      background: #125d2e;
+    }
+
+    .btn-reject {
+      background: #a52222;
+      color: #ffffff;
+    }
+
+    .btn-reject:hover {
+      background: #861b1b;
+    }
+
+    .btn-photo {
+      background: #eeeeee;
+      color: #333333;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
+
+    .photo-links {
+      display: flex;
+      gap: 7px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+
+    .photo-link {
+      color: #245ea8;
+      font-size: 13px;
+      text-decoration: none;
+    }
+
+    .photo-link:hover {
+      text-decoration: underline;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 25px;
+      color: #777777;
     }
 
     footer {
@@ -338,6 +454,39 @@
 
   <div id="errore" class="error-box"></div>
 
+  <div id="successo" class="success-box"></div>
+
+  <!-- =================================================
+       ACQUISTI DA VERIFICARE
+       ================================================= -->
+
+  <div class="section">
+
+```
+<h2 class="section-title">
+  Acquisti da verificare
+</h2>
+
+<div class="section-subtitle">
+  Gli acquisti registrati dai clienti rimangono in attesa
+  fino alla verifica dell'amministratore.
+</div>
+
+<div id="listaAcquisti">
+
+  <div class="loading">
+    Caricamento acquisti da verificare...
+  </div>
+
+</div>
+```
+
+  </div>
+
+  <!-- =================================================
+       NEGOZI ADERENTI
+       ================================================= -->
+
   <div class="section">
 
 ```
@@ -413,7 +562,10 @@ const API_URL =
 
 function giokriAdminDashboard(data) {
 
-  console.log("RISPOSTA DASHBOARD:", data);
+  console.log(
+    "RISPOSTA DASHBOARD:",
+    data
+  );
 
 
   if (!data) {
@@ -435,233 +587,4 @@ function giokriAdminDashboard(data) {
     data.card ?? 0;
 
 
-  document.getElementById("clienti").textContent =
-    data.clienti ?? 0;
-
-
-  document.getElementById("utilizzi").textContent =
-    data.utilizzi ?? 0;
-
-
-  document.getElementById("punti").textContent =
-    data.punti ?? 0;
-
-
-  document.getElementById("offerte").textContent =
-    data.offerte ?? 0;
-
-
-  document.getElementById("stato").textContent =
-    "Collegamento attivo";
-
-
-  document.getElementById("stato").className =
-    "status ok";
-
-
-  caricaNegozi();
-
-}
-
-
-/* =====================================================
-   NEGOZI
-   ===================================================== */
-
-function giokriAdminNegozi(data) {
-
-  console.log("RISPOSTA NEGOZI:", data);
-
-
-  const tbody =
-    document.getElementById("listaNegozi");
-
-
-  tbody.innerHTML = "";
-
-
-  let negozi = [];
-
-
-  if (Array.isArray(data)) {
-
-    negozi = data;
-
-  }
-
-
-  else if (
-    data &&
-    Array.isArray(data.negozi)
-  ) {
-
-    negozi = data.negozi;
-
-  }
-
-
-  else if (
-    data &&
-    Array.isArray(data.data)
-  ) {
-
-    negozi = data.data;
-
-  }
-
-
-  if (negozi.length === 0) {
-
-    tbody.innerHTML =
-      '<tr>' +
-      '<td colspan="3" class="empty">' +
-      'Nessun negozio trovato.' +
-      '</td>' +
-      '</tr>';
-
-    return;
-
-  }
-
-
-  negozi.forEach(function(negozio) {
-
-    const tr =
-      document.createElement("tr");
-
-
-    const tdNome =
-      document.createElement("td");
-
-
-    const tdSettore =
-      document.createElement("td");
-
-
-    const tdStato =
-      document.createElement("td");
-
-
-    if (
-      negozio &&
-      typeof negozio === "object" &&
-      !Array.isArray(negozio)
-    ) {
-
-      tdNome.textContent =
-        negozio.nome ||
-        negozio.NEGOZIO ||
-        negozio.negozio ||
-        "-";
-
-
-      tdSettore.textContent =
-        negozio.settore ||
-        negozio.SETTORE ||
-        "-";
-
-
-      tdStato.textContent =
-        negozio.attivo ||
-        negozio.ATTIVO ||
-        "SI";
-
-    }
-
-
-    else if (Array.isArray(negozio)) {
-
-      tdNome.textContent =
-        negozio[1] || "-";
-
-
-      tdSettore.textContent =
-        negozio[2] || "-";
-
-
-      tdStato.textContent =
-        negozio[3] || "SI";
-
-    }
-
-
-    tr.appendChild(tdNome);
-
-    tr.appendChild(tdSettore);
-
-    tr.appendChild(tdStato);
-
-
-    tbody.appendChild(tr);
-
-  });
-
-}
-
-
-/* =====================================================
-   ERRORE
-   ===================================================== */
-
-function mostraErrore(messaggio) {
-
-  const box =
-    document.getElementById("errore");
-
-
-  box.textContent =
-    messaggio;
-
-
-  box.style.display =
-    "block";
-
-
-  document.getElementById("stato").textContent =
-    "Errore collegamento";
-
-
-  document.getElementById("stato").className =
-    "status error";
-
-}
-
-
-/* =====================================================
-   CARICAMENTO NEGOZI
-   ===================================================== */
-
-function caricaNegozi() {
-
-  const script =
-    document.createElement("script");
-
-
-  script.src =
-    API_URL +
-    "?callback=giokriAdminNegozi&_=" +
-    Date.now();
-
-
-  script.onerror =
-    function() {
-
-      mostraErrore(
-        "Impossibile caricare l'elenco dei negozi."
-      );
-
-    };
-
-
-  document.body.appendChild(script);
-
-}
-
-
-</script>
-
-<script src="https://script.google.com/macros/s/AKfycbxHaUH-tBV6IjSEB6nwGXCwe-C2BZ5iw5qXO2lABAQibULYh2c2b7z--dUcHMqQpksS/exec?azione=dashboard&callback=giokriAdminDashboard"></script>
-
-</body>
-
-</html>
+  document.getElementById("c
