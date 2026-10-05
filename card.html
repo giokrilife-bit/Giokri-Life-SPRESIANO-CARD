@@ -1178,46 +1178,104 @@
      * =====================================================
      */
 
-    window.addEventListener(
-      "load",
-      function() {
+   window.addEventListener(
+  "load",
+  function() {
 
-        let cardSalvata = null;
+    let cardSalvata = null;
 
+    try {
 
-        try {
+      cardSalvata =
+        localStorage.getItem(
+          "spresianoCardId"
+        );
 
-          cardSalvata =
-            localStorage.getItem(
-              "spresianoCardId"
-            );
+    } catch (e) {
 
-        } catch (e) {
+      cardSalvata = null;
 
-          cardSalvata = null;
-
-        }
-
-
-        if (
-          cardSalvata
-        ) {
-
-          document.getElementById(
-            "idCard"
-          ).value =
-            cardSalvata;
-          
+    }
 
 
-          cercaCard(
-            cardSalvata
-          );
+    if (cardSalvata) {
 
-        }
+      /*
+       * Se esiste una Card già salvata,
+       * nascondiamo subito la schermata
+       * di ricerca per evitare il lampeggio
+       * iniziale.
+       */
 
-      }
-    );
+      document.getElementById(
+        "searchBox"
+      ).style.display = "none";
+
+
+      /*
+       * Mostriamo temporaneamente la sezione
+       * risultato mentre viene effettuata
+       * la verifica della Card.
+       */
+
+      document.getElementById(
+        "result"
+      ).style.display = "block";
+
+
+      /*
+       * Visualizzazione temporanea.
+       */
+
+      document.getElementById(
+        "nomeCliente"
+      ).textContent =
+        "Caricamento Card...";
+
+
+      document.getElementById(
+        "numeroCard"
+      ).textContent =
+        cardSalvata;
+
+
+      document.getElementById(
+        "statoCard"
+      ).textContent =
+        "Verifica in corso...";
+
+
+      document.getElementById(
+        "puntiCard"
+      ).textContent =
+        "–";
+
+
+      document.getElementById(
+        "livelloCard"
+      ).textContent =
+        "–";
+
+
+      document.getElementById(
+        "prossimoLivello"
+      ).textContent =
+        "Attendere...";
+
+
+      /*
+       * Recuperiamo i dati aggiornati
+       * dal database.
+       */
+
+      cercaCard(
+        cardSalvata
+      );
+
+    }
+
+  }
+);
 
   </script>
 
