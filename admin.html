@@ -587,4 +587,1342 @@ function giokriAdminDashboard(data) {
     data.card ?? 0;
 
 
-  document.getElementById("c
+  document.getElementById("clienti").textContent =
+    data.clienti ?? 0;
+
+
+  document.getElementById("utilizzi").textContent =
+    data.utilizzi ?? 0;
+
+
+  document.getElementById("punti").textContent =
+    data.punti ?? 0;
+
+
+  document.getElementById("offerte").textContent =
+    data.offerte ?? 0;
+
+
+  document.getElementById("stato").textContent =
+    "Collegamento attivo";
+
+
+  document.getElementById("stato").className =
+    "status ok";
+
+
+  caricaNegozi();
+
+  caricaAcquistiDaVerificare();
+
+}
+
+
+/* =====================================================
+   NEGOZI
+   ===================================================== */
+
+function giokriAdminNegozi(data) {
+
+  console.log(
+    "RISPOSTA NEGOZI:",
+    data
+  );
+
+
+  const tbody =
+    document.getElementById(
+      "listaNegozi"
+    );
+
+
+  tbody.innerHTML = "";
+
+
+  let negozi = [];
+
+
+  if (Array.isArray(data)) {
+
+    negozi = data;
+
+  }
+
+
+  else if (
+    data &&
+    Array.isArray(data.negozi)
+  ) {
+
+    negozi = data.negozi;
+
+  }
+
+
+  else if (
+    data &&
+    Array.isArray(data.data)
+  ) {
+
+    negozi = data.data;
+
+  }
+
+
+  if (negozi.length === 0) {
+
+    tbody.innerHTML =
+      '<tr>' +
+      '<td colspan="3" class="empty">' +
+      'Nessun negozio trovato.' +
+      '</td>' +
+      '</tr>';
+
+    return;
+
+  }
+
+
+  negozi.forEach(
+    function(negozio) {
+
+      const tr =
+        document.createElement("tr");
+
+
+      const tdNome =
+        document.createElement("td");
+
+
+      const tdSettore =
+        document.createElement("td");
+
+
+      const tdStato =
+        document.createElement("td");
+
+
+      if (
+        negozio &&
+        typeof negozio === "object" &&
+        !Array.isArray(negozio)
+      ) {
+
+        tdNome.textContent =
+          negozio.nome ||
+          negozio.NEGOZIO ||
+          negozio.negozio ||
+          "-";
+
+
+        tdSettore.textContent =
+          negozio.settore ||
+          negozio.SETTORE ||
+          "-";
+
+
+        tdStato.textContent =
+          negozio.attivo ||
+          negozio.ATTIVO ||
+          "SI";
+
+      }
+
+
+      else if (
+        Array.isArray(negozio)
+      ) {
+
+        tdNome.textContent =
+          negozio[1] || "-";
+
+
+        tdSettore.textContent =
+          negozio[2] || "-";
+
+
+        tdStato.textContent =
+          negozio[3] || "SI";
+
+      }
+
+
+      tr.appendChild(tdNome);
+
+      tr.appendChild(tdSettore);
+
+      tr.appendChild(tdStato);
+
+
+      tbody.appendChild(tr);
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+   ACQUISTI DA VERIFICARE
+   ===================================================== */
+
+function caricaAcquistiDaVerificare() {
+
+  const callback =
+    "giokriAdminAcquisti_" +
+    Date.now();
+
+
+  window[callback] =
+    function(data) {
+
+      console.log(
+        "RISPOSTA ACQUISTI:",
+        data
+      );
+
+
+      mostraAcquistiDaVerificare(
+        data
+      );
+
+
+      try {
+
+        delete window[callback];
+
+      } catch (e) {}
+
+    };
+
+
+  const script =
+    document.createElement("script");
+
+
+  script.src =
+    API_URL +
+    "?azione=acquistiDaVerificare" +
+    "&callback=" +
+    callback +
+    "&_=" +
+    Date.now();
+
+
+  script.onerror =
+    function() {
+
+      mostraErrore(
+        "Impossibile caricare gli acquisti da verificare."
+      );
+
+      try {
+
+        delete window[callback];
+
+      } catch (e) {}
+
+    };
+
+
+  document.body.appendChild(
+    script
+  );
+
+}
+
+
+/* =====================================================
+   VISUALIZZA ACQUISTI
+   ===================================================== */
+
+function mostraAcquistiDaVerificare(
+  data
+) {
+
+  const contenitore =
+    document.getElementById(
+      "listaAcquisti"
+    );
+
+
+  contenitore.innerHTML = "";
+
+
+  if (
+    !data ||
+    data.success === false
+  ) {
+
+    contenitore.innerHTML =
+      '<div class="empty">' +
+      'Errore nel caricamento degli acquisti.' +
+      '</div>';
+
+    return;
+
+  }
+
+
+  let acquisti = [];
+
+
+  if (
+    Array.isArray(data.acquisti)
+  ) {
+
+    acquisti =
+      data.acquisti;
+
+  }
+
+
+  else if (
+    Array.isArray(data.data)
+  ) {
+
+    acquisti =
+      data.data;
+
+  }
+
+
+  if (
+    acquisti.length === 0
+  ) {
+
+    contenitore.innerHTML =
+      '<div class="table-wrapper">' +
+      '<div class="empty">' +
+      'Non ci sono acquisti da verificare.' +
+      '</div>' +
+      '</div>';
+
+    return;
+
+  }
+
+
+  acquisti.forEach(
+    function(acquisto) {
+
+      const box =
+        document.createElement("div");
+
+
+      box.className =
+        "pending-box";
+
+
+      const id =
+        valoreAcquisto(
+          acquisto,
+          "ID_ACQUISTO"
+        );
+
+
+      const dataAcquisto =
+        formattaData(
+          valoreAcquisto(
+            acquisto,
+            "DATA"
+          )
+        );
+
+
+      const idCard =
+        valoreAcquisto(
+          acquisto,
+          "ID_CARD"
+        );
+
+
+      const idCliente =
+        valoreAcquisto(
+          acquisto,
+          "ID_CLIENTE"
+        );
+
+
+      const idNegozio =
+        valoreAcquisto(
+          acquisto,
+          "ID_NEGOZIO"
+        );
+
+
+      const importo =
+        valoreAcquisto(
+          acquisto,
+          "IMPORTO"
+        );
+
+
+      const punti =
+        valoreAcquisto(
+          acquisto,
+          "PUNTI"
+        );
+
+
+      const stato =
+        valoreAcquisto(
+          acquisto,
+          "STATO"
+        ) ||
+        "DA_VERIFICARE";
+
+
+      const note =
+        valoreAcquisto(
+          acquisto,
+          "NOTE"
+        );
+
+
+      const foto1 =
+        valoreAcquisto(
+          acquisto,
+          "FOTO_1"
+        );
+
+
+      const foto2 =
+        valoreAcquisto(
+          acquisto,
+          "FOTO_2"
+        );
+
+
+      const foto3 =
+        valoreAcquisto(
+          acquisto,
+          "FOTO_3"
+        );
+
+
+      const foto4 =
+        valoreAcquisto(
+          acquisto,
+          "FOTO_4"
+        );
+
+
+      let html =
+        "";
+
+
+      html +=
+        '<div class="pending-title">' +
+        'Acquisto ' +
+        escapeHtml(id || "-") +
+        '</div>';
+
+
+      html +=
+        '<div class="pending-info">';
+
+
+      html +=
+        '<strong>Data:</strong> ' +
+        escapeHtml(dataAcquisto) +
+        '<br>';
+
+
+      html +=
+        '<strong>Negozio:</strong> ' +
+        escapeHtml(idNegozio || "-") +
+        '<br>';
+
+
+      html +=
+        '<strong>Importo:</strong> ' +
+        formattaImporto(importo) +
+        '<br>';
+
+
+      html +=
+        '<strong>Punti:</strong> ' +
+        escapeHtml(String(punti || 0)) +
+        '<br>';
+
+
+      html +=
+        '<strong>Card:</strong> ' +
+        escapeHtml(idCard || "-") +
+        '<br>';
+
+
+      if (idCliente) {
+
+        html +=
+          '<strong>Cliente:</strong> ' +
+          escapeHtml(idCliente) +
+          '<br>';
+
+      }
+
+
+      if (note) {
+
+        html +=
+          '<strong>Note:</strong> ' +
+          escapeHtml(note) +
+          '<br>';
+
+      }
+
+
+      html +=
+        '<br><span class="badge">' +
+        escapeHtml(stato) +
+        '</span>';
+
+
+      html +=
+        '</div>';
+
+
+      const foto = [
+        foto1,
+        foto2,
+        foto3,
+        foto4
+      ];
+
+
+      const fotoValide =
+        foto.filter(
+          function(url) {
+
+            return (
+              url &&
+              String(url).trim() !== ""
+            );
+
+          }
+        );
+
+
+      if (
+        fotoValide.length > 0
+      ) {
+
+        html +=
+          '<div class="photo-links">';
+
+
+        fotoValide.forEach(
+          function(url, indice) {
+
+            html +=
+              '<a class="btn btn-photo" ' +
+              'target="_blank" ' +
+              'rel="noopener noreferrer" ' +
+              'href="' +
+              escapeAttribute(url) +
+              '">' +
+              '📷 Scontrino ' +
+              (indice + 1) +
+              '</a>';
+
+          }
+        );
+
+
+        html +=
+          '</div>';
+
+      }
+
+
+      html +=
+        '<div class="actions">';
+
+
+      html +=
+        '<button ' +
+        'class="btn btn-approve" ' +
+        'onclick="approvaAcquistoAdminUI(\'' +
+        escapeJavaScript(id) +
+        '\', this)">' +
+        '✓ APPROVA' +
+        '</button>';
+
+
+      html +=
+        '<button ' +
+        'class="btn btn-reject" ' +
+        'onclick="rifiutaAcquistoAdminUI(\'' +
+        escapeJavaScript(id) +
+        '\', this)">' +
+        '✕ RIFIUTA' +
+        '</button>';
+
+
+      html +=
+        '</div>';
+
+
+      box.innerHTML =
+        html;
+
+
+      contenitore.appendChild(
+        box
+      );
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+   APPROVA ACQUISTO
+   ===================================================== */
+
+function approvaAcquistoAdminUI(
+  idAcquisto,
+  pulsante
+) {
+
+  if (!idAcquisto) {
+
+    mostraErrore(
+      "ID acquisto mancante."
+    );
+
+    return;
+
+  }
+
+
+  const conferma =
+    window.confirm(
+      "Confermare l'approvazione dell'acquisto " +
+      idAcquisto +
+      "?\n\n" +
+      "I punti verranno accreditati alla Card."
+    );
+
+
+  if (!conferma) {
+
+    return;
+
+  }
+
+
+  bloccaPulsantiAcquisto(
+    pulsante
+  );
+
+
+  eseguiAzioneAcquisto(
+    "approvaAcquisto",
+    idAcquisto,
+    "",
+    function(data) {
+
+      console.log(
+        "RISPOSTA APPROVA:",
+        data
+      );
+
+
+      if (
+        data &&
+        data.success === true
+      ) {
+
+        mostraSuccesso(
+          "Acquisto " +
+          idAcquisto +
+          " approvato correttamente. " +
+          "Punti accreditati: " +
+          (data.punti || 0) +
+          "."
+        );
+
+
+        caricaDashboard();
+
+      }
+
+
+      else {
+
+        mostraErrore(
+          data &&
+          data.message
+            ? data.message
+            : "Impossibile approvare l'acquisto."
+        );
+
+        caricaAcquistiDaVerificare();
+
+      }
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+   RIFIUTA ACQUISTO
+   ===================================================== */
+
+function rifiutaAcquistoAdminUI(
+  idAcquisto,
+  pulsante
+) {
+
+  if (!idAcquisto) {
+
+    mostraErrore(
+      "ID acquisto mancante."
+    );
+
+    return;
+
+  }
+
+
+  const nota =
+    window.prompt(
+      "Motivo del rifiuto dell'acquisto " +
+      idAcquisto +
+      "?\n\n" +
+      "Puoi lasciare vuoto."
+    );
+
+
+  if (nota === null) {
+
+    return;
+
+  }
+
+
+  const conferma =
+    window.confirm(
+      "Confermare il rifiuto dell'acquisto " +
+      idAcquisto +
+      "?"
+    );
+
+
+  if (!conferma) {
+
+    return;
+
+  }
+
+
+  bloccaPulsantiAcquisto(
+    pulsante
+  );
+
+
+  eseguiAzioneAcquisto(
+    "rifiutaAcquisto",
+    idAcquisto,
+    nota,
+    function(data) {
+
+      console.log(
+        "RISPOSTA RIFIUTA:",
+        data
+      );
+
+
+      if (
+        data &&
+        data.success === true
+      ) {
+
+        mostraSuccesso(
+          "Acquisto " +
+          idAcquisto +
+          " rifiutato correttamente. " +
+          "Nessun punto è stato accreditato."
+        );
+
+
+        caricaDashboard();
+
+      }
+
+
+      else {
+
+        mostraErrore(
+          data &&
+          data.message
+            ? data.message
+            : "Impossibile rifiutare l'acquisto."
+        );
+
+        caricaAcquistiDaVerificare();
+
+      }
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+   ESEGUE AZIONE ACQUISTO
+   ===================================================== */
+
+function eseguiAzioneAcquisto(
+  azione,
+  idAcquisto,
+  nota,
+  callback
+) {
+
+  const nomeCallback =
+    "giokriAdminAzione_" +
+    Date.now();
+
+
+  window[nomeCallback] =
+    function(data) {
+
+      callback(data);
+
+
+      try {
+
+        delete window[nomeCallback];
+
+      } catch (e) {}
+
+    };
+
+
+  let url =
+    API_URL +
+    "?azione=" +
+    encodeURIComponent(azione) +
+    "&idAcquisto=" +
+    encodeURIComponent(idAcquisto) +
+    "&nota=" +
+    encodeURIComponent(nota || "") +
+    "&callback=" +
+    encodeURIComponent(nomeCallback) +
+    "&_=" +
+    Date.now();
+
+
+  const script =
+    document.createElement("script");
+
+
+  script.src =
+    url;
+
+
+  script.onerror =
+    function() {
+
+      callback({
+        success: false,
+        message:
+          "Errore di collegamento con la Web App."
+      });
+
+
+      try {
+
+        delete window[nomeCallback];
+
+      } catch (e) {}
+
+    };
+
+
+  document.body.appendChild(
+    script
+  );
+
+}
+
+
+/* =====================================================
+   BLOCCA PULSANTI
+   ===================================================== */
+
+function bloccaPulsantiAcquisto(
+  pulsante
+) {
+
+  if (!pulsante) {
+
+    return;
+
+  }
+
+
+  const contenitore =
+    pulsante.parentElement;
+
+
+  if (!contenitore) {
+
+    return;
+
+  }
+
+
+  const pulsanti =
+    contenitore.querySelectorAll(
+      "button"
+    );
+
+
+  pulsanti.forEach(
+    function(btn) {
+
+      btn.disabled = true;
+
+    }
+  );
+
+
+  pulsante.textContent =
+    "Elaborazione...";
+
+}
+
+
+/* =====================================================
+   RICARICA DASHBOARD
+   ===================================================== */
+
+function caricaDashboard() {
+
+  const callback =
+    "giokriAdminDashboardReload_" +
+    Date.now();
+
+
+  window[callback] =
+    function(data) {
+
+      giokriAdminDashboard(
+        data
+      );
+
+
+      try {
+
+        delete window[callback];
+
+      } catch (e) {}
+
+    };
+
+
+  const script =
+    document.createElement("script");
+
+
+  script.src =
+    API_URL +
+    "?azione=dashboard" +
+    "&callback=" +
+    callback +
+    "&_=" +
+    Date.now();
+
+
+  script.onerror =
+    function() {
+
+      mostraErrore(
+        "Impossibile aggiornare la dashboard."
+      );
+
+      try {
+
+        delete window[callback];
+
+      } catch (e) {}
+
+    };
+
+
+  document.body.appendChild(
+    script
+  );
+
+}
+
+
+/* =====================================================
+   CARICAMENTO NEGOZI
+   ===================================================== */
+
+function caricaNegozi() {
+
+  const callback =
+    "giokriAdminNegozi_" +
+    Date.now();
+
+
+  window[callback] =
+    function(data) {
+
+      giokriAdminNegozi(
+        data
+      );
+
+
+      try {
+
+        delete window[callback];
+
+      } catch (e) {}
+
+    };
+
+
+  const script =
+    document.createElement("script");
+
+
+  script.src =
+    API_URL +
+    "?callback=" +
+    callback +
+    "&_=" +
+    Date.now();
+
+
+  script.onerror =
+    function() {
+
+      mostraErrore(
+        "Impossibile caricare l'elenco dei negozi."
+      );
+
+      try {
+
+        delete window[callback];
+
+      } catch (e) {}
+
+    };
+
+
+  document.body.appendChild(
+    script
+  );
+
+}
+
+
+/* =====================================================
+   UTILITY ACQUISTI
+   ===================================================== */
+
+function valoreAcquisto(
+  acquisto,
+  campo
+) {
+
+  if (!acquisto) {
+
+    return "";
+
+  }
+
+
+  return (
+    acquisto[campo] ??
+    acquisto[campo.toLowerCase()] ??
+    ""
+  );
+
+}
+
+
+/* =====================================================
+   FORMATTA DATA
+   ===================================================== */
+
+function formattaData(
+  valore
+) {
+
+  if (!valore) {
+
+    return "-";
+
+  }
+
+
+  try {
+
+    const data =
+      new Date(valore);
+
+
+    if (
+      isNaN(
+        data.getTime()
+      )
+    ) {
+
+      return String(valore);
+
+    }
+
+
+    return data.toLocaleDateString(
+      "it-IT"
+    ) +
+    " " +
+    data.toLocaleTimeString(
+      "it-IT",
+      {
+        hour: "2-digit",
+        minute: "2-digit"
+      }
+    );
+
+  }
+
+  catch (e) {
+
+    return String(valore);
+
+  }
+
+}
+
+
+/* =====================================================
+   FORMATTA IMPORTO
+   ===================================================== */
+
+function formattaImporto(
+  valore
+) {
+
+  const numero =
+    Number(
+      String(
+        valore || "0"
+      )
+      .replace(",", ".")
+    );
+
+
+  if (
+    isNaN(numero)
+  ) {
+
+    return (
+      escapeHtml(
+        String(valore || "0")
+      ) +
+      " €"
+    );
+
+  }
+
+
+  return numero.toLocaleString(
+    "it-IT",
+    {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    }
+  ) +
+  " €";
+
+}
+
+
+/* =====================================================
+   ESCAPE HTML
+   ===================================================== */
+
+function escapeHtml(
+  valore
+) {
+
+  return String(
+    valore ?? ""
+  )
+  .replace(
+    /&/g,
+    "&amp;"
+  )
+  .replace(
+    /</g,
+    "&lt;"
+  )
+  .replace(
+    />/g,
+    "&gt;"
+  )
+  .replace(
+    /"/g,
+    "&quot;"
+  )
+  .replace(
+    /'/g,
+    "&#039;"
+  );
+
+}
+
+
+/* =====================================================
+   ESCAPE ATTRIBUTO
+   ===================================================== */
+
+function escapeAttribute(
+  valore
+) {
+
+  return escapeHtml(
+    valore
+  );
+
+}
+
+
+/* =====================================================
+   ESCAPE JAVASCRIPT
+   ===================================================== */
+
+function escapeJavaScript(
+  valore
+) {
+
+  return String(
+    valore ?? ""
+  )
+  .replace(
+    /\\/g,
+    "\\\\"
+  )
+  .replace(
+    /'/g,
+    "\\'"
+  )
+  .replace(
+    /"/g,
+    '\\"'
+  )
+  .replace(
+    /\r/g,
+    "\\r"
+  )
+  .replace(
+    /\n/g,
+    "\\n"
+  );
+
+}
+
+
+/* =====================================================
+   MESSAGGIO ERRORE
+   ===================================================== */
+
+function mostraErrore(
+  messaggio
+) {
+
+  const box =
+    document.getElementById(
+      "errore"
+    );
+
+
+  box.textContent =
+    messaggio;
+
+
+  box.style.display =
+    "block";
+
+
+  document.getElementById(
+    "stato"
+  ).textContent =
+    "Errore collegamento";
+
+
+  document.getElementById(
+    "stato"
+  ).className =
+    "status error";
+
+}
+
+
+/* =====================================================
+   MESSAGGIO SUCCESSO
+   ===================================================== */
+
+function mostraSuccesso(
+  messaggio
+) {
+
+  const box =
+    document.getElementById(
+      "successo"
+    );
+
+
+  box.textContent =
+    messaggio;
+
+
+  box.style.display =
+    "block";
+
+
+  setTimeout(
+    function() {
+
+      box.style.display =
+        "none";
+
+    },
+    5000
+  );
+
+}
+
+
+/* =====================================================
+   AVVIO
+   ===================================================== */
+
+window.addEventListener(
+  "load",
+  function() {
+
+    caricaDashboard();
+
+  }
+);
+
+
+</script>
+
+</body>
+
+</html>
