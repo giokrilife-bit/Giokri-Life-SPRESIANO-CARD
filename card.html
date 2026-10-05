@@ -1,22 +1,30 @@
 <!DOCTYPE html>
-
 <html lang="it">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#111827">
+  <meta name="description" content="La tua SPRESIANO CARD · Giokri Life">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="SPRESIANO CARD">
+
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icon-192.png" type="image/png">
+  <link rel="apple-touch-icon" href="icon-192.png">
 
   <title>La mia SPRESIANO CARD · Giokri Life</title>
 
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
       font-family: Arial, Helvetica, sans-serif;
       background: #f4f6f8;
       color: #222;
+      min-height: 100vh;
     }
 
     .header {
@@ -26,21 +34,9 @@
       border-bottom: 1px solid #e5e7eb;
     }
 
-    .brand {
-      font-size: 25px;
-      font-weight: 700;
-      margin-bottom: 6px;
-    }
-
-    .brand span {
-      font-weight: 400;
-    }
-
-    .subtitle {
-      margin: 0;
-      color: #667085;
-      font-size: 14px;
-    }
+    .brand { font-size: 25px; font-weight: 700; margin-bottom: 6px; }
+    .brand span { font-weight: 400; }
+    .subtitle { margin: 0; color: #667085; font-size: 14px; }
 
     .container {
       max-width: 620px;
@@ -48,18 +44,8 @@
       padding: 25px 16px 40px;
     }
 
-    h1 {
-      text-align: center;
-      font-size: 28px;
-      margin: 8px 0 8px;
-    }
-
-    .intro {
-      text-align: center;
-      color: #667085;
-      margin: 0 0 24px;
-      line-height: 1.5;
-    }
+    h1 { text-align: center; font-size: 28px; margin: 8px 0 8px; }
+    .intro { text-align: center; color: #667085; margin: 0 0 24px; line-height: 1.5; }
 
     .card-box {
       background: #ffffff;
@@ -69,11 +55,7 @@
       margin-bottom: 18px;
     }
 
-    label {
-      display: block;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
+    label { display: block; font-weight: 700; margin-bottom: 8px; }
 
     input {
       width: 100%;
@@ -84,9 +66,7 @@
       outline: none;
     }
 
-    input:focus {
-      border-color: #111827;
-    }
+    input:focus { border-color: #111827; }
 
     button {
       width: 100%;
@@ -101,43 +81,18 @@
       cursor: pointer;
     }
 
-    button:hover {
-      opacity: 0.92;
-    }
+    button:hover { opacity: 0.92; }
+    button.secondary { background: #eef2f6; color: #111827; }
 
-    .message {
-      margin-top: 16px;
-      text-align: center;
-      font-size: 14px;
-      min-height: 20px;
-    }
+    .message { margin-top: 16px; text-align: center; font-size: 14px; min-height: 20px; }
+    .error { color: #b42318; }
+    .success { color: #067647; }
 
-    .error {
-      color: #b42318;
-    }
+    .result { display: none; }
 
-    .success {
-      color: #067647;
-    }
-
-    .result {
-      display: none;
-    }
-
-    .welcome {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    .welcome h2 {
-      margin: 0 0 6px;
-      font-size: 24px;
-    }
-
-    .welcome p {
-      margin: 0;
-      color: #667085;
-    }
+    .welcome { text-align: center; margin-bottom: 20px; }
+    .welcome h2 { margin: 0 0 6px; font-size: 24px; }
+    .welcome p { margin: 0; color: #667085; }
 
     .data-row {
       display: flex;
@@ -147,18 +102,9 @@
       border-bottom: 1px solid #eaecf0;
     }
 
-    .data-row:last-child {
-      border-bottom: 0;
-    }
-
-    .data-label {
-      color: #667085;
-    }
-
-    .data-value {
-      font-weight: 700;
-      text-align: right;
-    }
+    .data-row:last-child { border-bottom: 0; }
+    .data-label { color: #667085; }
+    .data-value { font-weight: 700; text-align: right; }
 
     .points-box {
       text-align: center;
@@ -168,53 +114,16 @@
       margin-top: 20px;
     }
 
-    .points-number {
-      font-size: 42px;
-      font-weight: 800;
-      line-height: 1;
-      margin-bottom: 7px;
-    }
+    .points-number { font-size: 42px; font-weight: 800; line-height: 1; margin-bottom: 7px; }
+    .points-label { color: #667085; }
 
-    .points-label {
-      color: #667085;
-    }
+    .level-box { text-align: center; margin-top: 18px; }
+    .level { display: inline-block; padding: 8px 18px; border-radius: 999px; background: #eef2f6; font-weight: 700; }
+    .next-level { margin-top: 8px; color: #667085; font-size: 14px; }
 
-    .level-box {
-      text-align: center;
-      margin-top: 18px;
-    }
-
-    .level {
-      display: inline-block;
-      padding: 8px 18px;
-      border-radius: 999px;
-      background: #eef2f6;
-      font-weight: 700;
-    }
-
-    .next-level {
-      margin-top: 8px;
-      color: #667085;
-      font-size: 14px;
-    }
-
-    .purchase-box {
-      margin-top: 20px;
-      padding-top: 20px;
-      border-top: 1px solid #eaecf0;
-    }
-
-    .purchase-box h3 {
-      margin: 0 0 8px;
-      font-size: 19px;
-    }
-
-    .purchase-box p {
-      margin: 0 0 15px;
-      color: #667085;
-      line-height: 1.45;
-      font-size: 14px;
-    }
+    .purchase-box { margin-top: 20px; padding-top: 20px; border-top: 1px solid #eaecf0; }
+    .purchase-box h3 { margin: 0 0 8px; font-size: 19px; }
+    .purchase-box p { margin: 0 0 15px; color: #667085; line-height: 1.45; font-size: 14px; }
 
     .purchase-button {
       display: block;
@@ -228,6 +137,31 @@
       font-weight: 700;
     }
 
+    .install-box {
+      display: none;
+      background: #111827;
+      color: #ffffff;
+      border-radius: 16px;
+      padding: 17px;
+      margin-bottom: 18px;
+      box-shadow: 0 5px 18px rgba(0,0,0,0.12);
+    }
+
+    .install-box strong { display: block; margin-bottom: 5px; }
+    .install-box p { margin: 0; font-size: 14px; line-height: 1.4; opacity: 0.9; }
+    .install-button { background: #ffffff; color: #111827; margin-top: 12px; }
+
+    .saved-box {
+      display: none;
+      background: #ecfdf3;
+      color: #067647;
+      border-radius: 12px;
+      padding: 12px 14px;
+      margin-bottom: 18px;
+      font-size: 14px;
+      text-align: center;
+    }
+
     .back-link {
       display: block;
       text-align: center;
@@ -237,394 +171,256 @@
       font-weight: 600;
     }
 
-    .footer {
-      text-align: center;
-      padding: 25px 15px;
-      color: #98a2b3;
-      font-size: 13px;
-    }
+    .footer { text-align: center; padding: 25px 15px; color: #98a2b3; font-size: 13px; }
 
     @media (max-width: 480px) {
-      .container {
-        padding-top: 20px;
-      }
-
-      h1 {
-        font-size: 25px;
-      }
-
-      .card-box {
-        padding: 20px;
-      }
-
-      .data-row {
-        font-size: 14px;
-      }
+      .container { padding-top: 20px; }
+      h1 { font-size: 25px; }
+      .card-box { padding: 20px; }
+      .data-row { font-size: 14px; }
     }
   </style>
-
 </head>
 
 <body>
-
   <header class="header">
-    <div class="brand">
-      Giokri Life <span>· SPRESIANO CARD</span>
-    </div>
-
-```
-<p class="subtitle">
-  La tua partecipazione. I tuoi punti. Le tue opportunità.
-</p>
-```
-
+    <div class="brand">Giokri Life <span>· SPRESIANO CARD</span></div>
+    <p class="subtitle">La tua partecipazione. I tuoi punti. Le tue opportunità.</p>
   </header>
 
   <main class="container">
-
-```
-<h1>Consulta la tua Card</h1>
-
-<p class="intro">
-  Inserisci il numero della tua SPRESIANO CARD per visualizzare
-  i tuoi dati e i punti accumulati.
-</p>
-
-<section class="card-box">
-
-  <label for="idCard">Numero Card</label>
-
-  <input
-    type="text"
-    id="idCard"
-    placeholder="Es. CARD-000001"
-    autocomplete="off"
-  >
-
-  <button type="button" onclick="cercaCard()">
-    CONSULTA LA CARD
-  </button>
-
-  <div id="message" class="message"></div>
-
-</section>
-
-<section id="result" class="card-box result">
-
-  <div class="welcome">
-    <h2 id="nomeCliente">Benvenuto</h2>
-    <p>Questa è la tua SPRESIANO CARD.</p>
-  </div>
-
-  <div class="data-row">
-    <span class="data-label">Numero Card</span>
-    <span class="data-value" id="numeroCard">-</span>
-  </div>
-
-  <div class="data-row">
-    <span class="data-label">Stato</span>
-    <span class="data-value" id="statoCard">-</span>
-  </div>
-
-  <div class="points-box">
-    <div class="points-number" id="puntiCard">0</div>
-    <div class="points-label">punti disponibili</div>
-  </div>
-
-  <div class="level-box">
-    <div class="level" id="livelloCard">BASIC</div>
-
-    <div class="next-level" id="prossimoLivello">
-      -
+    <div id="installBox" class="install-box">
+      <strong>Installa SPRESIANO CARD sul tuo smartphone</strong>
+      <p>Con un tocco potrai aprire direttamente la tua Card senza dover cercare ogni volta il link.</p>
+      <button id="installButton" class="install-button" type="button">INSTALLA LA CARD</button>
     </div>
-  </div>
 
-  <div class="purchase-box">
+    <div id="savedBox" class="saved-box"></div>
 
-    <h3>Hai fatto un acquisto?</h3>
+    <h1>La mia SPRESIANO CARD</h1>
 
-    <p>
-      Registra il tuo acquisto, inserisci l'importo e
-      carica la foto dello scontrino. Dopo la verifica,
-      i punti verranno accreditati sulla tua Card.
+    <p id="introText" class="intro">
+      Inserisci il numero della tua SPRESIANO CARD per visualizzare i tuoi dati e i punti accumulati.
     </p>
 
-    <a
-      class="purchase-button"
-      id="registraAcquistoLink"
-      href="#"
-    >
-      REGISTRA UN ACQUISTO
-    </a>
+    <section id="searchBox" class="card-box">
+      <label for="idCard">Numero Card</label>
+      <input type="text" id="idCard" placeholder="Es. CARD-000001" autocomplete="off">
+      <button type="button" onclick="cercaCard()">CONSULTA LA CARD</button>
+      <div id="message" class="message"></div>
+    </section>
 
-  </div>
+    <section id="result" class="card-box result">
+      <div class="welcome">
+        <h2 id="nomeCliente">Benvenuto</h2>
+        <p>Questa è la tua SPRESIANO CARD.</p>
+      </div>
 
-</section>
+      <div class="data-row">
+        <span class="data-label">Numero Card</span>
+        <span class="data-value" id="numeroCard">-</span>
+      </div>
 
-<a class="back-link" href="index.html">
-  ← Torna alla SPRESIANO CARD
-</a>
-```
+      <div class="data-row">
+        <span class="data-label">Stato</span>
+        <span class="data-value" id="statoCard">-</span>
+      </div>
 
+      <div class="points-box">
+        <div class="points-number" id="puntiCard">0</div>
+        <div class="points-label">punti disponibili</div>
+      </div>
+
+      <div class="level-box">
+        <div class="level" id="livelloCard">BASIC</div>
+        <div class="next-level" id="prossimoLivello">-</div>
+      </div>
+
+      <div class="purchase-box">
+        <h3>Hai fatto un acquisto?</h3>
+        <p>
+          Registra il tuo acquisto, inserisci l'importo e carica la foto dello scontrino.
+          Dopo la verifica, i punti verranno accreditati sulla tua Card.
+        </p>
+        <a class="purchase-button" id="registraAcquistoLink" href="#">REGISTRA UN ACQUISTO</a>
+      </div>
+
+      <button id="cambiaCardButton" class="secondary" type="button">CAMBIA CARD</button>
+    </section>
+
+    <a class="back-link" href="index.html">← Torna alla SPRESIANO CARD</a>
   </main>
 
-  <footer class="footer">
-    Giokri Life · SPRESIANO CARD
-  </footer>
+  <footer class="footer">Giokri Life · SPRESIANO CARD</footer>
 
   <script>
-
     const API_URL =
       "https://script.google.com/macros/s/AKfycbxHaUH-tBV6IjSEB6nwGXCwe-C2BZ5iw5qXO2lABAQibULYh2c2b7z--dUcHMqQpksS/exec";
 
+    const STORAGE_KEY = "spresianoCardId";
+    let deferredInstallPrompt = null;
 
     function mostraMessaggio(testo, tipo) {
-
-      const elemento =
-        document.getElementById("message");
-
+      const elemento = document.getElementById("message");
       elemento.textContent = testo;
-
-      elemento.className =
-        "message " + (tipo || "");
-
+      elemento.className = "message " + (tipo || "");
     }
 
-
     function richiestaJSONP(url, callback) {
-
       const nomeCallback =
-        "giokriCard_" +
-        Date.now() +
-        "_" +
-        Math.floor(Math.random() * 100000);
+        "giokriCard_" + Date.now() + "_" + Math.floor(Math.random() * 100000);
 
-      let script = null;
+      let script = document.createElement("script");
+      let completata = false;
 
-      let timer = null;
-
-
-      window[nomeCallback] = function(dati) {
-
+      const chiudi = function(dati) {
+        if (completata) return;
+        completata = true;
         clearTimeout(timer);
-
-        if (script) {
-          script.remove();
-        }
-
-        try {
-          delete window[nomeCallback];
-        } catch (e) {}
-
+        if (script) script.remove();
+        try { delete window[nomeCallback]; } catch (e) {}
         callback(dati);
-
       };
 
+      window[nomeCallback] = chiudi;
 
-      script =
-        document.createElement("script");
-
-      script.src =
-        url +
-        "&callback=" +
-        encodeURIComponent(nomeCallback);
-
+      script.src = url + "&callback=" + encodeURIComponent(nomeCallback);
 
       script.onerror = function() {
-
-        clearTimeout(timer);
-
-        try {
-          delete window[nomeCallback];
-        } catch (e) {}
-
-        if (script) {
-          script.remove();
-        }
-
-        callback({
+        chiudi({
           success: false,
           message: "Errore di collegamento con il servizio."
         });
-
       };
-
 
       document.body.appendChild(script);
 
-
-      timer = setTimeout(function() {
-
-        try {
-          delete window[nomeCallback];
-        } catch (e) {}
-
-        if (script) {
-          script.remove();
-        }
-
-        callback({
+      const timer = setTimeout(function() {
+        chiudi({
           success: false,
-          message:
-            "Timeout collegamento API."
+          message: "Timeout collegamento API."
         });
-
       }, 15000);
-
     }
 
+    function mostraCard(dati, idCard) {
+      const cardId = dati.idCard || idCard;
 
-    function cercaCard() {
+      document.getElementById("nomeCliente").textContent =
+        ((dati.nome || "") + " " + (dati.cognome || "")).trim() || "Benvenuto";
 
-      const input =
-        document.getElementById("idCard");
+      document.getElementById("numeroCard").textContent = cardId;
+      document.getElementById("statoCard").textContent = dati.stato || "-";
+      document.getElementById("puntiCard").textContent = dati.punti != null ? dati.punti : "0";
+      document.getElementById("livelloCard").textContent = dati.livello || "BASIC";
 
-      const idCard =
-        input.value.trim().toUpperCase();
-
-
-      document.getElementById("result").style.display =
-        "none";
-
-
-      if (!idCard) {
-
-        mostraMessaggio(
-          "Inserisci il numero della tua Card.",
-          "error"
-        );
-
-        return;
-
+      if (dati.prossimoLivello && dati.puntiMancanti != null) {
+        document.getElementById("prossimoLivello").textContent =
+          "Prossimo livello: " + dati.prossimoLivello +
+          " · Mancano " + dati.puntiMancanti + " punti";
+      } else {
+        document.getElementById("prossimoLivello").textContent =
+          "Livello attuale: " + (dati.livello || "BASIC");
       }
 
+      document.getElementById("registraAcquistoLink").href =
+        "acquisto.html?idCard=" + encodeURIComponent(cardId);
 
-      mostraMessaggio(
-        "Ricerca della Card in corso...",
-        ""
-      );
+      document.getElementById("result").style.display = "block";
+      document.getElementById("searchBox").style.display = "none";
+      document.getElementById("introText").style.display = "none";
 
+      localStorage.setItem(STORAGE_KEY, cardId);
 
-      const url =
-        API_URL +
-        "?azione=cercaCard&idCard=" +
-        encodeURIComponent(idCard);
+      const savedBox = document.getElementById("savedBox");
+      savedBox.textContent = "Card " + cardId + " salvata su questo dispositivo.";
+      savedBox.style.display = "block";
 
-
-      richiestaJSONP(url, function(dati) {
-
-        if (
-          !dati ||
-          dati.success === false
-        ) {
-
-          mostraMessaggio(
-            dati && dati.message
-              ? dati.message
-              : "Card non trovata.",
-            "error"
-          );
-
-          return;
-
-        }
-
-
-        document.getElementById("nomeCliente").textContent =
-          (
-            (dati.nome || "") +
-            " " +
-            (dati.cognome || "")
-          ).trim() || "Benvenuto";
-
-
-        document.getElementById("numeroCard").textContent =
-          dati.idCard || idCard;
-
-
-        document.getElementById("statoCard").textContent =
-          dati.stato || "-";
-
-
-        document.getElementById("puntiCard").textContent =
-          dati.punti != null
-            ? dati.punti
-            : "0";
-
-
-        document.getElementById("livelloCard").textContent =
-          dati.livello || "BASIC";
-
-
-        if (
-          dati.prossimoLivello &&
-          dati.puntiMancanti != null
-        ) {
-
-          document.getElementById(
-            "prossimoLivello"
-          ).textContent =
-            "Prossimo livello: " +
-            dati.prossimoLivello +
-            " · Mancano " +
-            dati.puntiMancanti +
-            " punti";
-
-        } else {
-
-          document.getElementById(
-            "prossimoLivello"
-          ).textContent =
-            "Livello attuale: " +
-            (dati.livello || "BASIC");
-
-        }
-
-
-        /*
-         * Per ora il pulsante porta alla pagina
-         * di registrazione acquisto che creeremo
-         * nel prossimo passaggio.
-         *
-         * Il numero Card viene passato nell'URL,
-         * così la pagina potrà riconoscere
-         * automaticamente la Card.
-         */
-
-        document.getElementById(
-          "registraAcquistoLink"
-        ).href =
-          "acquisto.html?idCard=" +
-          encodeURIComponent(
-            dati.idCard || idCard
-          );
-
-
-        document.getElementById("result").style.display =
-          "block";
-
-
-        mostraMessaggio(
-          "Card trovata.",
-          "success"
-        );
-
-      });
-
+      mostraMessaggio("Card aggiornata.", "success");
     }
 
+    function cercaCard(idCardForzato) {
+      const input = document.getElementById("idCard");
+      const idCard = (idCardForzato || input.value || "").trim().toUpperCase();
 
-    document
-      .getElementById("idCard")
-      .addEventListener("keydown", function(event) {
+      document.getElementById("result").style.display = "none";
 
-        if (event.key === "Enter") {
-          cercaCard();
+      if (!idCard) {
+        mostraMessaggio("Inserisci il numero della tua Card.", "error");
+        return;
+      }
+
+      input.value = idCard;
+      mostraMessaggio("Ricerca della Card in corso...", "");
+
+      const url = API_URL +
+        "?azione=cercaCard&idCard=" + encodeURIComponent(idCard);
+
+      richiestaJSONP(url, function(dati) {
+        if (!dati || dati.success === false) {
+          mostraMessaggio(
+            dati && dati.message ? dati.message : "Card non trovata.",
+            "error"
+          );
+          return;
         }
 
+        mostraCard(dati, idCard);
       });
+    }
 
+    function cambiaCard() {
+      localStorage.removeItem(STORAGE_KEY);
+      document.getElementById("result").style.display = "none";
+      document.getElementById("searchBox").style.display = "block";
+      document.getElementById("introText").style.display = "block";
+      document.getElementById("savedBox").style.display = "none";
+      document.getElementById("idCard").value = "";
+      mostraMessaggio("Inserisci il numero della nuova Card.", "");
+      document.getElementById("idCard").focus();
+    }
+
+    window.addEventListener("beforeinstallprompt", function(event) {
+      event.preventDefault();
+      deferredInstallPrompt = event;
+      document.getElementById("installBox").style.display = "block";
+    });
+
+    document.getElementById("installButton").addEventListener("click", async function() {
+      if (!deferredInstallPrompt) {
+        alert("Se il browser non mostra l'installazione automatica, usa il menu del browser e scegli 'Installa app' o 'Aggiungi alla schermata Home'.");
+        return;
+      }
+
+      deferredInstallPrompt.prompt();
+      await deferredInstallPrompt.userChoice;
+      deferredInstallPrompt = null;
+      document.getElementById("installBox").style.display = "none";
+    });
+
+    window.addEventListener("appinstalled", function() {
+      document.getElementById("installBox").style.display = "none";
+    });
+
+    document.getElementById("cambiaCardButton").addEventListener("click", cambiaCard);
+
+    document.getElementById("idCard").addEventListener("keydown", function(event) {
+      if (event.key === "Enter") cercaCard();
+    });
+
+    window.addEventListener("load", function() {
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.register("service-worker.js").catch(function(error) {
+          console.warn("Service Worker non registrato:", error);
+        });
+      }
+
+      const cardSalvata = localStorage.getItem(STORAGE_KEY);
+      if (cardSalvata) {
+        document.getElementById("idCard").value = cardSalvata;
+        cercaCard(cardSalvata);
+      }
+    });
   </script>
-
 </body>
 </html>
