@@ -317,9 +317,34 @@ id="importo"
 min="0.01"
 step="0.01"
 placeholder="Es. 35,50"
-
+required
 >
 
+</div>
+
+<div class="field">
+
+<label for="dataScontrino">
+Data e ora dello scontrino <span class="required">*</span>
+</label>
+
+<input
+type="datetime-local"
+id="dataScontrino"
+required
+>
+
+<div class="photo-help">
+Inserisci la data e l'ora stampate sullo scontrino.
+L'acquisto deve essere inviato entro 8 ore da quel momento.
+</div>
+
+</div>
+
+<div class="photo-help" style="margin-bottom:17px;">
+<strong>Importante:</strong> la foto deve mostrare chiaramente
+il nome del negozio, l'importo totale, la data e l'ora.
+Se necessario, carica più foto, fino a un massimo di 4.
 </div>
 
 <div class="field">
@@ -1041,6 +1066,9 @@ document.getElementById("importo").value.replace(",",".")
 const note=
 document.getElementById("note").value.trim();
 
+const dataScontrinoInput =
+document.getElementById("dataScontrino").value;
+
 const btn=
 document.getElementById("btnRegistra");
 
@@ -1083,6 +1111,58 @@ return;
 
 }
 
+
+if(!dataScontrinoInput){
+
+mostraStatus(
+"statusAcquisto",
+"error",
+"Inserisci la data e l'ora riportate sullo scontrino."
+);
+
+return;
+
+}
+
+const dataScontrinoLocale = new Date(dataScontrinoInput);
+
+if(isNaN(dataScontrinoLocale.getTime())){
+
+mostraStatus(
+"statusAcquisto",
+"error",
+"La data e l'ora inserite non sono valide."
+);
+
+return;
+
+}
+
+const adessoClient = new Date();
+
+if(dataScontrinoLocale.getTime() > adessoClient.getTime()){
+
+mostraStatus(
+"statusAcquisto",
+"error",
+"La data dello scontrino non può essere futura."
+);
+
+return;
+
+}
+
+if(adessoClient.getTime() - dataScontrinoLocale.getTime() > 8 * 60 * 60 * 1000){
+
+mostraStatus(
+"statusAcquisto",
+"error",
+"Sono trascorse più di 8 ore dallo scontrino. Non è possibile registrare l'acquisto."
+);
+
+return;
+
+}
 
 if(fotoSelezionate.length===0){
 
@@ -1140,6 +1220,8 @@ idNegozio:negozio,
 
 importo:importo,
 
+dataScontrino:dataScontrinoLocale.toISOString(),
+
 modalita:"SCONTRINO",
 
 foto1:immagini[0]||"",
@@ -1195,6 +1277,7 @@ importo.toFixed(2).replace(".",",")+
 
 
 document.getElementById("importo").value="";
+document.getElementById("dataScontrino").value="";
 document.getElementById("note").value="";
 document.getElementById("foto").value="";
 document.getElementById("previewGrid").innerHTML="";
@@ -1244,6 +1327,8 @@ document.getElementById("negozio").innerHTML=
 '<option value="">Seleziona il negozio</option>';
 
 document.getElementById("importo").value="";
+
+document.getElementById("dataScontrino").value="";
 
 document.getElementById("note").value="";
 
