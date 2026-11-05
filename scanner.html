@@ -62,6 +62,53 @@ function messaggio(t,ok){
   status.className=ok?'ok':'err';
 }
 
+function copiaCodice(codice){
+
+  if(navigator.clipboard && navigator.clipboard.writeText){
+
+    navigator.clipboard.writeText(codice)
+      .then(function(){
+        messaggio(
+          'Codice copiato! Torna all’Area negoziante, tocca il campo codice QR e incolla.',
+          true
+        );
+      })
+      .catch(function(){
+        copiaAlternativa(codice);
+      });
+
+  }else{
+    copiaAlternativa(codice);
+  }
+}
+
+function copiaAlternativa(codice){
+
+  manual.value=codice;
+  manual.focus();
+  manual.select();
+
+  let copiato=false;
+
+  try{
+    copiato=document.execCommand('copy');
+  }catch(e){
+    copiato=false;
+  }
+
+  if(copiato){
+    messaggio(
+      'Codice copiato! Torna all’Area negoziante e incollalo nel campo codice QR.',
+      true
+    );
+  }else{
+    messaggio(
+      'Codice selezionato. Copialo e incollalo nel campo QR dell’Area negoziante.',
+      false
+    );
+  }
+}
+
 function inviaCodice(){
 
   const codice=(manual.value||codiceLetto).trim();
@@ -71,25 +118,36 @@ function inviaCodice(){
     return;
   }
 
-  if(!window.opener){
-    messaggio('Area negoziante non rilevata. Riapri lo scanner dal pulsante dell’Area negoziante.',false);
-    return;
+  if(window.opener && !window.opener.closed){
+
+    try{
+      window.opener.postMessage({
+        type:'SPRESIANO_CARD_QR',
+        token:codice,
+        nonce:nonce
+      },'*');
+
+      messaggio(
+        'Codice inviato. Torna all’Area negoziante e controlla la verifica della Card.',
+        true
+      );
+
+      send.disabled=true;
+      return;
+
+    }catch(e){
+      console.warn('Invio automatico non riuscito:',e);
+    }
   }
 
-  window.opener.postMessage({
-    type:'SPRESIANO_CARD_QR',
-    token:codice,
-    nonce:nonce
-  },'*');
-
-  messaggio('Codice inviato all’Area negoziante. Puoi tornare alla scheda precedente.',true);
-  send.disabled=true;
+  copiaCodice(codice);
 }
 
 send.addEventListener('click',inviaCodice);
 
 closeBtn.addEventListener('click',function(){
   window.close();
+  messaggio('Puoi tornare all’Area negoziante.',true);
 });
 
 if(!window.isSecureContext){
@@ -112,7 +170,7 @@ scanner.start(
     codiceLetto=decoded;
     manual.value=decoded;
 
-    messaggio('QR letto correttamente. Invialo all’Area negoziante.',true);
+    messaggio('QR letto correttamente. Premi INVIA CODICE.',true);
 
     scanner.stop().catch(function(e){
       console.warn('Arresto scanner:',e);
