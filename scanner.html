@@ -1,0 +1,143 @@
+
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#17202a">
+<title>Scanner QR · SPRESIANO CARD</title>
+<script src="https://unpkg.com/html5-qrcode"></script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;padding:18px;background:#f3f5f8;color:#17202a;font-family:Arial,sans-serif}
+main{max-width:520px;margin:20px auto;background:#fff;padding:22px;border-radius:16px;box-shadow:0 5px 22px #0000000d}
+h1{text-align:center;font-size:23px;margin:4px 0 8px}
+p{color:#667085;text-align:center;line-height:1.5}
+#reader{width:100%;margin:18px auto}
+button{width:100%;padding:14px;border:0;border-radius:9px;background:#17202a;color:#fff;font-weight:bold;font-size:15px;margin-top:12px}
+button.secondary{background:#e9edf2;color:#17202a}
+input{width:100%;padding:14px;border:1px solid #cbd2da;border-radius:9px;font-size:16px;margin-top:8px}
+#status{margin-top:15px;text-align:center;overflow-wrap:anywhere}
+.ok{color:#067647}.err{color:#b42318}
+.small{font-size:12px}
+</style>
+</head>
+<body>
+<main>
+<h1>SPRESIANO CARD</h1>
+<p>Scanner QR riservato ai negozi aderenti</p>
+
+<div id="reader"></div>
+<div id="status">Preparazione della fotocamera…</div>
+
+<label for="manual">In alternativa, inserisci il codice QR manualmente</label>
+<input id="manual" autocomplete="off" placeholder="Codice QR">
+
+<button id="send" type="button">INVIA CODICE ALL'AREA NEGOZIANTE</button>
+<button class="secondary" id="close" type="button">CHIUDI SCANNER</button>
+
+<p class="small">
+Questa pagina serve esclusivamente a leggere il QR.
+La verifica della Card e la registrazione dell'acquisto
+restano nell'Area negoziante.
+</p>
+</main>
+
+<script>
+(function(){
+
+const params=new URLSearchParams(location.search);
+const nonce=params.get('nonce')||'';
+
+const status=document.getElementById('status');
+const manual=document.getElementById('manual');
+const send=document.getElementById('send');
+const closeBtn=document.getElementById('close');
+
+let scanner=null;
+let codiceLetto='';
+
+function messaggio(t,ok){
+  status.textContent=t;
+  status.className=ok?'ok':'err';
+}
+
+function inviaCodice(){
+
+  const codice=(manual.value||codiceLetto).trim();
+
+  if(!codice){
+    messaggio('Nessun codice QR disponibile. Inquadra il QR oppure inseriscilo manualmente.',false);
+    return;
+  }
+
+  if(!window.opener){
+    messaggio('Area negoziante non rilevata. Riapri lo scanner dal pulsante dell’Area negoziante.',false);
+    return;
+  }
+
+  window.opener.postMessage({
+    type:'SPRESIANO_CARD_QR',
+    token:codice,
+    nonce:nonce
+  },'*');
+
+  messaggio('Codice inviato all’Area negoziante. Puoi tornare alla scheda precedente.',true);
+  send.disabled=true;
+}
+
+send.addEventListener('click',inviaCodice);
+
+closeBtn.addEventListener('click',function(){
+  window.close();
+});
+
+if(!window.isSecureContext){
+  messaggio('Connessione non sicura: apri questa pagina tramite HTTPS.',false);
+  return;
+}
+
+if(!window.Html5Qrcode){
+  messaggio('Libreria scanner non caricata. Ricarica la pagina o inserisci il codice manualmente.',false);
+  return;
+}
+
+scanner=new Html5Qrcode('reader');
+
+scanner.start(
+  {facingMode:'environment'},
+  {fps:10,qrbox:{width:230,height:230}},
+  function(decoded){
+
+    codiceLetto=decoded;
+    manual.value=decoded;
+
+    messaggio('QR letto correttamente. Invialo all’Area negoziante.',true);
+
+    scanner.stop().catch(function(e){
+      console.warn('Arresto scanner:',e);
+    });
+
+  },
+  function(){}
+).then(function(){
+
+  messaggio('Fotocamera attiva. Inquadra il QR della SPRESIANO CARD.',true);
+
+}).catch(function(e){
+
+  console.error('Errore fotocamera:',e);
+
+  messaggio(
+    'Fotocamera non disponibile: '+(e.name||'')+
+    ' - '+(e.message||String(e))+
+    '. Puoi inserire il codice manualmente.',
+    false
+  );
+
+});
+
+})();
+</script>
+</body>
+</html>
